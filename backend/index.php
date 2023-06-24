@@ -1,7 +1,6 @@
 <?php
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
-
 require 'vendor/autoload.php';
 require 'config/Database.php';
 require 'app/helpers/Renderer.php';

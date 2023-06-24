@@ -6,7 +6,7 @@ class Database
         $servername = "localhost";
         $username = "Barley";
         $password = "Csak1enter";
-        $dbName = "test";
+        $dbName = "restaurant";
         
         try {
           $conn = new PDO("mysql:host=$servername;dbname=$dbName", $username, $password);

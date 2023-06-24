@@ -1,13 +1,11 @@
 <?php
-require './app/models/Home_Model.php';
 
-class HomeHandler
+
+
+class HomeController
 {
-
     public function render()
     {
         require '../frontend/build/index.html';
     }
-
-
 }

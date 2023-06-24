@@ -1,7 +1,10 @@
 <?php
 
+
+
 $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
-    require 'app/routes/home_router.php';
+    require 'app/routes/home_routes.php';
+    require 'app/routes/admin_routes.php';
 });
 
 // Fetch method and URI from somewhere

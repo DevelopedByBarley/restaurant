@@ -1,0 +1,25 @@
+### 
+POST http://localhost:8080/admin/register 
+Content-Type: application/json;
+
+{
+    "name": "Barley",
+    "password": "Csak1enter@123"
+}
+
+### 
+POST http://localhost:8080/admin/login 
+Content-Type: application/json;
+
+{
+    "name": "Barley",
+    "password": "Csak1enter@123"
+}
+
+### 
+GET http://localhost:8080/admin/test
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODc2MTE5ODgsImV4cCI6MTY4NzYxMjAwMywic3ViIjoiNjQ5NmQ3MTAzNTllMSIsIm5hbWUiOiJCYXJsZXkifQ.rP5MQ8h_ez46OY3sOdoinSP23jap0zNhhesLgrGItQc
+
+### 
+GET http://localhost:8080/admin/new-token
+Cookie: restaurantRefreshToken=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODc2MTE4NjYsImV4cCI6MTY5MDIwMzg2Niwic3ViIjoiNjQ5NmQ3MTAzNTllMSIsIm5hbWUiOiJCYXJsZXkifQ.jjBVzwDdATR_YerFc38Kyur_uL7lYIjC4Tdaz7ju_ZQ
