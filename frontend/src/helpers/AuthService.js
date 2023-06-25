@@ -1,22 +1,11 @@
 import axios from 'axios';
 
 
-
-export function loginUser(user) {
-
-  return axios.post('/user/login', user)
-    .then(res => {
-      localStorage.setItem('accessToken', res.data.accessToken)
-    })
-}
-
 export const fetchAuthentication = axios.create();
 
 fetchAuthentication.interceptors.request.use(
   (config) => {
     const accessToken = localStorage.getItem('accessToken');
-
-
 
     if (!accessToken) {
       return config;
@@ -40,7 +29,7 @@ fetchAuthentication.interceptors.response.use(
     if (error.response.status !== 403) {
       return Promise.reject(error)
     }
-    
+
     const originalRequest = error.config;
     if (originalRequest.isRetry) {
       return Promise.reject(error)
@@ -51,7 +40,7 @@ fetchAuthentication.interceptors.response.use(
 
 
     return axios
-      .get("/user/token", {
+      .get("/admin/token", {
         withCredentials: true,
       })
       .then((res) => {

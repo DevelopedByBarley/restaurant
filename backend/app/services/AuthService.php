@@ -34,12 +34,12 @@ class AuthService
       $decoded = JWT::decode($token, new Key($_SERVER['JWT_TOKEN_SECRET'], 'HS256'));
       return (array)$decoded;
     } catch (\Firebase\JWT\ExpiredException $err) {
-      http_response_code(401);
+      http_response_code(403);
       header('Content-type: application/json');
       echo json_encode(['error' => 'token expired']);
       exit;
     } catch (Exception $exception) {
-      http_response_code(401);
+      http_response_code(403);
       echo json_encode(['error' => 'validation failed']);
       exit;
     }

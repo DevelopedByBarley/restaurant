@@ -87,4 +87,12 @@ class AdminModel
     ]);
   }
 
+
+  public  function getAdminData() {
+    $token = AuthService::getTokenFromHeaderOrSendErrorResponse();
+    $decoded = AuthService::decodeJwtOrSendErrorResponse($token);
+
+    var_dump($decoded);
+  }
+
 }
