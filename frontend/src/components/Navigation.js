@@ -2,6 +2,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Offcanvas from 'react-bootstrap/Offcanvas';
+import { Link } from 'react-router-dom';
 
 export function Navigation({ admin }) {
 
@@ -11,7 +12,9 @@ export function Navigation({ admin }) {
 
       <Navbar key={'sm'} expand={'sm'} className="mb-3 bg-secondary">
         <Container fluid>
-          <Navbar.Brand href="#" className='text-light'>Brand</Navbar.Brand>
+          <Link to={"/admin"}>
+            <Navbar.Brand className='text-light'>Brand</Navbar.Brand>
+          </Link>
           <Navbar.Toggle className='bg-light' aria-controls={`offcanvasNavbar-expand-${'sm'}`} />
           <Navbar.Offcanvas
             className="bg-secondary"
