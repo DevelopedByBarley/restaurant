@@ -28,8 +28,6 @@ export function Dashboard({ setAdmin, admin }) {
 
 
 
-  console.log(admin);
-
   return (
     <>
       <Row>

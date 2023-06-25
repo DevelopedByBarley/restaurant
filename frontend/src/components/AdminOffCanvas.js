@@ -1,11 +1,15 @@
 import { Button, ListGroup, Offcanvas } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { fetchAuthentication } from "../helpers/AuthService";
 
 export function AdminOffCanvas({ showAdminCanvas, handleCanvasClose, admin }) {
-
-  function logout(event) {
-    event.preventDefault();
-    console.log("Logout!");
+  const navigate = useNavigate();
+  function logout() {
+    fetchAuthentication.get('/admin/logout').then((res) => {
+      console.log(res.data);
+      localStorage.removeItem('accessToken');
+      navigate('/admin');
+    })
   }
 
   return (
@@ -38,7 +42,10 @@ export function AdminOffCanvas({ showAdminCanvas, handleCanvasClose, admin }) {
             </Link>
           </ListGroup>
           <div className="text-center mt-4">
-            <Button variant={'danger'} onClick={logout}>Kijelentkezés</Button>
+            <Button variant={'danger'} onClick={() => {
+              handleCanvasClose();
+              logout()
+            }}>Kijelentkezés</Button>
           </div>
         </Offcanvas.Body>
       </Offcanvas>

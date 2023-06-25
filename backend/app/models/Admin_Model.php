@@ -87,8 +87,24 @@ class AdminModel
     ]);
   }
 
+  public function logoutAdmin()
+  {
+    setcookie('restaurantRefreshToken', false, [
+      'expires' => 1,
+      'path' => "/",
+      'httponly' => true,
+      'secure' => true,
+      'samesite' => 'None', // csak fejlesztési célokkal 'None', amúgy 'Lax'
+    ]);
 
-  public  function getAdminData() {
+    echo json_encode([
+      "message" => "Kijelentkezés sikeres!"
+    ]);
+  }
+
+
+  public  function getAdminData()
+  {
     $token = AuthService::getTokenFromHeaderOrSendErrorResponse();
     $decoded = AuthService::decodeJwtOrSendErrorResponse($token);
 
@@ -96,5 +112,4 @@ class AdminModel
       "admin" => $decoded
     ]);
   }
-
 }

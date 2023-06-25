@@ -25,6 +25,10 @@ class AdminController
     $this->adminModel->loginAdmin($_POST);
   }
 
+  public function logout() {
+    $this->adminModel->logoutAdmin();
+  }
+
   public function getMe() {
     $this->adminModel->getAdminData();
   }
