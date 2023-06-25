@@ -92,7 +92,9 @@ class AdminModel
     $token = AuthService::getTokenFromHeaderOrSendErrorResponse();
     $decoded = AuthService::decodeJwtOrSendErrorResponse($token);
 
-    var_dump($decoded);
+    echo json_encode([
+      "admin" => $decoded
+    ]);
   }
 
 }

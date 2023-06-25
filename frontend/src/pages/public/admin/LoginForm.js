@@ -35,7 +35,7 @@ export function LoginForm({ admin }) {
       .catch((err) => {
         console.error(err);
       })
-  }, [])
+  }, [navigate])
 
   console.log(admin);
 

@@ -27,8 +27,7 @@ class GenerateToken
     $refreshToken = JWT::encode(
       [
         "iat" => time(),
-        //"exp" => time() + 60 * 60 * 24 * 30,
-        "exp" => time() + 20,
+        "exp" => time() + 60 * 60 * 24 * 30,
         "sub" => $admin["adminId"],
         "name" => $admin["name"],
       ],

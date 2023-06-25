@@ -1,21 +1,20 @@
-import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 
-export function Navigation() {
+export function Navigation({ admin }) {
+
+
   return (
     <>
 
       <Navbar key={'sm'} expand={'sm'} className="mb-3 bg-secondary">
         <Container fluid>
           <Navbar.Brand href="#" className='text-light'>Brand</Navbar.Brand>
-          <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${'sm'}`} />
+          <Navbar.Toggle className='bg-light' aria-controls={`offcanvasNavbar-expand-${'sm'}`} />
           <Navbar.Offcanvas
-            style={{ background: "hsla(37, 100%, 50%, 1)" }}
+            className="bg-secondary"
             id={`offcanvasNavbar-expand-${'sm'}`}
             aria-labelledby={`offcanvasNavbarLabel-expand-${'sm'}`}
             placement="end"
@@ -33,7 +32,7 @@ export function Navigation() {
                 <Nav.Link href="#action2" className='text-light'>Link</Nav.Link>
                 <Nav.Link href="#action2" className='text-light'>Link</Nav.Link>
               </Nav>
-              { localStorage.getItem('accessToken') !== null && <Navbar.Text> Signed in as: <a href="#login">Mark Otto</a></Navbar.Text> }
+              {admin && <Navbar.Text className='text-light rounded p-2'> Admin bejelentkezve: <a className='text-light' href="/admin/dashboard">{admin?.name}</a></Navbar.Text>}
             </Offcanvas.Body>
           </Navbar.Offcanvas>
         </Container>
