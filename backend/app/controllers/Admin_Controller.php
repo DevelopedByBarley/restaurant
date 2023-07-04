@@ -1,32 +1,33 @@
 <?php
 require 'app/models/Admin_Model.php';
+require 'app/services/AuthService.php';
 
 class AdminController
 {
-
   private $adminModel;
+  private $authService;
 
   public function __construct()
   {
     $this->adminModel = new AdminModel();
+    $this->authService = new AuthService();
   }
-
-
 
   public function register()
   {
     self::initializePOST();
-    $this->adminModel->registerAdmin($_POST);
+    $this->authService->registerAdmin($_POST);
+
   }
 
   public function  login()
   {
     self::initializePOST();
-    $this->adminModel->loginAdmin($_POST);
+    $this->authService->loginAdmin($_POST);
   }
 
   public function logout() {
-    $this->adminModel->logoutAdmin();
+    $this->authService->logoutAdmin();
   }
 
   public function getMe() {

@@ -12,7 +12,7 @@ import { Container } from 'react-bootstrap';
 
 
 function App() {
-  const [admin, setAdmin] = useState();
+  const [admin, setAdmin] = useState('');
 
 
   useEffect(() => {

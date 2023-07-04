@@ -1,0 +1,8 @@
+POST http://localhost:8080/reservations 
+Content-Type: application/json;
+
+{
+    "date": "2023-06-29",
+    "numOfGuests": 2,
+    "interval":  2
+}

@@ -44,7 +44,7 @@ export function Dashboard({ setAdmin, admin }) {
 
 
 
-      <AdminOffCanvas showAdminCanvas={showAdminCanvas} handleCanvasClose={handleCanvasClose} admin={admin} />
+      <AdminOffCanvas showAdminCanvas={showAdminCanvas} handleCanvasClose={handleCanvasClose} admin={admin} setAdmin={setAdmin} />
     </>
 
 

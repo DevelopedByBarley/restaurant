@@ -1,6 +1,6 @@
 <IfModule mod_rewrite.c>
   RewriteEngine On
-
+  
   RewriteCond %{REQUEST_URI} ^.*static/(.*)
   RewriteRule ^(.*)$ frontend/build/static/%1 [END]
 

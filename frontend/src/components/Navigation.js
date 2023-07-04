@@ -12,7 +12,7 @@ export function Navigation({ admin }) {
 
       <Navbar key={'sm'} expand={'sm'} className="mb-3 bg-secondary">
         <Container fluid>
-          <Link to={"/admin"}>
+          <Link to={"/"}>
             <Navbar.Brand className='text-light'>Brand</Navbar.Brand>
           </Link>
           <Navbar.Toggle className='bg-light' aria-controls={`offcanvasNavbar-expand-${'sm'}`} />
@@ -29,13 +29,14 @@ export function Navigation({ admin }) {
             </Offcanvas.Header>
             <Offcanvas.Body>
               <Nav className="justify-content-center flex-grow-1 pe-3">
-                <Nav.Link href="#action1" className='text-light'>Home</Nav.Link>
-                <Nav.Link href="#action2" className='text-light'>Link</Nav.Link>
-                <Nav.Link href="#action2" className='text-light'>Link</Nav.Link>
-                <Nav.Link href="#action2" className='text-light'>Link</Nav.Link>
-                <Nav.Link href="#action2" className='text-light'>Link</Nav.Link>
+                <Nav.Link href="#action1" className='text-light'>Kezdőlap</Nav.Link>
+                <Nav.Link href="#action2" className='text-light'>Étlap</Nav.Link>
+                <Nav.Link href="#action2" className='text-light'>Itallap</Nav.Link>
+                <Nav.Link href="#action2" className='text-light'>Foglalás</Nav.Link>
               </Nav>
-              {admin && <Navbar.Text className='text-light rounded p-2'> Admin bejelentkezve: <a className='text-light' href="/admin/dashboard">{admin?.name}</a></Navbar.Text>}
+              {admin && <Link to={"/admin"} className='mt-2'>
+                <Navbar.Text className='text-light rounded p-2 bg-warning'> Admin bejelentkezve: {admin?.name}</Navbar.Text>
+              </Link>}
             </Offcanvas.Body>
           </Navbar.Offcanvas>
         </Container>

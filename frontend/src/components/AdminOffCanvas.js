@@ -2,12 +2,12 @@ import { Button, ListGroup, Offcanvas } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { fetchAuthentication } from "../helpers/AuthService";
 
-export function AdminOffCanvas({ showAdminCanvas, handleCanvasClose, admin }) {
+export function AdminOffCanvas({ showAdminCanvas, handleCanvasClose, admin, setAdmin }) {
   const navigate = useNavigate();
   function logout() {
     fetchAuthentication.get('/admin/logout').then((res) => {
-      console.log(res.data);
       localStorage.removeItem('accessToken');
+      setAdmin('');
       navigate('/admin');
     })
   }
