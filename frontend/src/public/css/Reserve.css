@@ -1,0 +1,12 @@
+@media(min-width: 768px) {
+  #reserve {
+    width: 60%;
+    margin: 0 auto;
+  }
+}
+@media(min-width: 1028px) {
+  #reserve {
+    width: 35%;
+    margin: 0 auto;
+  }
+}

@@ -32,7 +32,7 @@ export function Navigation({ admin }) {
                 <Nav.Link href="#action1" className='text-light'>Kezdőlap</Nav.Link>
                 <Nav.Link href="#action2" className='text-light'>Étlap</Nav.Link>
                 <Nav.Link href="#action2" className='text-light'>Itallap</Nav.Link>
-                <Nav.Link href="#action2" className='text-light'>Foglalás</Nav.Link>
+                <Nav.Link href="/reserve" className='text-light'>Asztal foglalás</Nav.Link>
               </Nav>
               {admin && <Link to={"/admin"} className='mt-2'>
                 <Navbar.Text className='text-light rounded p-2 bg-warning'> Admin bejelentkezve: {admin?.name}</Navbar.Text>

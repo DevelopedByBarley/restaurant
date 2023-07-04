@@ -1,0 +1,12 @@
+@media(min-width: 768px) {
+  #reservation-form {
+    width: 60%;
+    margin: 0 auto;
+  }
+}
+@media(min-width: 1028px) {
+  #reservation-form {
+    width: 50%;
+    margin: 0 auto;
+  }
+}
