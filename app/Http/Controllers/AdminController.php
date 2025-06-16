@@ -56,7 +56,9 @@ class AdminController extends Controller
      */
     public function edit(Admin $admin)
     {
-        //
+        return Inertia::render('pages/admin/Edit', [
+            'admin' => $admin,
+        ]);
     }
 
     /**
@@ -64,7 +66,9 @@ class AdminController extends Controller
      */
     public function update(UpdateAdminRequest $request, Admin $admin)
     {
-        //
+        $admin->update($request->only(['name', 'email', 'level']));
+
+        return redirect()->back()->with('success', 'Admin sikeresen módosítva!');
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateAdminRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class UpdateAdminRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +23,16 @@ class UpdateAdminRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string|max:255',
+            'email' => [
+                'required',
+                'string',
+                'email',
+                'max:255',
+                Rule::unique('admins')->ignore($this->admin->id),
+            ],
+            'level' => 'required|integer|in:1,2,3',
+            'password' => 'nullable|string|min:8|confirmed', // update-nél nem kötelező a jelszó módosítás
         ];
     }
 }

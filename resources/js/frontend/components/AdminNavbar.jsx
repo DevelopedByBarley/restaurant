@@ -54,9 +54,8 @@ export default function AdminNavbar() {
                             <header className="p-4 flex justify-between items-center gap-x-2">
                                 <div className="flex items-center justify-between w-full gap-x-2">
                                     <Link
-                                        to="/admin"
+                                        href="/admin"
                                         className="flex-none font-semibold text-xl text-black focus:outline-hidden focus:opacity-80 dark:text-white"
-                                        href="#"
                                         aria-label="Brand"
                                     >
                                         Brand
