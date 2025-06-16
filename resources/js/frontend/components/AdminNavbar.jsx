@@ -1,10 +1,11 @@
-import { useForm, usePage } from "@inertiajs/react";
+import { Link, useForm, usePage } from "@inertiajs/react";
 import { useEffect, useState } from "react";
 
 export default function AdminNavbar() {
     const { post } = useForm();
     const [profileOpen, setProfileOpen] = useState(false);
     const { url } = usePage();
+    const { auth } = usePage().props;
 
     useEffect(() => {
         setProfileOpen(false);
@@ -21,7 +22,7 @@ export default function AdminNavbar() {
 
     return (
         <>
-            {url !== '/admin/login' && url !== '/admin/register' && (
+            {url !== "/admin/login" && url !== "/admin/register" && (
                 <>
                     <div className="lg:hidden py-16 text-center">
                         <button
@@ -51,13 +52,25 @@ export default function AdminNavbar() {
                     >
                         <div className="relative flex flex-col h-full max-h-full ">
                             <header className="p-4 flex justify-between items-center gap-x-2">
-                                <a
-                                    className="flex-none font-semibold text-xl text-black focus:outline-hidden focus:opacity-80 dark:text-white"
-                                    href="#"
-                                    aria-label="Brand"
-                                >
-                                    Brand
-                                </a>
+                                <div className="flex items-center justify-between w-full gap-x-2">
+                                    <Link
+                                        to="/admin"
+                                        className="flex-none font-semibold text-xl text-black focus:outline-hidden focus:opacity-80 dark:text-white"
+                                        href="#"
+                                        aria-label="Brand"
+                                    >
+                                        Brand
+                                    </Link>
+                                    {auth.admin.level > 2 && (
+                                        <Link
+                                            href={"/admin/create"}
+                                            type="button"
+                                            className="text-xs inline-flex w-full justify-center rounded-md px-3 py-2 font-semibold text-slate-600 hover:text-white hover:bg-slate-600 border shadow-xs sm:ml-3 sm:w-auto cursor-pointer"
+                                        >
+                                            + Admin
+                                        </Link>
+                                    )}
+                                </div>
 
                                 <div className="lg:hidden -me-2">
                                     <button
@@ -92,13 +105,23 @@ export default function AdminNavbar() {
                                                 className="flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-100 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-700 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:text-white"
                                                 href="#"
                                             >
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 21v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21m0 0h4.5V3.545M12.75 21h7.5V10.75M2.25 21h1.5m18 0h-18M2.25 9l4.5-1.636M18.75 3l-1.5.545m0 6.205 3 1m1.5.5-1.5-.5M6.75 7.364V3h-3v18m3-13.636 10.5-3.819" />
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    fill="none"
+                                                    viewBox="0 0 24 24"
+                                                    strokeWidth={1.5}
+                                                    stroke="currentColor"
+                                                    className="size-6"
+                                                >
+                                                    <path
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                        d="M8.25 21v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21m0 0h4.5V3.545M12.75 21h7.5V10.75M2.25 21h1.5m18 0h-18M2.25 9l4.5-1.636M18.75 3l-1.5.545m0 6.205 3 1m1.5.5-1.5-.5M6.75 7.364V3h-3v18m3-13.636 10.5-3.819"
+                                                    />
                                                 </svg>
                                                 Irányítópult
                                             </a>
                                         </li>
-                    
 
                                         {/* Többi menüpont marad változatlan */}
 
@@ -110,17 +133,28 @@ export default function AdminNavbar() {
                                                 aria-expanded={profileOpen}
                                                 aria-controls="account-accordion-sub-1-collapse-1"
                                             >
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    fill="none"
+                                                    viewBox="0 0 24 24"
+                                                    strokeWidth={1.5}
+                                                    stroke="currentColor"
+                                                    className="size-6"
+                                                >
+                                                    <path
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                        d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                                                    />
                                                 </svg>
-
                                                 Profil
                                             </button>
 
                                             <div
                                                 id="account-accordion-sub-1-collapse-1"
-                                                className={`w-full overflow-hidden transition-[height] duration-300 ${profileOpen ? "" : "hidden"
-                                                    }`}
+                                                className={`w-full overflow-hidden transition-[height] duration-300 ${
+                                                    profileOpen ? "" : "hidden"
+                                                }`}
                                                 role="region"
                                                 aria-labelledby="account-accordion"
                                             >
@@ -130,10 +164,22 @@ export default function AdminNavbar() {
                                                             onClick={logout}
                                                             className="flex items-center cursor-pointer gap-x-1 py-2 px-2.5 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:text-neutral-200 w-full text-left"
                                                         >
-                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                                                                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15M12 9l-3 3m0 0 3 3m-3-3h12.75" />
+                                                            <svg
+                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                fill="none"
+                                                                viewBox="0 0 24 24"
+                                                                strokeWidth={
+                                                                    1.5
+                                                                }
+                                                                stroke="currentColor"
+                                                                className="size-6"
+                                                            >
+                                                                <path
+                                                                    strokeLinecap="round"
+                                                                    strokeLinejoin="round"
+                                                                    d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15M12 9l-3 3m0 0 3 3m-3-3h12.75"
+                                                                />
                                                             </svg>
-
                                                             Kijelentkezés
                                                         </button>
                                                     </li>

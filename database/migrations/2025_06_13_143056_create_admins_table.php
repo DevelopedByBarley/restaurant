@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->integer('level')->default(2); // 3 for super admin, 2 for admin, 1 for user
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreAdminRequest;
 use App\Http\Requests\UpdateAdminRequest;
 use App\Models\Admin;
+use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
 
 class AdminController extends Controller
@@ -24,7 +25,7 @@ class AdminController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('pages/admin/Create');
     }
 
     /**
@@ -32,7 +33,14 @@ class AdminController extends Controller
      */
     public function store(StoreAdminRequest $request)
     {
-        //
+        Admin::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'level' => $request->level,
+            'password' => Hash::make($request->password),
+        ]);
+
+        return redirect()->back()->with('success', 'Admin sikeresen létrehozva.');
     }
 
     /**
