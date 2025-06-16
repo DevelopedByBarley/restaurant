@@ -1,0 +1,15 @@
+<?php
+
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Auth\AdminAuthController;
+use Illuminate\Support\Facades\Route;
+
+Route::get('/admin/register', [AdminAuthController::class, 'registerForm'])->name('admin.register');
+Route::post('/admin/register', [AdminAuthController::class, 'register'])->name('admin.register');
+Route::get('/admin/login', [AdminAuthController::class, 'loginForm'])->name('admin.login');
+Route::post('/admin/login', [AdminAuthController::class, 'login']);
+Route::post('/admin/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
+
+Route::resource('admin', AdminController::class)
+    ->middleware(['auth:admin'])
+    ->names('admin');
