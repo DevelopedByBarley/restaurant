@@ -1,189 +1,152 @@
-import { useForm } from "@inertiajs/react";
-import { useState } from "react";
+import { useForm, usePage } from "@inertiajs/react";
+import { useEffect, useState } from "react";
 
 export default function AdminNavbar() {
     const { post } = useForm();
     const [profileOpen, setProfileOpen] = useState(false);
+    const { url } = usePage();
+
+    useEffect(() => {
+        setProfileOpen(false);
+    }, [url]);
 
     function logout(e) {
         e.preventDefault();
         post("/admin/logout");
     }
 
-    // Profil menü nyitás-csukás toggle
     function toggleProfileMenu() {
         setProfileOpen(!profileOpen);
     }
 
     return (
-        <nav className="bg-gray-800">
-            <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-                <div className="relative flex h-16 items-center justify-between">
-                    <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
+        <>
+            {url !== '/admin/login' && url !== '/admin/register' && (
+                <>
+                    <div className="lg:hidden py-16 text-center">
                         <button
                             type="button"
-                            className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:ring-2 focus:ring-white focus:outline-hidden focus:ring-inset"
-                            aria-controls="mobile-menu"
+                            className="py-2 px-3 inline-flex justify-center items-center gap-x-2 text-start bg-gray-800 border border-gray-800 text-white text-sm font-medium rounded-lg shadow-2xs align-middle hover:bg-gray-950 focus:outline-hidden focus:bg-gray-900 dark:bg-white dark:text-neutral-800 dark:hover:bg-neutral-200 dark:focus:bg-neutral-200"
+                            aria-haspopup="dialog"
                             aria-expanded="false"
+                            aria-controls="hs-sidebar-collapsible-group"
+                            aria-label="Toggle navigation"
                         >
-                            <span className="absolute -inset-0.5"></span>
-                            <span className="sr-only">Open main menu</span>
-
-                            <svg
-                                className="block size-6"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                strokeWidth="1.5"
-                                stroke="currentColor"
-                                aria-hidden="true"
-                                data-slot="icon"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-                                />
-                            </svg>
-
-                            <svg
-                                className="hidden size-6"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                strokeWidth="1.5"
-                                stroke="currentColor"
-                                aria-hidden="true"
-                                data-slot="icon"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    d="M6 18 18 6M6 6l12 12"
-                                />
-                            </svg>
+                            Open
                         </button>
                     </div>
-                    <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-                        <div className="flex shrink-0 items-center">
-                            <img
-                                className="h-8 w-auto"
-                                src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
-                                alt="Your Company"
-                            />
-                        </div>
-                        <div className="hidden sm:ml-6 sm:block">
-                            <div className="flex space-x-4">
+
+                    <div
+                        id="hs-sidebar-collapsible-group"
+                        className="hs-overlay [--auto-close:lg] lg:block lg:translate-x-0 lg:end-auto lg:bottom-0 w-64
+                        hs-overlay-open:translate-x-0
+                        -translate-x-full transition-all duration-300 transform
+                        h-full
+                        hidden
+                        fixed top-0 start-0 bottom-0 z-60
+                        bg-white border-e border-gray-200 dark:bg-neutral-800 dark:border-neutral-700"
+                        role="dialog"
+                        tabIndex="-1"
+                        aria-label="Sidebar"
+                    >
+                        <div className="relative flex flex-col h-full max-h-full ">
+                            <header className="p-4 flex justify-between items-center gap-x-2">
                                 <a
+                                    className="flex-none font-semibold text-xl text-black focus:outline-hidden focus:opacity-80 dark:text-white"
                                     href="#"
-                                    className="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
-                                    aria-current="page"
+                                    aria-label="Brand"
                                 >
-                                    Dashboard
+                                    Brand
                                 </a>
 
-                            </div>
-                        </div>
-                    </div>
-                    <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                        <button
-                            type="button"
-                            className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden"
-                        >
-                            <span className="absolute -inset-1.5"></span>
-                            <span className="sr-only">View notifications</span>
-                            <svg
-                                className="size-6"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                strokeWidth="1.5"
-                                stroke="currentColor"
-                                aria-hidden="true"
-                                data-slot="icon"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0"
-                                />
-                            </svg>
-                        </button>
-
-                        <div className="relative ml-3">
-                            <div>
-                                <button
-                                    type="button"
-                                    className="relative flex rounded-full bg-gray-800 text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden"
-                                    id="user-menu-button"
-                                    aria-expanded="false"
-                                    aria-haspopup="true"
-                                    onClick={() => toggleProfileMenu()}
-                                >
-                                    <span className="absolute -inset-1.5"></span>
-                                    <span className="sr-only">
-                                        Open user menu
-                                    </span>
-                                    <img
-                                        className="size-8 rounded-full"
-                                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                        alt=""
-                                    />
-                                </button>
-                            </div>
-
-                            {profileOpen && (
-                                <div
-                                    className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 focus:outline-hidden"
-                                    role="menu"
-                                    aria-orientation="vertical"
-                                    aria-labelledby="user-menu-button"
-                                    tabIndex="-1"
-                                >
-                                    <a
-                                        href="#"
-                                        className="block px-4 py-2 text-sm text-gray-700"
-                                        role="menuitem"
-                                        tabIndex="-1"
-                                        id="user-menu-item-0"
-                                    >
-                                        Your Profile
-                                    </a>
-                                    <a
-                                        href="#"
-                                        className="block px-4 py-2 text-sm text-gray-700"
-                                        role="menuitem"
-                                        tabIndex="-1"
-                                        id="user-menu-item-1"
-                                    >
-                                        Settings
-                                    </a>
-                                    {/* Ez legyen logout gomb, hogy működjön */}
+                                <div className="lg:hidden -me-2">
                                     <button
-                                        onClick={logout}
-                                        className="block w-full text-left px-4 py-2 text-sm text-gray-700"
-                                        role="menuitem"
-                                        tabIndex="-1"
-                                        id="user-menu-item-2"
+                                        type="button"
+                                        className="flex justify-center items-center gap-x-3 size-6 bg-white border border-gray-200 text-sm text-gray-600 hover:bg-gray-100 rounded-full disabled:opacity-50 disabled:pointer-events-none focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:hover:text-neutral-200 dark:focus:text-neutral-200"
                                     >
-                                        Sign out
+                                        <svg
+                                            className="shrink-0 size-4"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="24"
+                                            height="24"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            strokeWidth="2"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                        >
+                                            <path d="M18 6 6 18" />
+                                            <path d="m6 6 12 12" />
+                                        </svg>
+                                        <span className="sr-only">Bezár</span>
                                     </button>
                                 </div>
-                            )}
+                            </header>
+
+                            <nav className="h-full overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500">
+                                <div className="pb-0 px-2  w-full flex flex-col flex-wrap">
+                                    <ul className="space-y-1">
+                                        <li>
+                                            <a
+                                                className="flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-100 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-700 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:text-white"
+                                                href="#"
+                                            >
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 21v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21m0 0h4.5V3.545M12.75 21h7.5V10.75M2.25 21h1.5m18 0h-18M2.25 9l4.5-1.636M18.75 3l-1.5.545m0 6.205 3 1m1.5.5-1.5-.5M6.75 7.364V3h-3v18m3-13.636 10.5-3.819" />
+                                                </svg>
+                                                Irányítópult
+                                            </a>
+                                        </li>
+                    
+
+                                        {/* Többi menüpont marad változatlan */}
+
+                                        <li id="account-accordion">
+                                            <button
+                                                type="button"
+                                                onClick={toggleProfileMenu} // Profil menü toggle
+                                                className="cursor-pointer w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:text-neutral-200"
+                                                aria-expanded={profileOpen}
+                                                aria-controls="account-accordion-sub-1-collapse-1"
+                                            >
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                                </svg>
+
+                                                Profil
+                                            </button>
+
+                                            <div
+                                                id="account-accordion-sub-1-collapse-1"
+                                                className={`w-full overflow-hidden transition-[height] duration-300 ${profileOpen ? "" : "hidden"
+                                                    }`}
+                                                role="region"
+                                                aria-labelledby="account-accordion"
+                                            >
+                                                <ul className="pt-1 ps-2 space-y-1">
+                                                    <li>
+                                                        <button
+                                                            onClick={logout}
+                                                            className="flex items-center cursor-pointer gap-x-1 py-2 px-2.5 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:text-neutral-200 w-full text-left"
+                                                        >
+                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                                                                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15M12 9l-3 3m0 0 3 3m-3-3h12.75" />
+                                                            </svg>
+
+                                                            Kijelentkezés
+                                                        </button>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </nav>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <div className="sm:hidden" id="mobile-menu">
-                <div className="space-y-1 px-2 pt-2 pb-3">
-                    <a
-                        href="#"
-                        className="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white"
-                        aria-current="page"
-                    >
-                        Dashboard
-                    </a>
-                
-                </div>
-            </div>
-        </nav>
+                </>
+            )}
+        </>
     );
 }

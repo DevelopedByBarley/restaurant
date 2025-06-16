@@ -1,6 +1,7 @@
 import { useForm } from "@inertiajs/react";
+import AdminLayout from "../../../layouts/AdminLayout";
 
-export default function Register() {
+function Register() {
     const { data, setData, post, processing, errors } = useForm({
         name: "",
         email: "",
@@ -105,3 +106,7 @@ export default function Register() {
         </div>
     );
 }
+
+Register.layout = page => <AdminLayout>{page}</AdminLayout>
+
+export default Register

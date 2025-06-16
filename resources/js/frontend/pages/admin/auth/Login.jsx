@@ -1,6 +1,7 @@
 import { useForm } from "@inertiajs/react";
+import AdminLayout from "../../../layouts/AdminLayout";
 
-export default function Login() {
+function Login() {
     const { data, setData, post, processing, errors } = useForm({
         email: "",
         password: "",
@@ -83,3 +84,8 @@ export default function Login() {
         </div>
     );
 }
+
+Login.layout = page => <AdminLayout>{page}</AdminLayout>
+
+export default Login
+

@@ -14,8 +14,8 @@ class AdminController extends Controller
      */
     public function index()
     {
-       return Inertia::render('pages/admin/Index', [
-            'admins' => Admin::all(),
+        return Inertia::render('pages/admin/Index', [
+            'admins' => Admin::latest()->paginate()
         ]);
     }
 
@@ -64,6 +64,7 @@ class AdminController extends Controller
      */
     public function destroy(Admin $admin)
     {
-        //
+        Admin::destroy($admin->id);
+        return redirect()->route('admin.index')->with('success', 'Admin sikeresen törölve!');
     }
 }
