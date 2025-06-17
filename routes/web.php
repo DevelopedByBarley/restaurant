@@ -7,5 +7,7 @@ Route::get('/', function () {
     return Inertia::render('pages/Home');
 });
 
-require __DIR__.'/auth/user.php';
-require __DIR__.'/auth/admin.php';
+if (env('AUTH_ENABLED', false)) {
+    require __DIR__ . '/auth/user.php';
+}
+require __DIR__ . '/auth/admin.php';

@@ -59,6 +59,9 @@ class HandleInertiaRequests extends Middleware
                 'info' => $request->session()->get('info'),
                 'violet'  => $request->session()->get('violet'),
             ],
+            'env' => [
+                'authEnabled' => env('AUTH_ENABLED', false),
+            ],
         ];
     }
 }
