@@ -22,7 +22,7 @@ export default function AdminNavbar() {
 
     return (
         <>
-            {url !== "/admin/login" && url !== "/admin/register" && (
+            {url !== "/admin" && url !== "/admin/register" && (
                 <>
                     <div className="lg:hidden py-16 text-center">
                         <button
@@ -54,13 +54,13 @@ export default function AdminNavbar() {
                             <header className="p-4 flex justify-between items-center gap-x-2">
                                 <div className="flex items-center justify-between w-full gap-x-2">
                                     <Link
-                                        href="/admin"
+                                        href="/admin/dashboard"
                                         className="flex-none font-semibold text-xl text-black focus:outline-hidden focus:opacity-80 dark:text-white"
                                         aria-label="Brand"
                                     >
                                         Admin
                                     </Link>
-                                    {auth.admin.level > 2 && (
+                                    {auth.admin && auth.admin.level > 2 && (
                                         <Link
                                             href={"/admin/create"}
                                             type="button"
@@ -102,7 +102,7 @@ export default function AdminNavbar() {
                                         <li>
                                             <Link
                                                 className="flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-100 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-700 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:text-white"
-                                                href="/admin"
+                                                href="/admin/dashboard"
                                             >
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"

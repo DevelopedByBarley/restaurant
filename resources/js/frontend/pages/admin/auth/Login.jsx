@@ -1,5 +1,6 @@
-import { useForm } from "@inertiajs/react";
+import { useForm, usePage } from "@inertiajs/react";
 import AdminLayout from "../../../layouts/AdminLayout";
+import { useEffect } from "react";
 
 function Login() {
     const { data, setData, post, processing, errors } = useForm({
@@ -7,6 +8,14 @@ function Login() {
         password: "",
         remember: false,
     });
+        const { auth } = usePage().props;
+
+
+    useEffect(() => {
+        if(auth.admin) {
+            window.location.href = "/admin/dashboard";
+        }
+    }, [])
 
     function submit(e) {
         e.preventDefault();
@@ -16,7 +25,7 @@ function Login() {
         <div className="h-screen flex items-center justify-center">
             <section className="max-w-xl w-full p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800">
                 <h2 className="text-lg font-semibold text-gray-700 capitalize dark:text-white">
-                    Admin regisztráció
+                    Admin
                 </h2>
 
                 <form onSubmit={submit}>

@@ -43,7 +43,7 @@ class AdminAuthController extends Controller
         Auth::guard('admin')->login($admin);
 
         // Redirect to a desired page after registration
-        return redirect()->route('admin.index')->with('success', 'Regisztráció sikeresen megtörtént!');
+        return redirect()->route('admin.dashboard')->with('success', 'Regisztráció sikeresen megtörtént!');
     }
 
     public function login(Request $request)
@@ -56,7 +56,7 @@ class AdminAuthController extends Controller
         // Attempt to log in the user
         if (Auth::guard('admin')->attempt($request->only('email', 'password'))) {
             // Redirect to a desired page after successful login
-            return redirect()->route('admin.index')->with('success', 'Sikeresen bejelentkeztél!');
+            return redirect()->route('admin.dashboard')->with('success', 'Sikeresen bejelentkeztél!');
         }
 
         // If login fails, redirect back with an error message
