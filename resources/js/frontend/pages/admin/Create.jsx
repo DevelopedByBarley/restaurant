@@ -1,6 +1,7 @@
 import { useForm } from "@inertiajs/react";
 import AdminLayout from "../../layouts/AdminLayout";
 
+
 function Create() {
     const { data, setData, post, processing, errors, reset } = useForm({
         name: "",
