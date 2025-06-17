@@ -42,8 +42,7 @@ function Index() {
                 </h2>
 
                 <p className="text-sm text-gray-600 dark:text-gray-300">
-                    Használd a bal oldali menüt a navigációhoz, vagy válassz egy
-                    funkciót a kezdéshez.
+                    {auth.admin.email}
                 </p>
             </section>
 
