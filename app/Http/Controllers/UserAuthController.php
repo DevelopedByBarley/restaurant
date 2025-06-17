@@ -34,7 +34,7 @@ class UserAuthController extends Controller
 
         Auth::guard('web')->login($admin);
 
-        return redirect()->route('user.dashboard')->with('success', 'Regisztráció sikeresen megtörtént!');
+        return redirect()->route('dashboard')->with('success', 'Regisztráció sikeresen megtörtént!');
     }
 
     public function login(Request $request)

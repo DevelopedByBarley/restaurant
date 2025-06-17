@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Socialite\ProviderCallbackController;
+use App\Http\Controllers\Socialite\ProviderRedirectController;
 use App\Http\Controllers\UserAuthController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -9,6 +11,10 @@ Route::post('/register', [UserAuthController::class, 'register'])->name('registe
 Route::get('/login', [UserAuthController::class, 'loginForm'])->name('login');
 Route::post('/login', [UserAuthController::class, 'login']);
 Route::post('/logout', [UserAuthController::class, 'logout']);
+
+
+Route::get('/auth/{provider}/redirect', ProviderCallbackController::class)->name('auth.callback');
+Route::get('/auth/{provider}/redirect', ProviderRedirectController::class)->name('auth.redirect');
 
 Route::get('/dashboard', [UserController::class, 'index'])->middleware(['auth:web'])->name('dashboard');
 
