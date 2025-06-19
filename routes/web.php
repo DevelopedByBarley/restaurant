@@ -9,5 +9,8 @@ Route::get('/', function () {
 
 if (env('AUTH_ENABLED', false)) {
     require __DIR__ . '/auth/user.php';
+    require __DIR__ . '/auth/forgot-password.php';
 }
-require __DIR__ . '/auth/admin.php';
+if (env('ADMIN_AUTH_ENABLED', false)) {
+    require __DIR__ . '/auth/admin.php';
+}

@@ -1,4 +1,5 @@
 import { usePage } from "@inertiajs/react";
+import { useEffect, useState } from "react";
 
 // Heroicons SVG-k (outline)
 const icons = {
@@ -112,28 +113,38 @@ const alertStyles = {
 
 function FlashMessages() {
     const { flash } = usePage().props;
+    const [showFlash, setShowFlash] = useState(false);
+
+    console.log(showFlash);
+
+    useEffect(() => {
+        if (Object.keys(flash).length > 0) {
+            setShowFlash(true);
+
+            const timer = setTimeout(() => setShowFlash(false), 3000);
+            return () => clearTimeout(timer);
+        }
+    }, [flash]);
+
+    if (!showFlash) return null;
 
     return (
-        <>
-            {flash && (
-                <div className="fixed top-5 right-5 space-y-3 z-50 max-w-xs px-4">
-                    {Object.entries(alertStyles).map(([type, style]) => {
-                        if (!flash[type]) return null;
+        <div id="flash" className="fixed top-5 right-5 space-y-3 z-50 max-w-xs px-4">
+            {Object.entries(alertStyles).map(([type, style]) => {
+                if (!flash[type]) return null;
 
-                        return (
-                            <div
-                                key={type}
-                                className={`${style} flex items-center p-3 rounded shadow-md animate-fade-in`}
-                                role="alert"
-                            >
-                                {icons[type]}
-                                <span className="flex-1">{flash[type]}</span>
-                            </div>
-                        );
-                    })}
-                </div>
-            )}
-        </>
+                return (
+                    <div
+                        key={type}
+                        className={`${style} flex items-center p-3 rounded shadow-md animate-fade-in`}
+                        role="alert"
+                    >
+                        {icons[type]}
+                        <span className="flex-1">{flash[type]}</span>
+                    </div>
+                );
+            })}
+        </div>
     );
 }
 

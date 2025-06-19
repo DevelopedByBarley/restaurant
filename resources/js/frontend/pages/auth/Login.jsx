@@ -1,4 +1,4 @@
-import { useForm } from "@inertiajs/react";
+import { Link, useForm } from "@inertiajs/react";
 import SocialButtons from "../../components/SocialButtons";
 
 export default function Login() {
@@ -39,7 +39,7 @@ export default function Login() {
 					<div class="mt-4">
 						<div class="flex justify-between">
 							<label class="block text-gray-700 text-sm font-bold mb-2">Password</label>
-							<a href="#" class="text-xs text-gray-500">Forget Password?</a>
+							<Link href={"/forgot-password"} class="text-xs text-gray-500">Forget Password?</Link>
 						</div>
 						<input
 							value={data.password}
