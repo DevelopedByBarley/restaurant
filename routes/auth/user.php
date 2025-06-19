@@ -13,7 +13,7 @@ Route::post('/login', [UserAuthController::class, 'login']);
 Route::post('/logout', [UserAuthController::class, 'logout']);
 
 
-Route::get('/auth/{provider}/redirect', ProviderCallbackController::class)->name('auth.callback');
+Route::get('/auth/{provider}/callback', ProviderCallbackController::class)->name('auth.callback');
 Route::get('/auth/{provider}/redirect', ProviderRedirectController::class)->name('auth.redirect');
 
 Route::get('/dashboard', [UserController::class, 'index'])->middleware(['auth:web'])->name('dashboard');

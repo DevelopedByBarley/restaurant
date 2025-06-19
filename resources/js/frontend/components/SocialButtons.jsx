@@ -1,4 +1,4 @@
-export default function SocialButtons() {
+export default function SocialButtons({operation = 'login'}) {
     return (
         <>
             <a
@@ -25,9 +25,9 @@ export default function SocialButtons() {
                         />
                     </svg>
                 </div>
-                <h1 className="px-4 py-3 w-5/6 text-center text-gray-600 font-bold">Sign up with Google</h1>
+                <h1 className="px-4 py-3 w-5/6 text-center text-gray-600 font-bold">{operation === 'login' ? 'Sign in with Google' : 'Sign up with Google'}</h1>
             </a>
-            <a
+           {/*  <a
                 href="/auth/facebook/redirect"
                 className="flex items-center justify-center mt-4 text-white rounded-lg shadow-md hover:bg-gray-100"
             >
@@ -36,7 +36,7 @@ export default function SocialButtons() {
                         className="h-6 w-6"
                         viewBox="0 0 24 24"
                         fill="#1877F2"
-                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns=""
                     >
                         <path
                             d="M22.675 0H1.325C0.59325 0 0 0.59325 0 1.325V22.675C0 23.4067 0.59325 24 1.325 24H12.82V14.709H9.692V11.077H12.82V8.4135C12.82 5.348 14.7135 3.671 17.4385 3.671C18.756 3.671 19.9245 3.783 20.2345 3.822V7.007H18.3535C16.839 7.007 16.56 7.83525 16.56 8.94675V11.0767H20.112L19.62 14.709H16.56V24H22.675C23.4067 24 24 23.4067 24 22.675V1.325C24 0.59325 23.4067 0 22.675 0Z"
@@ -49,7 +49,7 @@ export default function SocialButtons() {
                     </svg>
                 </div>
                 <h1 className="px-4 py-3 w-5/6 text-center text-gray-600 font-bold">Sign up with Facebook</h1>
-            </a>
+            </a> */}
         </>
     )
 }

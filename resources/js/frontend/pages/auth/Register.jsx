@@ -29,7 +29,7 @@ export default function Register() {
                 <div className="w-full p-8 lg:w-1/2">
                     <h2 className="text-2xl font-semibold text-gray-700 text-center">Brand</h2>
                     <p className="text-xl text-gray-600 text-center">Create an account</p>
-                    <SocialButtons />
+                    <SocialButtons operation="register"/>
                     <div className="mt-4 flex items-center justify-between">
                         <span className="border-b w-1/5 lg:w-1/4"></span>
                         <span className="text-xs text-center text-gray-500 uppercase">or register with email</span>

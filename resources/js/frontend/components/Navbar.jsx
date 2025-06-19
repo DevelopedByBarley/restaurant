@@ -1,40 +1,136 @@
 import { Link, usePage } from "@inertiajs/react";
+import { useState } from "react";
 
 export default function Navbar() {
+    const { url } = usePage();
+    const [isOpen, setIsOpen] = useState(false);
 
-    const { env } = usePage().props;
+    const getLinkClass = (path) => {
+        return url === path
+            ? "rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
+            : "rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white";
+    };
 
     return (
-        <header className="text-gray-600 body-font">
-            <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-                <Link href="/" className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
-                    <span className="ml-3 text-xl">Brand</span>
-                </Link>
+        <nav className="bg-gray-800">
+            <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+                <div className="relative flex h-16 items-center justify-between">
+                    {/* Hamburger gomb mobilra (balra) */}
+                    <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
+                        <button
+                            type="button"
+                            className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none"
+                            aria-controls="mobile-menu"
+                            aria-expanded={isOpen}
+                            onClick={() => setIsOpen(!isOpen)}
+                        >
+                            <span className="sr-only">Open main menu</span>
+                            {!isOpen ? (
+                                <svg
+                                    className="block h-6 w-6"
+                                    xmlns=""
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                    aria-hidden="true"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth="2"
+                                        d="M4 6h16M4 12h16M4 18h16"
+                                    />
+                                </svg>
+                            ) : (
+                                <svg
+                                    className="block h-6 w-6"
+                                    xmlns=""
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                    aria-hidden="true"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth="2"
+                                        d="M6 18L18 6M6 6l12 12"
+                                    />
+                                </svg>
+                            )}
+                        </button>
+                    </div>
 
-                <nav className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
-                    <a className="mr-5 hover:text-gray-900 cursor-pointer">First Link</a>
-                    <a className="mr-5 hover:text-gray-900 cursor-pointer">Second Link</a>
-                    <a className="mr-5 hover:text-gray-900 cursor-pointer">Third Link</a>
-                    <a className="mr-5 hover:text-gray-900 cursor-pointer">Fourth Link</a>
-                </nav>
+                    {/* Logó mobilra középre, nagy képernyőn balra */}
+                    <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+                        <div className="flex shrink-0 items-center">
+                            <img
+                                className="h-8 w-auto"
+                                src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
+                                alt="Your Company"
+                            />
+                        </div>
 
-                {env.authEnabled && (
-                    <div className="flex space-x-4 mt-4 md:mt-0">
+                        {/* Nagy képernyős menü */}
+                        <div className="hidden sm:ml-6 sm:flex sm:space-x-4">
+                            <Link
+                                href="/"
+                                className={getLinkClass("/")}
+                                aria-current={url === "/" ? "page" : undefined}
+                            >
+                                Kezdőlap
+                            </Link>
+                        </div>
+                    </div>
+
+                    {/* Sign in / Sign up nagy képernyőn jobbra, mobilon rejtve */}
+                    <div className="hidden sm:flex gap-2">
                         <Link
                             href="/login"
-                            className="inline-flex items-center bg-white text-gray-700 border border-gray-300 py-1 px-4 rounded hover:bg-gray-100 text-base"
+                            className="cursor-pointer bg-violet-500 hover:bg-violet-700 text-white font-bold py-2 px-4 rounded"
                         >
-                            Sign In
+                            Sign in
                         </Link>
                         <Link
                             href="/register"
-                            className="inline-flex items-center bg-blue-600 text-white py-1 px-4 rounded hover:bg-blue-700 text-base"
+                            className="cursor-pointer text-violet-500 bg-slate-50 hover:bg-slate-100 font-bold py-2 px-4 rounded"
                         >
-                            Sign Up
+                            Sign up
                         </Link>
                     </div>
-                )}
+                </div>
             </div>
-        </header>
+
+            {/* Mobil menü (csak ha isOpen true) */}
+            {isOpen && (
+                <div className="sm:hidden" id="mobile-menu">
+                    <div className="space-y-1 px-2 pt-2 pb-3">
+                        <Link
+                            href="/"
+                            className={getLinkClass("/")}
+                            aria-current={url === "/" ? "page" : undefined}
+                        >
+                            Kezdőlap
+                        </Link>
+
+                        {/* Sign in / Sign up mobil menübe */}
+                        <div className="mt-5 flex gap-3">
+                            <Link
+                                href="/login"
+                                className="block rounded-md bg-violet-500 px-3 py-2 text-base font-medium text-white hover:bg-violet-700"
+                            >
+                                Sign in
+                            </Link>
+                            <Link
+                                href="/register"
+                                className="block rounded-md bg-slate-50 px-3 py-2 text-base font-medium text-violet-500 hover:bg-slate-100"
+                            >
+                                Sign up
+                            </Link>
+                        </div>
+                    </div>
+                </div>
+            )}
+        </nav>
     );
 }

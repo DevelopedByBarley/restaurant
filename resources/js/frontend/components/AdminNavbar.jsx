@@ -78,7 +78,7 @@ export default function AdminNavbar() {
                                     >
                                         <svg
                                             className="shrink-0 size-4"
-                                            xmlns="http://www.w3.org/2000/svg"
+                                            xmlns=""
                                             width="24"
                                             height="24"
                                             viewBox="0 0 24 24"
@@ -105,7 +105,7 @@ export default function AdminNavbar() {
                                                 href="/admin/dashboard"
                                             >
                                                 <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    xmlns=""
                                                     fill="none"
                                                     viewBox="0 0 24 24"
                                                     strokeWidth={1.5}
@@ -133,7 +133,7 @@ export default function AdminNavbar() {
                                                 aria-controls="account-accordion-sub-1-collapse-1"
                                             >
                                                 <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    xmlns=""
                                                     fill="none"
                                                     viewBox="0 0 24 24"
                                                     strokeWidth={1.5}
@@ -164,7 +164,7 @@ export default function AdminNavbar() {
                                                             className="flex items-center cursor-pointer gap-x-1 py-2 px-2.5 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:text-neutral-200 w-full text-left"
                                                         >
                                                             <svg
-                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                xmlns=""
                                                                 fill="none"
                                                                 viewBox="0 0 24 24"
                                                                 strokeWidth={
