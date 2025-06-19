@@ -3,6 +3,9 @@
 namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Lang;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
@@ -37,6 +40,8 @@ class HandleInertiaRequests extends Middleware
     {
         $admin = auth('admin')->user() ?? null;
         $user = auth('web')->user() ?? null;
+        $locale =  App::getLocale();
+
         return [
             ...parent::share($request),
             'auth' => [
@@ -62,6 +67,10 @@ class HandleInertiaRequests extends Middleware
             'env' => [
                 'authEnabled' => env('AUTH_ENABLED', false),
             ],
+            'locale' => $locale,
+            't' => [
+                'navbar' => trans('navbar')
+            ]
         ];
     }
 }

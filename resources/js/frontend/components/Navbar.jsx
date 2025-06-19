@@ -1,10 +1,13 @@
 import { Link, usePage } from "@inertiajs/react";
 import { useState } from "react";
+import LocaleSwitcher from "./LocaleSwitcher";
 
 export default function Navbar() {
     const { url } = usePage();
+    const { locale, t } = usePage().props;
     const [isOpen, setIsOpen] = useState(false);
 
+    console.log(locale);
     const getLinkClass = (path) => {
         return url === path
             ? "rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
@@ -83,19 +86,21 @@ export default function Navbar() {
                         </div>
                     </div>
 
+                    <LocaleSwitcher />
+
                     {/* Sign in / Sign up nagy képernyőn jobbra, mobilon rejtve */}
                     <div className="hidden sm:flex gap-2">
                         <Link
                             href="/login"
                             className="cursor-pointer bg-violet-500 hover:bg-violet-700 text-white font-bold py-2 px-4 rounded"
                         >
-                            Sign in
+                            {t.navbar.login}
                         </Link>
                         <Link
                             href="/register"
                             className="cursor-pointer text-violet-500 bg-slate-50 hover:bg-slate-100 font-bold py-2 px-4 rounded"
                         >
-                            Sign up
+                            {t.navbar.register}
                         </Link>
                     </div>
                 </div>
@@ -114,6 +119,7 @@ export default function Navbar() {
                         </Link>
 
                         {/* Sign in / Sign up mobil menübe */}
+                        <LocaleSwitcher />
                         <div className="mt-5 flex gap-3">
                             <Link
                                 href="/login"
