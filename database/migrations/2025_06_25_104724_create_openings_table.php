@@ -15,7 +15,6 @@ return new class extends Migration
         Schema::create('openings', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Restaurant::class)->constrained('restaurants')->onDelete('cascade');
-            $table->date('date');
             $table->string('day'); // pl. "Monday", "Tuesday" vagy "Hétfő", "Kedd"
             $table->time('open_time');
             $table->time('close_time');

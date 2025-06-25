@@ -20,7 +20,6 @@ class OpeningFactory extends Factory
 
         return [
             'restaurant_id' => Restaurant::factory(),
-            'date' => $date->format('Y-m-d'),
             'day' => $dayName,
             'open_time' => $this->faker->time('H:i:s', '10:00'),  // például 10:00 vagy későbbi nyitás
             'close_time' => $this->faker->time('H:i:s', '22:00'), // például 22:00 vagy későbbi zárás

@@ -83,6 +83,13 @@ export default function Navbar() {
                             >
                                 Kezdőlap
                             </Link>
+                            <Link
+                                href="/clients"
+                                className={getLinkClass("/clients")}
+                                aria-current={url === "/" ? "page" : undefined}
+                            >
+                                Tulajdonos vagyok
+                            </Link>
                         </div>
                     </div>
 
