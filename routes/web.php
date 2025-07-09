@@ -17,6 +17,7 @@ Route::get('/locale/{lang}', [LocaleController::class, 'setLocale']);
 
 require __DIR__ . '/reservations.php';
 require __DIR__ . '/locations.php';
+require __DIR__ . '/tables.php';
 
 
 if (env('AUTH_ENABLED', false)) {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Table;
 use App\Http\Requests\StoreTableRequest;
 use App\Http\Requests\UpdateTableRequest;
+use Inertia\Inertia;
 
 class TableController extends Controller
 {
@@ -13,7 +14,17 @@ class TableController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('pages/admin/tables/Index', [
+            'locations' => Table::all()->map(function ($location) {
+                return [
+                    'id' => $location->id,
+                    'name' => $location->name,
+                    'description' => $location->description,
+                    'created_at' => $location->created_at->toDateTimeString(),
+                    'updated_at' => $location->updated_at->toDateTimeString(),
+                ];
+            }),
+        ]);
     }
 
     /**
@@ -21,7 +32,7 @@ class TableController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('pages/admin/tables/Create');
     }
 
     /**
