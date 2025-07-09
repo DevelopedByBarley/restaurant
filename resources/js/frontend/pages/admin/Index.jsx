@@ -3,6 +3,7 @@ import AdminLayout from "../../layouts/AdminLayout";
 import Paginator from "../../components/Paginator";
 import DangerModal from "../../components/modals/DangerModal";
 import { useState } from "react";
+import AdminHeader from "../../components/AdminHeader";
 
 function Index() {
     const { auth, admins } = usePage().props;
@@ -35,30 +36,24 @@ function Index() {
     };
 
     return (
-        <div className="xl:ml-72 p-10">
-            <section className="w-full p-8 bg-white rounded-md shadow-md dark:bg-gray-800">
-                <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">
-                    Admin Vezérlőpult
-                </h2>
-
-                <p className="text-sm text-gray-600 dark:text-gray-300">
-                    {auth.admin.email}
-                </p>
-            </section>
+        <>
+            <AdminHeader>
+                Admin Vezérlőpult
+            </AdminHeader>
 
             <section>
                 <div className=" w-full mt-5 md:grid grid-cols-5 grid-rows-5 gap-4 min-h-[600px]">
-                    <div className="col-span-3 row-span-3 border">1</div>
-                    <div className="col-span-2 row-span-3 col-start-4 border">
+                    <div className="col-span-3 row-span-3 shadow">1</div>
+                    <div className="col-span-2 row-span-3 col-start-4 shadow">
                         2
                     </div>
-                    <div className="col-span-2 row-span-2 row-start-4 border">
+                    <div className="col-span-2 row-span-2 row-start-4 shadow">
                         3
                     </div>
-                    <div className="col-span-2 row-span-2 col-start-3 row-start-4 border">
+                    <div className="col-span-2 row-span-2 col-start-3 row-start-4 shadow">
                         4
                     </div>
-                    <div className="row-span-2 col-start-5 row-start-4 border">
+                    <div className="row-span-2 col-start-5 row-start-4 shadow">
                         5
                     </div>
                 </div>
@@ -72,16 +67,16 @@ function Index() {
                                 Adminisztrátorok listája
                             </h3>
 
-                            <table className="w-full text-left border-collapse">
+                            <table className="w-full text-left shadow-collapse">
                                 <thead>
                                     <tr>
-                                        <th className="border-b px-4 py-2 text-gray-700 dark:text-gray-300">
+                                        <th className="shadow-b px-4 py-2 text-gray-700 dark:text-gray-300">
                                             Név
                                         </th>
-                                        <th className="border-b px-4 py-2 text-gray-700 dark:text-gray-300">
+                                        <th className="shadow-b px-4 py-2 text-gray-700 dark:text-gray-300">
                                             Email
                                         </th>
-                                        <th className="border-b px-4 py-2 text-gray-700 dark:text-gray-300">
+                                        <th className="shadow-b px-4 py-2 text-gray-700 dark:text-gray-300">
                                             Műveletek
                                         </th>
                                     </tr>
@@ -105,7 +100,7 @@ function Index() {
                                                 </td>
                                                 <td className="border-b px-4 py-2">
                                                     <Link
-                                                        className="text-xs text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg px-3 py-1 text-center inline-flex items-center dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 me-2 mb-2"
+                                                        className="text-xs text-gray-900 bg-white hover:bg-gray-100 shadow shadow-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg px-3 py-1 text-center inline-flex items-center dark:focus:ring-gray-600 dark:bg-gray-800 dark:shadow-gray-700 dark:text-white dark:hover:bg-gray-700 me-2 mb-2"
                                                         href={`/admin/${admin.id}/edit`}
                                                     >
                                                         <svg
@@ -131,7 +126,7 @@ function Index() {
                                                             )
                                                         }
                                                         type="button"
-                                                        className="cursor-pointer text-xs text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg px-3 py-1 text-center inline-flex items-center dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 me-2 mb-2"
+                                                        className="cursor-pointer text-xs text-gray-900 bg-white hover:bg-gray-100 shadow shadow-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg px-3 py-1 text-center inline-flex items-center dark:focus:ring-gray-600 dark:bg-gray-800 dark:shadow-gray-700 dark:text-white dark:hover:bg-gray-700 me-2 mb-2"
                                                     >
                                                         <svg
                                                             xmlns=""
@@ -173,7 +168,7 @@ function Index() {
                     </div>
                 )}
             </section>
-        </div>
+        </>
     );
 }
 

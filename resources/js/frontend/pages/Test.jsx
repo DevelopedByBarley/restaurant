@@ -32,46 +32,113 @@ export default function Test() {
     };
 
 
+
+
     return (
         <>
-            <div class="relative overflow-hidden before:absolute before:top-0 before:start-1/2 before:bg-[url('https://preline.co/assets/svg/examples/squared-bg-element.svg')] dark:before:bg-[url('https://preline.co/assets/svg/examples-dark/squared-bg-element.svg')] before:bg-no-repeat before:bg-top before:size-full before:-z-1 before:transform before:-translate-x-1/2">
-                <div class="max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-10">
-                    <div class="flex justify-center">
-                        <a class="inline-flex items-center gap-x-2 bg-white border border-gray-200 text-xs text-gray-600 p-2 px-3 rounded-full transition hover:border-gray-300 focus:outline-hidden focus:border-gray-300 dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-400 dark:hover:border-neutral-600 dark:focus:border-neutral-600" href="#">
-                            Explore the Capital Product
-                            <span class="flex items-center gap-x-1">
-                                <span class="border-s border-gray-200 text-blue-600 ps-2 dark:text-blue-500 dark:border-neutral-700">Explore</span>
-                                <svg class="shrink-0 size-4 text-blue-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg>
-                            </span>
-                        </a>
-                    </div>
+            <div class="bg-base-100">
+                <header class="border-base-content/20 bg-base-100 fixed top-0 z-10 w-full border-b py-0.25">
+                    <nav class="navbar mx-auto max-w-7xl rounded-b-xl px-4 sm:px-6 lg:px-8">
+                        <div class="w-full lg:flex lg:items-center lg:gap-2">
+                            <div class="navbar-start items-center justify-between max-lg:w-full">
+                                <a class="text-base-content flex items-center gap-3 text-xl font-bold" href="#">
+                                    <img src="https://cdn.flyonui.com/fy-assets/logo/logo.png" class="size-8" alt="brand-logo" />
+                                    FlyonUI
+                                </a>
+                                <div class="flex items-center gap-5 lg:hidden">
+                                    <a href="#" class="btn btn-primary">Login</a>
+                                    <button
+                                        type="button"
+                                        class="collapse-toggle btn btn-outline btn-secondary btn-square"
+                                        data-collapse="#navbar-block-4"
+                                        aria-controls="navbar-block-4"
+                                        aria-label="Toggle navigation"
+                                    >
+                                        <span class="icon-[tabler--menu-2] collapse-open:hidden size-5.5"></span>
+                                        <span class="icon-[tabler--x] collapse-open:block hidden size-5.5"></span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div
+                                id="navbar-block-4"
+                                class="lg:navbar-center transition-height collapse hidden grow overflow-hidden font-medium duration-300 lg:flex"
+                            >
+                                <div class="text-base-content flex gap-6 text-base max-lg:mt-4 max-lg:flex-col lg:items-center">
+                                    <a href="#" class="hover:text-primary">Home</a>
+                                    <a href="#" class="hover:text-primary">Products</a>
+                                    <a href="#" class="hover:text-primary">About Us</a>
+                                    <a href="#" class="hover:text-primary">Contacts</a>
+                                </div>
+                            </div>
+                            <div class="navbar-end max-lg:hidden">
+                                <a href="#" class="btn btn-primary">Login</a>
+                            </div>
+                        </div>
+                    </nav>
+                </header>
 
-                    <div class="mt-5 max-w-xl text-center mx-auto">
-                        <h1 class="block font-bold text-gray-800 text-4xl md:text-5xl lg:text-6xl dark:text-neutral-200">
-                            Supercharged Preline Experience
-                        </h1>
-                    </div>
-
-                    <div class="mt-5 max-w-3xl text-center mx-auto">
-                        <p class="text-lg text-gray-600 dark:text-neutral-400">Preline is a large open-source project, crafted with Tailwind CSS framework by Hmlstream.</p>
-                    </div>
-                    <div class="mt-8 gap-3 flex justify-center">
-                        <a class="inline-flex justify-center items-center gap-x-3 text-center bg-linear-to-tl from-blue-600 to-violet-600 hover:from-violet-600 hover:to-blue-600 focus:outline-hidden focus:from-violet-600 focus:to-blue-600 border border-transparent text-white text-sm font-medium rounded-full py-3 px-4" href="#">
-                            <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
-                            </svg>
-                            Continue with Github
-                        </a>
-                    </div>
-                    <div className="mt-6 flex justify-center">
-                        <button
-                            onClick={handleCheckout}
-                            className="inline-flex items-center gap-x-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 py-3 rounded-full shadow transition"
+                <main class="h-screen">
+                    <div
+                        class="flex h-full flex-col justify-between gap-18 overflow-x-hidden pt-40 md:gap-24 md:pt-45 lg:gap-35 lg:pt-47.5"
+                    >
+                        <div
+                            class="mx-auto flex max-w-7xl flex-col items-center gap-8 justify-self-center px-4 text-center sm:px-6 lg:px-8"
                         >
-                            Fizetés indítása
-                        </button>
+                            <div class="bg-base-200 border-base-content/20 flex w-fit items-center gap-2.5 rounded-full border px-3 py-2">
+                                <span class="badge badge-primary shrink-0 rounded-full">AI-Powered</span>
+                                <span class="text-base-content/80">Solution for client-facing businesses</span>
+                            </div>
+                            <h1
+                                class="text-base-content relative z-1 text-5xl leading-[1.15] font-bold max-md:text-2xl md:max-w-3xl md:text-balance"
+                            >
+                                <span>Sizzling Summer Delights Effortless Recipes for Parties!</span>
+                                <svg
+                                    width="223"
+                                    height="12"
+                                    viewBox="0 0 223 12"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="absolute -bottom-1.5 left-10 -z-1 max-lg:left-4 max-md:hidden"
+                                >
+                                    <path
+                                        d="M1.30466 10.7431C39.971 5.28788 76.0949 3.02 115.082 2.30401C143.893 1.77489 175.871 0.628649 204.399 3.63102C210.113 3.92052 215.332 4.91391 221.722 6.06058"
+                                        stroke="url(#paint0_linear_10365_68643)"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                    />
+                                    <defs>
+                                        <linearGradient
+                                            id="paint0_linear_10365_68643"
+                                            x1="19.0416"
+                                            y1="4.03539"
+                                            x2="42.8362"
+                                            y2="66.9459"
+                                            gradientUnits="userSpaceOnUse"
+                                        >
+                                            <stop offset="0.2" stop-color="var(--color-primary)" />
+                                            <stop offset="1" stop-color="var(--color-primary-content)" />
+                                        </linearGradient>
+                                    </defs>
+                                </svg>
+                            </h1>
+                            <p class="text-base-content/80 max-w-3xl">
+                                Dive into a world of flavor this summer with our collection of Sizzling Summer Delights! From refreshing
+                                appetizers to delightful desserts
+                            </p>
+
+                            <a href="#" class="btn btn-primary btn-gradient btn-lg">
+                                Try it Now
+                                <span class="icon-[tabler--arrow-right] size-5 rtl:rotate-180"></span>
+                            </a>
+                        </div>
+
+                        <img
+                            src="https://cdn.flyonui.com/fy-assets/blocks/marketing-ui/hero/hero-10.png"
+                            alt="Dishes"
+                            class="min-h-67 w-full object-cover"
+                        />
                     </div>
-                </div>
+                </main>
             </div>
         </>
     );

@@ -15,6 +15,10 @@ Route::get('/test', function () {
 });
 Route::get('/locale/{lang}', [LocaleController::class, 'setLocale']);
 
+require __DIR__ . '/reservations.php';
+require __DIR__ . '/locations.php';
+
+
 if (env('AUTH_ENABLED', false)) {
     require __DIR__ . '/auth/user.php';
     require __DIR__ . '/auth/socialite.php';
@@ -29,4 +33,3 @@ if (env('ADMIN_AUTH_ENABLED', false)) {
 if (env('PAYMENT', false)) {
     require __DIR__ . '/payment.php';
 }
-

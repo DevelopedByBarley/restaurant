@@ -3,12 +3,15 @@ import { useEffect, useState } from "react";
 
 export default function AdminNavbar() {
     const { post } = useForm();
-    const [profileOpen, setProfileOpen] = useState(false);
     const { url } = usePage();
     const { auth } = usePage().props;
 
+    const [profileOpen, setProfileOpen] = useState(false);
+    const [sidebarOpen, setSidebarOpen] = useState(false);
+
     useEffect(() => {
         setProfileOpen(false);
+        setSidebarOpen(false);
     }, [url]);
 
     function logout(e) {
@@ -16,181 +19,207 @@ export default function AdminNavbar() {
         post("/admin/logout");
     }
 
-    function toggleProfileMenu() {
-        setProfileOpen(!profileOpen);
-    }
+    const toggleSidebar = () => {
+        setSidebarOpen(!sidebarOpen);
+    };
+
+    const isHiddenRoute = url === "/admin" || url === "/admin/register";
 
     return (
         <>
-            {url !== "/admin" && url !== "/admin/register" && (
-                <>
-                    <div className="lg:hidden py-16 text-center">
-                        <button
-                            type="button"
-                            className="py-2 px-3 inline-flex justify-center items-center gap-x-2 text-start bg-gray-800 border border-gray-800 text-white text-sm font-medium rounded-lg shadow-2xs align-middle hover:bg-gray-950 focus:outline-hidden focus:bg-gray-900 dark:bg-white dark:text-neutral-800 dark:hover:bg-neutral-200 dark:focus:bg-neutral-200"
-                            aria-haspopup="dialog"
-                            aria-expanded="false"
-                            aria-controls="hs-sidebar-collapsible-group"
-                            aria-label="Toggle navigation"
-                        >
-                            Open
-                        </button>
-                    </div>
-
-                    <div
-                        id="hs-sidebar-collapsible-group"
-                        className="hs-overlay [--auto-close:lg] lg:block lg:translate-x-0 lg:end-auto lg:bottom-0 w-64
-                        hs-overlay-open:translate-x-0
-                        -translate-x-full transition-all duration-300 transform
-                        h-full
-                        hidden
-                        fixed top-0 start-0 bottom-0 z-60
-                        bg-white border-e border-gray-200 dark:bg-neutral-800 dark:border-neutral-700"
-                        role="dialog"
-                        tabIndex="-1"
-                        aria-label="Sidebar"
+            {!isHiddenRoute && (
+                <div className="lg:hidden fixed top-4 left-4 z-50">
+                    <button
+                        onClick={toggleSidebar}
+                        className="p-2 text-gray-600 bg-white rounded-md shadow-md dark:bg-gray-800 dark:text-gray-300"
                     >
-                        <div className="relative flex flex-col h-full max-h-full ">
-                            <header className="p-4 flex justify-between items-center gap-x-2">
-                                <div className="flex items-center justify-between w-full gap-x-2">
-                                    <Link
-                                        href="/admin/dashboard"
-                                        className="flex-none font-semibold text-xl text-black focus:outline-hidden focus:opacity-80 dark:text-white"
-                                        aria-label="Brand"
-                                    >
-                                        Admin
-                                    </Link>
-                                    {auth.admin && auth.admin.level > 2 && (
-                                        <Link
-                                            href={"/admin/create"}
-                                            type="button"
-                                            className="text-xs inline-flex w-full justify-center rounded-md px-3 py-2 font-semibold text-slate-600 hover:text-white hover:bg-slate-600 border shadow-xs sm:ml-3 sm:w-auto cursor-pointer"
-                                        >
-                                            + Admin
-                                        </Link>
-                                    )}
-                                </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                             viewBox="0 0 24 24" strokeWidth="1.5"
+                             stroke="currentColor" className="w-6 h-6">
+                            <path strokeLinecap="round" strokeLinejoin="round"
+                                  d="M3.75 5.25h16.5M3.75 12h16.5M3.75 18.75h16.5" />
+                        </svg>
+                    </button>
+                </div>
+            )}
 
-                                <div className="lg:hidden -me-2">
-                                    <button
-                                        type="button"
-                                        className="flex justify-center items-center gap-x-3 size-6 bg-white border border-gray-200 text-sm text-gray-600 hover:bg-gray-100 rounded-full disabled:opacity-50 disabled:pointer-events-none focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:hover:text-neutral-200 dark:focus:text-neutral-200"
-                                    >
-                                        <svg
-                                            className="shrink-0 size-4"
-                                            xmlns=""
-                                            width="24"
-                                            height="24"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            strokeWidth="2"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                        >
-                                            <path d="M18 6 6 18" />
-                                            <path d="m6 6 12 12" />
-                                        </svg>
-                                        <span className="sr-only">Bezár</span>
-                                    </button>
-                                </div>
-                            </header>
+            {!isHiddenRoute && (
+                <aside
+                    className={`
+                        fixed top-0  z-40 h-screen w-64 px-5 py-8 overflow-y-auto bg-white border-r dark:bg-gray-900 dark:border-gray-700
+                        transform transition-transform duration-300 ease-in-out
+                        ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
+                        lg:translate-x-0
+                    `}
+                >
+                    {/* Logo */}
+                    <a>
+                        <img className="w-auto h-7" src="https://merakiui.com/images/logo.svg" alt="Logo" />
+                    </a>
 
-                            <nav className="h-full overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500">
-                                <div className="pb-0 px-2  w-full flex flex-col flex-wrap">
-                                    <ul className="space-y-1">
-                                        <li>
-                                            <Link
-                                                className="flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-100 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-700 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:text-white"
-                                                href="/admin/dashboard"
-                                            >
-                                                <svg
-                                                    xmlns=""
-                                                    fill="none"
-                                                    viewBox="0 0 24 24"
-                                                    strokeWidth={1.5}
-                                                    stroke="currentColor"
-                                                    className="size-6"
-                                                >
-                                                    <path
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        d="M8.25 21v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21m0 0h4.5V3.545M12.75 21h7.5V10.75M2.25 21h1.5m18 0h-18M2.25 9l4.5-1.636M18.75 3l-1.5.545m0 6.205 3 1m1.5.5-1.5-.5M6.75 7.364V3h-3v18m3-13.636 10.5-3.819"
-                                                    />
-                                                </svg>
-                                                Irányítópult
-                                            </Link>
-                                        </li>
 
-                                        {/* Többi menüpont marad változatlan */}
+                    {/* Navigation Links */}
+                    <nav className="flex flex-col mt-6 space-y-3">
+                        <Link href="/admin/dashboard" className="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-300
+                            hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                 viewBox="0 0 24 24" strokeWidth="1.5"
+                                 stroke="currentColor" className="w-5 h-5">
+                                <path strokeLinecap="round" strokeLinejoin="round"
+                                      d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5m.75-9l3-3 2.148 2.148A12.061 12.061 0 0116.5 7.605" />
+                            </svg>
+                            <span className="mx-2 text-sm font-medium">Vezérlőpult</span>
+                        </Link>
 
-                                        <li id="account-accordion">
-                                            <button
-                                                type="button"
-                                                onClick={toggleProfileMenu} // Profil menü toggle
-                                                className="cursor-pointer w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:text-neutral-200"
-                                                aria-expanded={profileOpen}
-                                                aria-controls="account-accordion-sub-1-collapse-1"
-                                            >
-                                                <svg
-                                                    xmlns=""
-                                                    fill="none"
-                                                    viewBox="0 0 24 24"
-                                                    strokeWidth={1.5}
-                                                    stroke="currentColor"
-                                                    className="size-6"
-                                                >
-                                                    <path
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-                                                    />
-                                                </svg>
-                                                Profil
-                                            </button>
+                        <Link href="/admin/locations" className="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-300
+                            hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                 viewBox="0 0 24 24" strokeWidth="1.5"
+                                 stroke="currentColor" className="w-5 h-5">
+                                <path strokeLinecap="round" strokeLinejoin="round"
+                                      d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 010 3.75H5.625a1.875 1.875 0 010-3.75z" />
+                            </svg>
+                            <span className="mx-2 text-sm font-medium">Helyszínek</span>
+                        </Link>
 
-                                            <div
-                                                id="account-accordion-sub-1-collapse-1"
-                                                className={`w-full overflow-hidden transition-[height] duration-300 ${
-                                                    profileOpen ? "" : "hidden"
-                                                }`}
-                                                role="region"
-                                                aria-labelledby="account-accordion"
-                                            >
-                                                <ul className="pt-1 ps-2 space-y-1">
-                                                    <li>
-                                                        <button
-                                                            onClick={logout}
-                                                            className="flex items-center cursor-pointer gap-x-1 py-2 px-2.5 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:text-neutral-200 w-full text-left"
-                                                        >
-                                                            <svg
-                                                                xmlns=""
-                                                                fill="none"
-                                                                viewBox="0 0 24 24"
-                                                                strokeWidth={
-                                                                    1.5
-                                                                }
-                                                                stroke="currentColor"
-                                                                className="size-6"
-                                                            >
-                                                                <path
-                                                                    strokeLinecap="round"
-                                                                    strokeLinejoin="round"
-                                                                    d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15M12 9l-3 3m0 0 3 3m-3-3h12.75"
-                                                                />
-                                                            </svg>
-                                                            Kijelentkezés
-                                                        </button>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </nav>
-                        </div>
+                        <Link href="/admin/tasks" className="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-300
+                            hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                 viewBox="0 0 24 24" strokeWidth="1.5"
+                                 stroke="currentColor" className="w-5 h-5">
+                                <path strokeLinecap="round" strokeLinejoin="round"
+                                      d="M10.125 2.25h-4.5c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125
+                                      1.125h12.75c.621 0 1.125-.504 1.125-1.125v-9M10.125 2.25h.375a9 9 0 019
+                                      9v.375M10.125 2.25A3.375 3.375 0 0113.5 5.625v1.5c0 .621.504
+                                      1.125 1.125 1.125h1.5a3.375 3.375 0 013.375 3.375M9 15l2.25
+                                      2.25L15 12" />
+                            </svg>
+                            <span className="mx-2 text-sm font-medium">Tasks</span>
+                        </Link>
+
+                        <Link href="/admin/reporting" className="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-300
+                            hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                 viewBox="0 0 24 24" strokeWidth="1.5"
+                                 stroke="currentColor" className="w-5 h-5">
+                                <path strokeLinecap="round" strokeLinejoin="round"
+                                      d="M10.5 6a7.5 7.5 0 107.5
+                                      7.5h-7.5V6z" />
+                                <path strokeLinecap="round" strokeLinejoin="round"
+                                      d="M13.5 10.5H21A7.5 7.5 0
+                                      0013.5 3v7.5z" />
+                            </svg>
+                            <span className="mx-2 text-sm font-medium">Reporting</span>
+                        </Link>
+
+                        <Link href="/admin/users" className="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-300
+                            hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                 viewBox="0 0 24 24" strokeWidth="1.5"
+                                 stroke="currentColor" className="w-5 h-5">
+                                <path strokeLinecap="round" strokeLinejoin="round"
+                                      d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337
+                                      0 004.121-.952 4.125 4.125 0
+                                      00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786
+                                      -3.07M15 19.128v.106A12.318 12.318
+                                      0 018.624 21c-2.331 0-4.512-.645-6.374
+                                      -1.766l-.001-.109a6.375 6.375 0
+                                      0111.964-3.07M12 6.375a3.375
+                                      3.375 0 11-6.75 0 3.375 3.375 0
+                                      016.75 0zm8.25 2.25a2.625 2.625 0
+                                      11-5.25 0 2.625 2.625 0 015.25
+                                      0z" />
+                            </svg>
+                            <span className="mx-2 text-sm font-medium">Users</span>
+                        </Link>
+
+                        <Link href="/admin/setting" className="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-300
+                            hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                 viewBox="0 0 24 24" strokeWidth="1.5"
+                                 stroke="currentColor" className="w-5 h-5">
+                                <path strokeLinecap="round" strokeLinejoin="round"
+                                      d="M10.343 3.94c.09-.542.56-.94 1.11
+                                      -.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07
+                                      .424.384.764.78.93.398.164.855.142 1.205-.108l.737
+                                      -.527a1.125 1.125 0 011.45.12l.773.774c.39.389.44
+                                      1.002.12 1.45l-.527.737c-.25.35-.272.806-.107
+                                      1.204.165.397.505.71.93.78l.893.15c.543.09.94.56
+                                      .94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.894.149c-
+                                      .425.07-.765.383-.93.78-.165.398-.143.854.107
+                                      1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774
+                                      .773a1.125 1.125 0 01-1.449.12l-.738-.527c-.35
+                                      -.25-.806-.272-1.203-.107-.397.165-.71.505
+                                      -.781.929l-.149.894c-.09.542-.56.94-1.11.94h-
+                                      1.094c-.55 0-1.019-.398-1.11
+                                      -.94l-.148-.894c-.071-.424-.384
+                                      -.764-.781-.93-.398-.164-.854-.142-1.204.108l-
+                                      .738.527c-.447.32-1.06.269
+                                      093c-.55 0-1.02-.398-1.11-.94l-.149-.894c-.07
+                                      -.424-.384-.764-.78-.93-.398-.164-.855-.142-1.205.108l-
+                                      .737.527a1.125 1.125 0 01-1.45-.12l-.773-.774a1.125
+                                      1.125 0 01-.12-1.45l.527-.737c.25-.35.272-.806.107-
+                                      1.204-.165-.397-.505-.71-.93-.78l-.893-.15c-
+                                      .543-.09-.94-.56-.94-1.109v-1.094c0-.55.397-
+                                      1.02.94-1.11l.894-.149c.425-.07.765-.383.93-
+                                      .78.165-.398.143-.854-.107-1.204l-.527-.738a1.125
+                                      1.125 0 01.12-1.45l.774-.773a1.125 1.125 0 011.449-
+                                      .12l.738.527c.35.25.806.272 1.203.107.397-.165.71-
+                                      .505.781-.929l.149-.894zM15 12a3 3 0 11-6 0 3 3 0
+                                      016 0z" />
+                            </svg>
+                            <span className="mx-2 text-sm font-medium">Settings</span>
+                        </Link>
+                    </nav>
+
+                    {/* User Profile Section */}
+                    <div className="relative mt-6">
+                        <button
+                            onClick={() => setProfileOpen(!profileOpen)}
+                            className="flex items-center w-full px-4 py-2 text-sm font-medium text-left text-gray-600 rounded-lg
+                            dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring"
+                        >
+                            <img
+                                className="object-cover w-8 h-8 rounded-full"
+                                src={auth?.user?.profile_photo_url || 'https://via.placeholder.com/40'}
+                                alt="avatar"
+                            />
+                            <span className="mx-2">{auth?.user?.name || 'User'}</span>
+                            <svg
+                                className={`w-4 h-4 transition-transform duration-200 ${profileOpen ? 'rotate-180' : 'rotate-0'}`}
+                                fill="none" stroke="currentColor" strokeWidth="2"
+                                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+
+                        {profileOpen && (
+                            <div className="absolute right-0 w-full mt-2 bg-white rounded-md shadow-lg dark:bg-gray-900">
+                                <Link
+                                    href="/admin/profile"
+                                    className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                                >
+                                    Profil
+                                </Link>
+                                <button
+                                    onClick={logout}
+                                    className="block w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                                >
+                                    Kijelentkezés
+                                </button>
+                            </div>
+                        )}
                     </div>
-                </>
+                </aside>
+            )}
+
+            {/* Overlay for sidebar when open on mobile */}
+            {sidebarOpen && (
+                <div
+                    onClick={() => setSidebarOpen(false)}
+                    className="fixed inset-0 z-30 bg-black opacity-50 lg:hidden"
+                ></div>
             )}
         </>
     );
