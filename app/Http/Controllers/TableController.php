@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Table;
 use App\Http\Requests\StoreTableRequest;
 use App\Http\Requests\UpdateTableRequest;
+use App\Models\Location;
 use Inertia\Inertia;
 
 class TableController extends Controller
@@ -15,24 +16,35 @@ class TableController extends Controller
     public function index()
     {
         return Inertia::render('pages/admin/tables/Index', [
-            'locations' => Table::all()->map(function ($location) {
+            'tables' => Table::with('location')->get()->map(function ($table) {
                 return [
-                    'id' => $location->id,
-                    'name' => $location->name,
-                    'description' => $location->description,
-                    'created_at' => $location->created_at->toDateTimeString(),
-                    'updated_at' => $location->updated_at->toDateTimeString(),
+                    'id' => $table->id,
+                    'name' => $table->name,
+                    'seats' => $table->seats,
+                    'location_name' => $table->location->name ?? 'N/A',
+                    'created_at' => $table->created_at->format('Y-m-d H:i'),
+                    'updated_at' => $table->updated_at->format('Y-m-d H:i'),
                 ];
             }),
         ]);
     }
 
+
     /**
      * Show the form for creating a new resource.
      */
+
     public function create()
     {
-        return Inertia::render('pages/admin/tables/Create');
+        return Inertia::render('pages/admin/tables/Create', [
+            'locations' => Location::all()->map(function ($location) {
+                return [
+                    'id' => $location->id,
+                    'name' => $location->name,
+                    'description' => $location->description,
+                ];
+            }),
+        ]);
     }
 
     /**
@@ -40,7 +52,17 @@ class TableController extends Controller
      */
     public function store(StoreTableRequest $request)
     {
-        //
+        Table::create([
+            'location_id' => $request->location_id,
+            'name' => $request->name,
+            'seats' => $request->seats,
+            'pos_x' => 0,
+            'pos_y' => 0,
+            'width' => 60,
+            'height' => 60,
+        ]);
+
+        return redirect()->route('tables.index')->with('success', 'Asztal sikeresen létrehozva.');
     }
 
     /**

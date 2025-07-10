@@ -27,7 +27,7 @@ if (env('AUTH_ENABLED', false)) {
     require __DIR__ . '/auth/forgot-password.php';
 }
 
-if (env('ADMIN_AUTH_ENABLED', false)) {
+if (env('ADMIN_AUTH_ENABLED', true)) {
     require __DIR__ . '/auth/admin.php';
 }
 

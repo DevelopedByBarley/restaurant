@@ -1,59 +1,102 @@
-
 import AdminHeader from "../../../components/AdminHeader";
 import IndigoBtn from "../../../components/IndigoBtn";
 import AdminLayout from "../../../layouts/AdminLayout";
-import { useForm } from '@inertiajs/react';
+import { useForm } from "@inertiajs/react";
 
-function Create() {
-    const { data, setData, post, processing, errors, reset } = useForm({
-        name: '',
-        description: '',
+function Create({ locations }) {
+    const { data, setData, post, processing, errors } = useForm({
+        location_id: "",
+        name: "",
+        seats: "",
     });
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post('/admin/locations', {
-            onSuccess: () => reset(),
-        });
+        post("/admin/tables"); // vagy a megfelelő route
     };
 
     return (
         <>
-            <AdminHeader>Asztal létrehozása</AdminHeader>
-            <form onSubmit={handleSubmit} className="p-6 mt-9 bg-white rounded-md shadow-md">
+            <AdminHeader>Asztal hozzáadása</AdminHeader>
 
-                {/* Név mező */}
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-                    Név <span className="text-red-500">*</span>
-                </label>
-                <input
-                    id="name"
-                    type="text"
-                    value={data.name}
-                    onChange={(e) => setData('name', e.target.value)}
-                    className="w-full px-3 py-2 mb-2 border border-gray-300 rounded-md focus:ring focus:ring-indigo-500"
-                    required
-                />
-                {errors.name && <p className="text-sm text-red-600 mb-2">{errors.name}</p>}
+            <form
+                onSubmit={handleSubmit}
+                className="mt-7 p-6 bg-white shadow-md rounded-xl space-y-4"
+            >
+                <div>
+                    <label className="block text-sm font-medium text-gray-700">
+                        Helység
+                    </label>
+                    <select
+                        name="location_id"
+                        value={data.location_id}
+                        onChange={(e) =>
+                            setData("location_id", Number(e.target.value))
+                        }
+                        className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                    >
+                        <option value="" defaultChecked>
+                            Válassza ki a helységet
+                        </option>
+                        {locations.map((loc) => (
+                            <option key={loc.id} value={loc.id}>
+                                {loc.name}
+                            </option>
+                        ))}
+                    </select>
+                    {errors.location_id && (
+                        <p className="text-red-500 text-sm mt-1">
+                            {errors.location_id}
+                        </p>
+                    )}
+                </div>
 
-                {/* Leírás mező */}
-                <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
-                    Leírás (opcionális)
-                </label>
-                <textarea
-                    id="description"
-                    value={data.description}
-                    onChange={(e) => setData('description', e.target.value)}
-                    className="w-full px-3 py-2 mb-4 border border-gray-300 rounded-md focus:ring focus:ring-indigo-500 resize-y"
-                    rows={4}
-                />
-                {errors.description && <p className="text-sm text-red-600 mb-2">{errors.description}</p>}
+                <div>
+                    <label className="block text-sm font-medium text-gray-700">
+                        Asztal neve
+                    </label>
+                    <input
+                        type="text"
+                        name="name"
+                        value={data.name}
+                        onChange={(e) => setData("name", e.target.value)}
+                        required
+                        className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                    />
+                    {errors.name && (
+                        <p className="text-red-500 text-sm mt-1">
+                            {errors.name}
+                        </p>
+                    )}
+                </div>
+
+                <div>
+                    <label className="block text-sm font-medium text-gray-700">
+                        Ülőhelyek száma
+                    </label>
+                    <input
+                        type="number"
+                        name="seats"
+                        value={data.seats}
+                        onChange={(e) =>
+                            setData("seats", Number(e.target.value))
+                        }
+                        required
+                        className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                    />
+                    {errors.seats && (
+                        <p className="text-red-500 text-sm mt-1">
+                            {errors.seats}
+                        </p>
+                    )}
+                </div>
 
                 <IndigoBtn
                     type="submit"
                     disabled={processing}
+                    className="bg-blue-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-blue-700 disabled:opacity-50"
                 >
-                    Mentés
+                    {processing ? "Submitting..." : "Létrehozás"}
                 </IndigoBtn>
             </form>
         </>
