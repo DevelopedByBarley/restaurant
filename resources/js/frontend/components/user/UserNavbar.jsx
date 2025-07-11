@@ -1,6 +1,6 @@
 import { Link, useForm, usePage } from "@inertiajs/react";
 import { useEffect, useState } from "react";
-import urlIs from "../helpers/functions";
+import urlIs from "../../helpers/functions";
 import UserNavbarLink from "./UserNavbarLink";
 
 export default function UserNavbar() {

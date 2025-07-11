@@ -1,4 +1,4 @@
-import AdminNavbar from "../components/AdminNavbar";
+import AdminNavbar from "../components/admin/AdminNavbar";
 import FlashMessages from "../components/FlashMessage";
 
 export default function AdminLayout({ children }) {

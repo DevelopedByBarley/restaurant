@@ -1,5 +1,5 @@
 import FlashMessages from "../components/FlashMessage";
-import UserNavbar from "../components/UserNavbar";
+import UserNavbar from "../components/user/UserNavbar";
 
 export default function UserLayout({ children }) {
     return (

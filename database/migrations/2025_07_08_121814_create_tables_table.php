@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('pos_y')->default(null)->nullable();
             $table->integer('width')->default(60);
             $table->integer('height')->default(60);
+            $table->string('color')->default('bg-rose-400');
             $table->timestamps();
         });
     }

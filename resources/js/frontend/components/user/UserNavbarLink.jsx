@@ -1,5 +1,5 @@
 import { Link } from "@inertiajs/react";
-import urlIs from "../helpers/functions";
+import urlIs from "../../helpers/functions";
 
 export default function UserNavbarLink({route, children}) {
     return (

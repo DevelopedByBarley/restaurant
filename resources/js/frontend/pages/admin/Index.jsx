@@ -3,7 +3,7 @@ import AdminLayout from "../../layouts/AdminLayout";
 import Paginator from "../../components/Paginator";
 import DangerModal from "../../components/modals/DangerModal";
 import { useState } from "react";
-import AdminHeader from "../../components/AdminHeader";
+import AdminHeader from "../../components/admin/AdminHeader";
 
 function Index() {
     const { auth, admins } = usePage().props;

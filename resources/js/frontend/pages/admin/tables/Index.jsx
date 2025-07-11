@@ -1,29 +1,56 @@
 import { useForm, usePage } from "@inertiajs/react";
-import AdminHeader from "../../../components/AdminHeader";
+
 import AdminLayout from "../../../layouts/AdminLayout";
 import IndigoBtn from "../../../components/IndigoBtn";
 import { useState } from "react";
-import { Rnd } from "react-rnd";
-import SubmitModal from "../../../components/modals/SubmitModal";
+import SubmitModal from "../../../components/modals/DefaultModal";
+import TableBoard from "../../../components/admin/table/TableBoard";
+import AdminHeader from "../../../components/admin/AdminHeader";
 
 function Index() {
     const [createModalOpen, setCreateModalOpen] = useState(false);
+    
     const { locations } = usePage().props;
+
     const [activeLocationId, setActiveLocationId] = useState(
-        locations.length > 0 ? locations[0].id : null
+        locations.length > 0 ? locations[0].id : 0
     );
 
     const activeLocation = locations.find(
         (location) => location.id === activeLocationId
     );
 
-    const { data, setData, post, processing, reset, errors } = useForm({
+    const {
+        data,
+        setData,
+        post,
+        delete: destroy,
+        processing,
+        reset,
+        errors,
+    } = useForm({
         location_id: "",
         name: "",
+        color: "bg-rose-400",
         seats: "",
         pos_x: "",
         pos_y: "",
     });
+
+    const handleDelete = (id) => {
+        if (confirm("Biztosan törölni szeretnéd ezt az asztalt?")) {
+            destroy(`/admin/tables/${id}`, {
+                onSuccess: () => {
+                    console.log("Asztal törölve:", id);
+                    // Esetleg itt végezhetsz el további műveleteket, pl. újratöltés
+                },
+                onError: (errors) => {
+                    console.error("Hiba törlés közben:", errors);
+                    // Itt kezelheted a hibákat, pl. megjelenítheted őket a felületen
+                },
+            });
+        }
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -31,26 +58,93 @@ function Index() {
         // pos_x / pos_y nullra állítása ha üres
         const formData = {
             ...data,
-            pos_x: data.pos_x === "" ? null : Number(data.pos_x),
-            pos_y: data.pos_y === "" ? null : Number(data.pos_y),
+            /*             pos_x: data.pos_x === "" ? null : Number(data.pos_x),
+            pos_y: data.pos_y === "" ? null : Number(data.pos_y), */
         };
 
         post("/admin/tables", {
             data: formData,
             onSuccess: () => {
+                console.log(data);
                 reset();
+                setCreateModalOpen(false);
+            },
+            onError: (errors) => {
+                console.error("Hiba:", errors);
+                // Itt kezelheted a hibákat, pl. megjelenítheted őket a felületen
+            },
+            onFinish: () => {
+                // Esetleg itt végezhetsz el további műveleteket, pl. újratöltés
+                console.log("Kérelem befejezve");
+                reset();
+                setCreateModalOpen(false);
+            },
+            onClose: () => {
+                // Esetleg itt végezhetsz el további műveleteket, pl. újratöltés
+                console.log("Modal bezárva");
+                reset();
+                setCreateModalOpen(false);
+                // Ha szükséges, itt is bezárhatod a modalt
                 onClose();
             },
         });
     };
 
+    /*    const handleSave = async (id, x, y, width, height) => {
+        try {
+            await axios.patch(`/admin/tables/${id}`, {
+                pos_x: x,
+                pos_y: y,
+                width,
+                height,
+            });
+            console.log("Mentve:", id);
+        } catch (error) {
+            console.error("Hiba mentés közben:", error);
+        }
+    }; */
+
     return (
         <>
-            <AdminHeader>Asztalok beállítása</AdminHeader>
+            <AdminHeader>
+                <span className="block"> Asztalok beállítása</span>
+                <IndigoBtn className="text-xs">
+                    <span onClick={() => setCreateModalOpen(true)}>
+                        Létrehozás
+                    </span>
+                </IndigoBtn>
+            </AdminHeader>
+
+            <div className="flex gap-4 mt-6 mb-8 flex-wrap">
+                {locations.map((location) => (
+                    <button
+                        key={location.id}
+                        onClick={() => setActiveLocationId(location.id)}
+                        className={`px-4 py-2 rounded ${
+                            location.id === activeLocationId
+                                ? "bg-indigo-600 text-white"
+                                : "bg-gray-200 text-gray-800 hover:bg-gray-300"
+                        }`}
+                    >
+                        {location.name}
+                    </button>
+                ))}
+            </div>
+            {activeLocation && activeLocation.tables.length > 0 && (
+                <div className="mt-10">
+                    <h2 className="text-lg font-semibold mb-2">
+                        Asztalok elhelyezése
+                    </h2>
+                    <TableBoard
+                        tables={activeLocation.tables}
+                        onSave={() => console.log("HELLO SAVE")}
+                    />
+                </div>
+            )}
 
             {createModalOpen && (
                 <SubmitModal
-                    isOpen={activeLocationId !== null}
+                    isOpen={() => console.log("isOpen")}
                     onClose={() => setCreateModalOpen(false)}
                     onSubmit={(e) => {
                         handleSubmit(e);
@@ -123,70 +217,34 @@ function Index() {
                         )}
                     </div>
 
-                    {/* pos_x (opcionális) */}
-                    <div className="mb-4">
-                        <label className="block mb-1 text-sm">
-                            X pozíció (opcionális)
-                        </label>
-                        <input
-                            type="number"
-                            name="pos_x"
-                            value={data.pos_x}
-                            onChange={(e) => setData("pos_x", e.target.value)}
-                            className="w-full border border-gray-300 p-2 rounded"
-                        />
-                        {errors.pos_x && (
-                            <p className="text-red-500 text-sm">
-                                {errors.pos_x}
-                            </p>
-                        )}
-                    </div>
-
-                    {/* pos_y (opcionális) */}
-                    <div className="mb-4">
-                        <label className="block mb-1 text-sm">
-                            Y pozíció (opcionális)
-                        </label>
-                        <input
-                            type="number"
-                            name="pos_y"
-                            value={data.pos_y}
-                            onChange={(e) => setData("pos_y", e.target.value)}
-                            className="w-full border border-gray-300 p-2 rounded"
-                        />
-                        {errors.pos_y && (
-                            <p className="text-red-500 text-sm">
-                                {errors.pos_y}
-                            </p>
-                        )}
-                    </div>
+                    <select
+                        name="color"
+                        id="color"
+                        onChange={(e) => setData("color", e.target.value)}
+                        className="w-full border border-gray-300 p-2 rounded mb-4"
+                    >
+                        <option value="">Válassz színt</option>
+                        <option value="bg-red-400">Piros</option>
+                        <option value="bg-blue-400">Kék</option>
+                        <option value="bg-green-400">Zöld</option>
+                        <option value="bg-yellow-400">Sárga</option>
+                        <option value="bg-purple-400">Lila</option>
+                        <option value="bg-pink-400">Rózsaszín</option>
+                        <option value="bg-gray-400">Szürke</option>
+                        <option value="bg-indigo-400">Indigó</option>
+                        <option value="bg-teal-400">Türkiz</option>
+                        <option value="bg-orange-400">Narancs</option>
+                        <option value="bg-rose-400">Rózsaszín</option>
+                        <option value="bg-amber-400">Borostyán</option>
+                        <option value="bg-lime-400">Lime</option>
+                    </select>
                 </SubmitModal>
             )}
-
-            {/* Helyszín gombok */}
-            <div className="flex gap-4 mt-6 mb-8 flex-wrap">
-                {locations.map((location) => (
-                    <button
-                        key={location.id}
-                        onClick={() => setActiveLocationId(location.id)}
-                        className={`px-4 py-2 rounded ${
-                            location.id === activeLocationId
-                                ? "bg-indigo-600 text-white"
-                                : "bg-gray-200 text-gray-800 hover:bg-gray-300"
-                        }`}
-                    >
-                        {location.name}
-                    </button>
-                ))}
-            </div>
 
             <div className="relative overflow-x-auto sm:rounded-lg">
                 {activeLocation && activeLocation.tables.length === 0 ? (
                     <div className="p-6 text-gray-600 dark:text-gray-300 text-center flex items-center justify-center flex-col gap-2">
                         Nincs elérhető asztal ezen a helyszínen.
-                        <IndigoBtn>
-                            <button onClick={() => setCreateModalOpen(true)}>Létrehozás</button>
-                        </IndigoBtn>
                     </div>
                 ) : (
                     <>
@@ -227,12 +285,14 @@ function Index() {
                                             >
                                                 Szerkesztés
                                             </a>
-                                            <a
-                                                href={`/admin/tables/${table.id}/delete`}
+                                            <button
+                                                onClick={() =>
+                                                    handleDelete(table.id)
+                                                }
                                                 className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded mr-2 transition"
                                             >
                                                 Törlés
-                                            </a>
+                                            </button>
                                             <a
                                                 href={`/admin/tables/${table.id}/reservations`}
                                                 className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded transition"

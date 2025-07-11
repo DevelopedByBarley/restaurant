@@ -43,6 +43,7 @@ class TableController extends Controller
             'location_id' => $request->location_id,
             'name' => $request->name,
             'seats' => $request->seats,
+            'color' => $request->color ?? 'bg-rose-400',
             'pos_x' => 0,
             'pos_y' => 0,
             'width' => 60,
@@ -82,5 +83,7 @@ class TableController extends Controller
     public function destroy(Table $table)
     {
         //
+        $table->delete();
+        return redirect()->route('tables.index')->with('success', 'Asztal sikeresen törölve.');
     }
 }

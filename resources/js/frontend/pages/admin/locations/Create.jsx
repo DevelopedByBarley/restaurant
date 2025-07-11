@@ -1,5 +1,5 @@
 
-import AdminHeader from "../../../components/AdminHeader";
+import AdminHeader from "../../../components/admin/AdminHeader";
 import IndigoBtn from "../../../components/IndigoBtn";
 import AdminLayout from "../../../layouts/AdminLayout";
 import { useForm } from '@inertiajs/react';

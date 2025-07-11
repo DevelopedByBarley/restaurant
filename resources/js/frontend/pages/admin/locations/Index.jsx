@@ -1,7 +1,7 @@
 import { Link, usePage } from "@inertiajs/react";
-import AdminHeader from "../../../components/AdminHeader";
 import AdminLayout from "../../../layouts/AdminLayout";
 import IndigoBtn from "../../../components/IndigoBtn";
+import AdminHeader from "../../../components/admin/AdminHeader";
 
 function Index() {
     const { locations } = usePage().props;
