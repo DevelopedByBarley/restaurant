@@ -17,8 +17,8 @@ return new class extends Migration
             $table->foreignIdFor(Location::class)->constrained()->onDelete('cascade');
             $table->string('name');
             $table->integer('seats');
-            $table->integer('pos_x')->default(0); // pixel érték
-            $table->integer('pos_y')->default(0);
+            $table->integer('pos_x')->default(null)->nullable(); // pixel érték
+            $table->integer('pos_y')->default(null)->nullable();
             $table->integer('width')->default(60);
             $table->integer('height')->default(60);
             $table->timestamps();

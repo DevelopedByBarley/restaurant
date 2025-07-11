@@ -15,17 +15,10 @@ class TableController extends Controller
      */
     public function index()
     {
+        $locations = Location::with('tables')->get();
         return Inertia::render('pages/admin/tables/Index', [
-            'tables' => Table::with('location')->get()->map(function ($table) {
-                return [
-                    'id' => $table->id,
-                    'name' => $table->name,
-                    'seats' => $table->seats,
-                    'location_name' => $table->location->name ?? 'N/A',
-                    'created_at' => $table->created_at->format('Y-m-d H:i'),
-                    'updated_at' => $table->updated_at->format('Y-m-d H:i'),
-                ];
-            }),
+            'locations' => Location::with('tables')->get(),
+            'tables' => Table::with('location')->get(),
         ]);
     }
 
@@ -37,13 +30,7 @@ class TableController extends Controller
     public function create()
     {
         return Inertia::render('pages/admin/tables/Create', [
-            'locations' => Location::all()->map(function ($location) {
-                return [
-                    'id' => $location->id,
-                    'name' => $location->name,
-                    'description' => $location->description,
-                ];
-            }),
+            'locations' => Location::with('tables')->get(),
         ]);
     }
 

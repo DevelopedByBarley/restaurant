@@ -28,9 +28,7 @@ class StoreTableRequest extends FormRequest
                 'required',
                 'string',
                 'max:255',
-                Rule::unique('tables')->where(function ($query) {
-                    return $query->where('location_id', $this->location_id);
-                }),
+                'unique:tables,name'
             ],
             'seats' => 'required|integer|min:1',
             // Az alábbi mezők csak akkor kellenek, ha nem akarod defaultként 0/60-ra bízni
