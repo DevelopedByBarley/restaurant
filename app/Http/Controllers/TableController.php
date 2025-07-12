@@ -16,7 +16,6 @@ class TableController extends Controller
      */
     public function index()
     {
-        $locations = Location::with('tables')->get();
         return Inertia::render('pages/admin/tables/Index', [
             'locations' => Location::with('tables')->get(),
             'tables' => Table::with('location')->get(),

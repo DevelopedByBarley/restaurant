@@ -2,10 +2,12 @@ import { useForm, usePage } from "@inertiajs/react";
 
 import AdminLayout from "../../../layouts/AdminLayout";
 import IndigoBtn from "../../../components/IndigoBtn";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SubmitModal from "../../../components/modals/DefaultModal";
 import TableBoard from "../../../components/admin/table/TableBoard";
 import AdminHeader from "../../../components/admin/AdminHeader";
+import { router } from '@inertiajs/react';
+
 
 function Index() {
     const [createModalOpen, setCreateModalOpen] = useState(false);
@@ -19,7 +21,10 @@ function Index() {
     const activeLocation = locations.find(
         (location) => location.id === activeLocationId
     );
+
     
+
+
 
     const {
         data,

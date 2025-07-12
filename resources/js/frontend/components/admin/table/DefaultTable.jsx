@@ -1,21 +1,35 @@
 import { Rnd } from "react-rnd";
 import axios from "axios";
+import { router } from "@inertiajs/react";
 
 export default function DefaultTable({ table }) {
     const handleSave = (data) => {
-        axios.post(`/admin/tables/${table.id}/save`, {
-            pos_x: data.x,
-            pos_y: data.y,
-            width: data.width,
-            height: data.height,
+        axios
+            .post(
+                `/admin/tables/${table.id}/save`,
+                {
+                    pos_x: data.x,
+                    pos_y: data.y,
+                    width: data.width,
+                    height: data.height,
+                },
+                {
+                    withCredentials: true, // így küldi a sütiket is
+                }
+            )
+            .then(() => {
+                console.log(`Table ${table.id} saved:`, data);
 
-        }, {
-            withCredentials: true,  // így küldi a sütiket is
-        }).then(() => {
-            console.log(`Table ${table.id} saved:`, data);
-        }).catch((err) => {
-            console.error("Error saving table position:", err);
-        });
+                router.visit("/admin/tables", {
+                    method: "get",
+                    preserveScroll: true,
+                    preserveState: true,
+                    only: ["locations", "tables"], // csak ezeket kérjük újra
+                });
+            })
+            .catch((err) => {
+                console.error("Error saving table position:", err);
+            });
     };
 
     return (
