@@ -11,7 +11,7 @@ class UpdateTableRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,8 +21,16 @@ class UpdateTableRequest extends FormRequest
      */
     public function rules(): array
     {
+
         return [
-            //
+            'location_id' => ['required', 'exists:locations,id'],
+            'name' => ['required', 'string', 'max:255'],
+            'seats' => ['required', 'integer', 'min:1'],
+            'color' => ['nullable', 'string'],
+            'pos_x' => ['nullable', 'numeric'],
+            'pos_y' => ['nullable', 'numeric'],
+            'width' => ['nullable', 'numeric'],
+            'height' => ['nullable', 'numeric'],
         ];
     }
 }

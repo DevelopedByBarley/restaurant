@@ -74,7 +74,18 @@ class TableController extends Controller
      */
     public function update(UpdateTableRequest $request, Table $table)
     {
-        //
+        $table->update([
+            'location_id' => $request->location_id,
+            'name' => $request->name,
+            'seats' => $request->seats,
+            'color' => $request->color,
+            'pos_x' => $request->pos_x ?? 0,
+            'pos_y' => $request->pos_y ?? 0,
+            'width' => $request->width ?? 60,
+            'height' => $request->height ?? 60,
+        ]);
+
+        return redirect()->route('tables.index')->with('success', 'Asztal sikeresen frissítve.');
     }
 
     /**

@@ -2,7 +2,7 @@ import { Rnd } from "react-rnd";
 import axios from "axios";
 import { router } from "@inertiajs/react";
 
-export default function DefaultTable({ table }) {
+export default function DefaultTable({ table, setEditModalOpen, setCurrentTable, setData }) {
     const handleSave = (data) => {
         axios
             .post(
@@ -69,7 +69,19 @@ export default function DefaultTable({ table }) {
         >
             <div
                 onDoubleClick={() => {
-                    alert("Double clicked on table " + table.name);
+                    setEditModalOpen(true);
+                    setData({
+                        id: table.id,
+                        location_id: table.location_id, // helyszín ID
+                        name: table.name,
+                        seats: table.seats,
+                        color: table.color,
+                        pos_x: table.pos_x,
+                        pos_y: table.pos_y,
+                        width: table.width,
+                        height: table.height,
+                    });
+                    setCurrentTable(table);
                 }}
                 className="flex items-center justify-center flex-col gap-1 h-full w-full p-2 rounded"
             >

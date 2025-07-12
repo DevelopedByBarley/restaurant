@@ -2,16 +2,16 @@ import { useForm, usePage } from "@inertiajs/react";
 
 import AdminLayout from "../../../layouts/AdminLayout";
 import IndigoBtn from "../../../components/IndigoBtn";
-import { useEffect, useState } from "react";
-import SubmitModal from "../../../components/modals/DefaultModal";
+import { useState } from "react";
 import TableBoard from "../../../components/admin/table/TableBoard";
 import AdminHeader from "../../../components/admin/AdminHeader";
-import { router } from '@inertiajs/react';
-
+import CreateTableModal from "../../../components/admin/components/CreateTableModal";
+import EditTableModal from "../../../components/admin/components/EditTableModal";
 
 function Index() {
     const [createModalOpen, setCreateModalOpen] = useState(false);
-
+    const [editModalOpen, setEditModalOpen] = useState(false);
+    const [currentTable, setCurrentTable] = useState(null);
     const { locations } = usePage().props;
 
     const [activeLocationId, setActiveLocationId] = useState(
@@ -22,10 +22,6 @@ function Index() {
         (location) => location.id === activeLocationId
     );
 
-    
-
-
-
     const {
         data,
         setData,
@@ -34,6 +30,7 @@ function Index() {
         processing,
         reset,
         errors,
+        patch: patch,
     } = useForm({
         location_id: "",
         name: "",
@@ -53,6 +50,42 @@ function Index() {
                 onError: (errors) => {
                     console.error("Hiba törlés közben:", errors);
                     // Itt kezelheted a hibákat, pl. megjelenítheted őket a felületen
+                },
+            });
+        }
+    };
+
+    const handleUpdate = (id) => {
+        if (confirm("Biztosan frissíteni szeretnéd ezt az asztalt?")) {
+            console.log(data);
+            patch(`/admin/tables/${id}`, {
+                data: {
+                    ...data,
+                    pos_x: data.pos_x === "" ? null : Number(data.pos_x),
+                    pos_y: data.pos_y === "" ? null : Number(data.pos_y),
+                },
+                onSuccess: () => {
+                    console.log("Asztal frissítve:", id);
+                    // Esetleg itt végezhetsz el további műveleteket, pl. újratöltés
+                    reset();
+                    setEditModalOpen(false);
+                },
+                onError: (errors) => {
+                    console.error("Hiba frissítés közben:", errors);
+                    // Itt kezelheted a hibákat, pl. megjelenítheted őket a felületen
+                },
+                onFinish: () => {
+                    // Esetleg itt végezhetsz el további műveleteket, pl. újratöltés
+                    console.log("Kérelem befejezve");
+                    reset();
+                    setEditModalOpen(false);
+                },
+                onClose: () => {
+                    // Esetleg itt végezhetsz el további műveleteket, pl. újratöltés
+                    console.log("Modal bezárva");
+                    reset();
+                    setEditModalOpen(false);
+                    // Ha szükséges, itt is bezárhatod a modalt
                 },
             });
         }
@@ -143,107 +176,37 @@ function Index() {
                     </h2>
                     <TableBoard
                         tables={activeLocation.tables}
+                        setEditModalOpen={setEditModalOpen}
+                        setCurrentTable={setCurrentTable}
+                        setData={setData}
                     />
                 </div>
             )}
 
-            {createModalOpen && (
-                <SubmitModal
-                    isOpen={() => console.log("isOpen")}
-                    onClose={() => setCreateModalOpen(false)}
-                    onSubmit={(e) => {
-                        handleSubmit(e);
-                        setCreateModalOpen(false);
+            {editModalOpen && (
+                <EditTableModal
+                    currentTable={currentTable}
+                    setEditModalOpen={setEditModalOpen}
+                    locations={locations}
+                    data={data}
+                    setData={setData}
+                    errors={errors}
+                    handleSubmit={(e) => {
+                        handleUpdate(currentTable.id);
+                        setEditModalOpen(false);
                     }}
-                    title="Asztalok kezelése"
-                    description="Válassz egy helyszínt az asztalok kezeléséhez."
-                    submitLabel="Asztal hozzáadása"
-                >
-                    <div className="mb-4">
-                        <label className="block mb-1 text-sm">Helyszín</label>
-                        <select
-                            name="location_id"
-                            value={data.location_id}
-                            onChange={(e) =>
-                                setData("location_id", e.target.value)
-                            }
-                            required
-                            className="w-full border border-gray-300 p-2 rounded"
-                        >
-                            <option value="">Válassz helyszínt</option>
-                            {locations.map((loc) => (
-                                <option key={loc.id} value={loc.id}>
-                                    {loc.name}
-                                </option>
-                            ))}
-                        </select>
-                        {errors.location_id && (
-                            <p className="text-red-500 text-sm">
-                                {errors.location_id}
-                            </p>
-                        )}
-                    </div>
+                />
+            )}
 
-                    {/* Name */}
-                    <div className="mb-4">
-                        <label className="block mb-1 text-sm">Név</label>
-                        <input
-                            type="text"
-                            name="name"
-                            value={data.name}
-                            onChange={(e) => setData("name", e.target.value)}
-                            required
-                            className="w-full border border-gray-300 p-2 rounded"
-                        />
-                        {errors.name && (
-                            <p className="text-red-500 text-sm">
-                                {errors.name}
-                            </p>
-                        )}
-                    </div>
-
-                    {/* Seats */}
-                    <div className="mb-4">
-                        <label className="block mb-1 text-sm">
-                            Férőhelyek száma
-                        </label>
-                        <input
-                            type="number"
-                            name="seats"
-                            value={data.seats}
-                            onChange={(e) => setData("seats", e.target.value)}
-                            required
-                            className="w-full border border-gray-300 p-2 rounded"
-                        />
-                        {errors.seats && (
-                            <p className="text-red-500 text-sm">
-                                {errors.seats}
-                            </p>
-                        )}
-                    </div>
-
-                    <select
-                        name="color"
-                        id="color"
-                        onChange={(e) => setData("color", e.target.value)}
-                        className="w-full border border-gray-300 p-2 rounded mb-4"
-                    >
-                        <option value="">Válassz színt</option>
-                        <option value="bg-red-400">Piros</option>
-                        <option value="bg-blue-400">Kék</option>
-                        <option value="bg-green-400">Zöld</option>
-                        <option value="bg-yellow-400">Sárga</option>
-                        <option value="bg-purple-400">Lila</option>
-                        <option value="bg-pink-400">Rózsaszín</option>
-                        <option value="bg-gray-400">Szürke</option>
-                        <option value="bg-indigo-400">Indigó</option>
-                        <option value="bg-teal-400">Türkiz</option>
-                        <option value="bg-orange-400">Narancs</option>
-                        <option value="bg-rose-400">Rózsaszín</option>
-                        <option value="bg-amber-400">Borostyán</option>
-                        <option value="bg-lime-400">Lime</option>
-                    </select>
-                </SubmitModal>
+            {createModalOpen && (
+                <CreateTableModal
+                    setCreateModalOpen={setCreateModalOpen}
+                    locations={locations}
+                    data={data}
+                    setData={setData}
+                    errors={errors}
+                    handleSubmit={handleSubmit}
+                />
             )}
 
             <div className="relative overflow-x-auto sm:rounded-lg">
@@ -284,12 +247,28 @@ function Index() {
                                             {table.seats}
                                         </td>
                                         <td className="px-6 py-4 text-right">
-                                            <a
-                                                href={`/admin/tables/${table.id}/edit`}
-                                                className="bg-orange-600 hover:bg-orange-700 text-white font-semibold py-2 px-4 rounded mr-2 transition"
+                                            <button
+                                                onClick={() => {
+                                                    setEditModalOpen(true);
+                                                    setData({
+                                                        id: table.id,
+                                                        location_id:
+                                                            table.location_id,
+                                                        name: table.name,
+                                                        seats: table.seats,
+                                                        color: table.color,
+                                                        pos_x: table.pos_x,
+                                                        pos_y: table.pos_y,
+                                                        width: table.width,
+                                                        height: table.height,
+                                                    });
+                                                    setCurrentTable(table);
+                                                }}
+                                                className="bg-orange-500 hover:bg-orange-500 text-white font-semibold py-2 px-4 rounded mr-2 transition"
                                             >
                                                 Szerkesztés
-                                            </a>
+                                            </button>
+
                                             <button
                                                 onClick={() =>
                                                     handleDelete(table.id)
