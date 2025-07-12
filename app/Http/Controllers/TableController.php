@@ -6,6 +6,7 @@ use App\Models\Table;
 use App\Http\Requests\StoreTableRequest;
 use App\Http\Requests\UpdateTableRequest;
 use App\Models\Location;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class TableController extends Controller
@@ -85,5 +86,17 @@ class TableController extends Controller
         //
         $table->delete();
         return redirect()->route('tables.index')->with('success', 'Asztal sikeresen törölve.');
+    }
+
+    public function save(Request $request, Table $table)
+    {
+        $table->update([
+            'width' => $request->width,
+            'height' => $request->height,
+            'pos_x' => $request->pos_x,
+            'pos_y' => $request->pos_y,
+        ]);
+
+        return redirect()->route('tables.index')->with('success', 'Asztal mérete sikeresen frissítve.');
     }
 }

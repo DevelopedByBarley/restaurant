@@ -1,6 +1,23 @@
 import { Rnd } from "react-rnd";
+import axios from "axios";
 
-export default function DefaultTable({ table, onSave }) {
+export default function DefaultTable({ table }) {
+    const handleSave = (data) => {
+        axios.post(`/admin/tables/${table.id}/save`, {
+            pos_x: data.x,
+            pos_y: data.y,
+            width: data.width,
+            height: data.height,
+
+        }, {
+            withCredentials: true,  // így küldi a sütiket is
+        }).then(() => {
+            console.log(`Table ${table.id} saved:`, data);
+        }).catch((err) => {
+            console.error("Error saving table position:", err);
+        });
+    };
+
     return (
         <Rnd
             key={table.id}
@@ -11,18 +28,22 @@ export default function DefaultTable({ table, onSave }) {
                 height: table.height,
             }}
             bounds="parent"
-            onDragStop={(e, d) =>
-                onSave(table.id, d.x, d.y, table.width, table.height)
-            }
-            onResizeStop={(e, direction, ref, delta, position) =>
-                onSave(
-                    table.id,
-                    position.x,
-                    position.y,
-                    parseInt(ref.style.width),
-                    parseInt(ref.style.height)
-                )
-            }
+            onDragStop={(e, d) => {
+                handleSave({
+                    x: d.x,
+                    y: d.y,
+                    width: table.width,
+                    height: table.height,
+                });
+            }}
+            onResizeStop={(e, direction, ref, delta, position) => {
+                handleSave({
+                    x: position.x,
+                    y: position.y,
+                    width: parseInt(ref.style.width),
+                    height: parseInt(ref.style.height),
+                });
+            }}
             style={{
                 display: "flex",
                 alignItems: "center",
@@ -33,11 +54,13 @@ export default function DefaultTable({ table, onSave }) {
             className={`${table.color} shadow-md`}
         >
             <div
-                onDoubleClick={() => {alert("Double clicked on table " + table.name);}}
-                className="flex items-center justify-center flex-col gap-1 qqqqqqqqqqqq h-full w-full p-2 rounded"
+                onDoubleClick={() => {
+                    alert("Double clicked on table " + table.name);
+                }}
+                className="flex items-center justify-center flex-col gap-1 h-full w-full p-2 rounded"
             >
                 <p className="font-bold">{table.name}</p>
-                <div className=" rounded-full bg-white p-1 flex items-center justify-center">
+                <div className="rounded-full bg-white p-1 flex items-center justify-center">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"

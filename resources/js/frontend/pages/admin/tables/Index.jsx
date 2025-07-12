@@ -9,7 +9,7 @@ import AdminHeader from "../../../components/admin/AdminHeader";
 
 function Index() {
     const [createModalOpen, setCreateModalOpen] = useState(false);
-    
+
     const { locations } = usePage().props;
 
     const [activeLocationId, setActiveLocationId] = useState(
@@ -19,6 +19,7 @@ function Index() {
     const activeLocation = locations.find(
         (location) => location.id === activeLocationId
     );
+    
 
     const {
         data,
@@ -137,7 +138,6 @@ function Index() {
                     </h2>
                     <TableBoard
                         tables={activeLocation.tables}
-                        onSave={() => console.log("HELLO SAVE")}
                     />
                 </div>
             )}
