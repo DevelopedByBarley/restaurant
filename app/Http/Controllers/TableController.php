@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Table;
 use App\Http\Requests\StoreTableRequest;
 use App\Http\Requests\UpdateTableRequest;
+use App\Models\Block;
 use App\Models\Location;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -17,8 +18,9 @@ class TableController extends Controller
     public function index()
     {
         return Inertia::render('pages/admin/tables/Index', [
-            'locations' => Location::with('tables')->get(),
+            'locations' => Location::with('tables', 'blocks')->get(),
             'tables' => Table::with('location')->get(),
+            'blocks' => Block::with('location')->get(), // Assuming blocks are tables without a location
         ]);
     }
 

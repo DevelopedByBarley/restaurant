@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Location;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,17 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tables', function (Blueprint $table) {
+        Schema::create('blocks', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Location::class)->constrained()->onDelete('cascade');
+            $table->foreignId('location_id')->constrained()->onDelete('cascade');
             $table->string('name');
-            $table->string('type')->default('table');
-            $table->integer('seats');
+            $table->string('type')->default('block');
             $table->integer('pos_x')->default(null)->nullable(); // pixel érték
             $table->integer('pos_y')->default(null)->nullable();
             $table->integer('width')->default(60);
             $table->integer('height')->default(60);
-            $table->string('color')->default('bg-rose-400');
+            $table->string('color')->default('bg-slate-600');
             $table->timestamps();
         });
     }
@@ -32,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tables');
+        Schema::dropIfExists('blocks');
     }
 };

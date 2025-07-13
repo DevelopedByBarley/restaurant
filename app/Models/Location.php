@@ -16,4 +16,9 @@ class Location extends Model
     {
         return $this->hasMany(Table::class);
     }
+
+    public function blocks()
+    {
+        return $this->hasMany(Block::class);
+    }
 }

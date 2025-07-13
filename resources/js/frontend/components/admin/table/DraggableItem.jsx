@@ -2,8 +2,20 @@ import { Rnd } from "react-rnd";
 import axios from "axios";
 import { router } from "@inertiajs/react";
 
-export default function DefaultTable({ table, setEditModalOpen, setCurrentTable, setData }) {
+export default function DraggableItem({
+    table,
+    setEditModalOpen,
+    setCurrentTable,
+    setData,
+}) {
     const handleSave = (data) => {
+        if (table.type === "block") {
+            alert(
+                "Blocks cannot be saved yet. This feature is under development."
+            );
+
+            return;
+        }
         axios
             .post(
                 `/admin/tables/${table.id}/save`,
@@ -40,6 +52,7 @@ export default function DefaultTable({ table, setEditModalOpen, setCurrentTable,
                 y: table.pos_y || 0,
                 width: table.width,
                 height: table.height,
+                type: table.type || "table",
             }}
             bounds="parent"
             onDragStop={(e, d) => {
@@ -48,6 +61,7 @@ export default function DefaultTable({ table, setEditModalOpen, setCurrentTable,
                     y: d.y,
                     width: table.width,
                     height: table.height,
+                    type: table.type || "table",
                 });
             }}
             onResizeStop={(e, direction, ref, delta, position) => {
@@ -56,6 +70,7 @@ export default function DefaultTable({ table, setEditModalOpen, setCurrentTable,
                     y: position.y,
                     width: parseInt(ref.style.width),
                     height: parseInt(ref.style.height),
+                    type: table.type || "table",
                 });
             }}
             style={{
@@ -85,24 +100,28 @@ export default function DefaultTable({ table, setEditModalOpen, setCurrentTable,
                 }}
                 className="flex items-center justify-center flex-col gap-1 h-full w-full p-2 rounded"
             >
-                <p className="font-bold">{table.name}</p>
-                <div className="rounded-full bg-white p-1 flex items-center justify-center">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={1.5}
-                        stroke="currentColor"
-                        className="size-4"
-                    >
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
-                        />
-                    </svg>
-                    <p className="text-sm">{table.seats}</p>
-                </div>
+                {table.seats && (
+                    <>
+                        <p className="font-bold">{table.name}</p>
+                        <div className="rounded-full bg-white p-1 flex items-center justify-center">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth={1.5}
+                                stroke="currentColor"
+                                className="size-4"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
+                                />
+                            </svg>
+                            <p className="text-sm">{table.seats}</p>
+                        </div>
+                    </>
+                )}
             </div>
         </Rnd>
     );

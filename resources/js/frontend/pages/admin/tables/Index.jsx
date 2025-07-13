@@ -14,6 +14,7 @@ function Index() {
     const [currentTable, setCurrentTable] = useState(null);
     const { locations } = usePage().props;
 
+
     const [activeLocationId, setActiveLocationId] = useState(
         locations.length > 0 ? locations[0].id : 0
     );
@@ -21,6 +22,7 @@ function Index() {
     const activeLocation = locations.find(
         (location) => location.id === activeLocationId
     );
+    console.log(activeLocation)
 
     const {
         data,
@@ -176,6 +178,7 @@ function Index() {
                     </h2>
                     <TableBoard
                         tables={activeLocation.tables}
+                        blocks={activeLocation.blocks}
                         setEditModalOpen={setEditModalOpen}
                         setCurrentTable={setCurrentTable}
                         setData={setData}
