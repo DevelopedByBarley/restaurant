@@ -7,8 +7,10 @@ import TableBoard from "../../../components/admin/table/TableBoard";
 import AdminHeader from "../../../components/admin/AdminHeader";
 import CreateTableModal from "../../../components/admin/components/CreateTableModal";
 import EditTableModal from "../../../components/admin/components/EditTableModal";
+import CreateBlockModal from "../../../components/admin/components/CreateBlockModal";
 
 function Index() {
+    const [createBlockModalOpen, setCreateBlockModalOpen] = useState(false);
     const [createModalOpen, setCreateModalOpen] = useState(false);
     const [editModalOpen, setEditModalOpen] = useState(false);
     const [currentTable, setCurrentTable] = useState(null);
@@ -25,26 +27,74 @@ function Index() {
     console.log(activeLocation)
 
     const {
-        data,
-        setData,
-        post,
-        delete: destroy,
-        processing,
-        reset,
-        errors,
-        patch: patch,
+        data: tableData,
+        setData: setTableData,
+        post: tablePost,
+        delete: tableDestroy,
+        processing: tableProcessing,
+        reset: tableReset,
+        errors: tableErrors,
+        patch: tablePatch,
     } = useForm({
         location_id: "",
         name: "",
+        type: "table",
         color: "bg-rose-400",
         seats: "",
         pos_x: "",
         pos_y: "",
     });
+    const {
+        data: blockData,
+        setData: setBlockData,
+        post: blockPost,
+        delete: blockDestroy,
+        processing: blockProcessing,
+        reset: blockReset,
+        errors: blockErrors,
+        patch: blockPatch,
+    } = useForm({
+        location_id: "",
+        name: "",
+        type: "block",
+        color: "bg-slate-600",
+        pos_x: "",
+        pos_y: "",
+    });
+
+    const handleBlockSubmit = (e) => {
+        e.preventDefault();
+        const formData = {
+            ...blockData,
+            pos_x: blockData.pos_x === "" ? null : Number(blockData.pos_x),
+            pos_y: blockData.pos_y === "" ? null : Number(blockData.pos_y),
+        };
+
+    
+        blockPost("/admin/blocks", {
+            data: formData,
+            onSuccess: () => {
+                blockReset();
+                setCreateBlockModalOpen(false);
+            },
+            onError: (errors) => {
+                console.error("Hiba:", errors);
+            },
+        });
+    };
+
+    /*      $table->foreignId('location_id')->constrained()->onDelete('cascade');
+            $table->string('name');
+            $table->string('type')->default('block');
+            $table->integer('pos_x')->default(null)->nullable(); // pixel érték
+            $table->integer('pos_y')->default(null)->nullable();
+            $table->integer('width')->default(60);
+            $table->integer('height')->default(60);
+            $table->string('color')->default('bg-slate-600'); */
 
     const handleDelete = (id) => {
         if (confirm("Biztosan törölni szeretnéd ezt az asztalt?")) {
-            destroy(`/admin/tables/${id}`, {
+            tableDestroy(`/admin/tables/${id}`, {
                 onSuccess: () => {
                     console.log("Asztal törölve:", id);
                     // Esetleg itt végezhetsz el további műveleteket, pl. újratöltés
@@ -60,11 +110,11 @@ function Index() {
     const handleUpdate = (id) => {
         if (confirm("Biztosan frissíteni szeretnéd ezt az asztalt?")) {
             console.log(data);
-            patch(`/admin/tables/${id}`, {
-                data: {
-                    ...data,
-                    pos_x: data.pos_x === "" ? null : Number(data.pos_x),
-                    pos_y: data.pos_y === "" ? null : Number(data.pos_y),
+            tablePatch(`/admin/tables/${id}`, {
+                tableData: {
+                    ...tableData,
+                    pos_x: tableData.pos_x === "" ? null : Number(tableData.pos_x),
+                    pos_y: tableData.pos_y === "" ? null : Number(tableData.pos_y),
                 },
                 onSuccess: () => {
                     console.log("Asztal frissítve:", id);
@@ -98,15 +148,14 @@ function Index() {
 
         // pos_x / pos_y nullra állítása ha üres
         const formData = {
-            ...data,
+            ...tableData,
             /*             pos_x: data.pos_x === "" ? null : Number(data.pos_x),
             pos_y: data.pos_y === "" ? null : Number(data.pos_y), */
         };
 
-        post("/admin/tables", {
+        tablePost("/admin/tables", {
             data: formData,
             onSuccess: () => {
-                console.log(data);
                 reset();
                 setCreateModalOpen(false);
             },
@@ -151,7 +200,12 @@ function Index() {
                 <span className="block"> Asztalok beállítása</span>
                 <IndigoBtn className="text-xs">
                     <span onClick={() => setCreateModalOpen(true)}>
-                        Létrehozás
+                        + Asztal
+                    </span>
+                </IndigoBtn>
+                <IndigoBtn className="text-xs">
+                    <span onClick={() => setCreateBlockModalOpen(true)}>
+                        + Blokk
                     </span>
                 </IndigoBtn>
             </AdminHeader>
@@ -171,7 +225,7 @@ function Index() {
                     </button>
                 ))}
             </div>
-            {activeLocation && activeLocation.tables.length > 0 && (
+            {activeLocation && (activeLocation.tables.length > 0 || activeLocation.blocks.length > 0) && (
                 <div className="mt-10">
                     <h2 className="text-lg font-semibold mb-2">
                         Asztalok elhelyezése
@@ -179,9 +233,10 @@ function Index() {
                     <TableBoard
                         tables={activeLocation.tables}
                         blocks={activeLocation.blocks}
+                        setBlockData={setBlockData}
                         setEditModalOpen={setEditModalOpen}
                         setCurrentTable={setCurrentTable}
-                        setData={setData}
+                        setTableData={setTableData}
                     />
                 </div>
             )}
@@ -191,8 +246,8 @@ function Index() {
                     currentTable={currentTable}
                     setEditModalOpen={setEditModalOpen}
                     locations={locations}
-                    data={data}
-                    setData={setData}
+                    data={tableData}
+                    setData={setTableData}
                     errors={errors}
                     handleSubmit={(e) => {
                         handleUpdate(currentTable.id);
@@ -201,13 +256,24 @@ function Index() {
                 />
             )}
 
+            {createBlockModalOpen && (
+                <CreateBlockModal
+                    setCreateModalOpen={setCreateBlockModalOpen}
+                    locations={locations}
+                    data={blockData}
+                    setData={setBlockData}
+                    errors={blockErrors}
+                    handleSubmit={handleBlockSubmit}
+                />
+            )}
+
             {createModalOpen && (
                 <CreateTableModal
                     setCreateModalOpen={setCreateModalOpen}
                     locations={locations}
-                    data={data}
-                    setData={setData}
-                    errors={errors}
+                    data={tableData}
+                    setData={setTableData}
+                    errors={tableErrors}
                     handleSubmit={handleSubmit}
                 />
             )}
@@ -253,7 +319,7 @@ function Index() {
                                             <button
                                                 onClick={() => {
                                                     setEditModalOpen(true);
-                                                    setData({
+                                                    setTableData({
                                                         id: table.id,
                                                         location_id:
                                                             table.location_id,

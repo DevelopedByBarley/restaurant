@@ -5,6 +5,7 @@ export default function TableBoard({
     blocks,
     setEditModalOpen,
     setCurrentTable,
+    setBlockData,
     setData,
 }) {
     return (
@@ -24,7 +25,7 @@ export default function TableBoard({
                     table={block}
                     setEditModalOpen={setEditModalOpen}
                     setCurrentTable={setCurrentTable}
-                    setData={setData}
+                    setData={setBlockData}
                 />
             ))}
         </div>
