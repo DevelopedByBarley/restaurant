@@ -1,6 +1,7 @@
 import { Rnd } from "react-rnd";
 import axios from "axios";
 import { router } from "@inertiajs/react";
+import { useState } from "react";
 
 export default function DraggableItem({
     table,
@@ -8,6 +9,8 @@ export default function DraggableItem({
     setCurrentTable,
     setData,
 }) {
+
+    const [isDragging, setIsDragging] = useState(false);
     const handleSave = (data) => {
         if (table.type === "block") {
             axios
@@ -85,6 +88,8 @@ export default function DraggableItem({
                     height: table.height,
                     type: table.type || "table",
                 });
+
+                setIsDragging(false);
             }}
             onResizeStop={(e, direction, ref, delta, position) => {
                 handleSave({
@@ -94,31 +99,44 @@ export default function DraggableItem({
                     height: parseInt(ref.style.height),
                     type: table.type || "table",
                 });
+                setIsDragging(false);
             }}
+            onDragStart={() => setIsDragging(true)}
+            onResizeStart={() => setIsDragging(true)}
+            onDragEnd={() => setIsDragging(false)}
+            onResizeEnd={() => setIsDragging(false)}
             style={{
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 borderRadius: 4,
                 cursor: "move",
+                opacity: isDragging ? 0.5 : 1,
+                transition: "opacity 0.2s ease",
+                boxShadow: isDragging ? "0 4px 8px rgba(0, 0, 0, 0.2)" : "none",
             }}
             className={`${table.color} shadow-md`}
         >
             <div
                 onDoubleClick={() => {
-                    setEditModalOpen(true);
-                    setData({
-                        id: table.id,
-                        location_id: table.location_id, // helyszín ID
-                        name: table.name,
-                        seats: table.seats,
-                        color: table.color,
-                        pos_x: table.pos_x,
-                        pos_y: table.pos_y,
-                        width: table.width,
-                        height: table.height,
-                    });
-                    setCurrentTable(table);
+                    if (table.type === "table") {
+                        alert("EDIT BLOCK MODAL");
+                        /* setEditModalOpen(true);
+                        setData({
+                            id: table.id,
+                            location_id: table.location_id, // helyszín ID
+                            name: table.name,
+                            seats: table.seats,
+                            color: table.color,
+                            pos_x: table.pos_x,
+                            pos_y: table.pos_y,
+                            width: table.width,
+                            height: table.height,
+                        });
+                        setCurrentTable(table); */
+                    } else {
+                        alert("DELETE BLOCK MODAL");
+                    }
                 }}
                 className="flex items-center justify-center flex-col gap-1 h-full w-full p-2 rounded"
             >

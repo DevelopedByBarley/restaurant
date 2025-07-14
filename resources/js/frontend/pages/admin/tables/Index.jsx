@@ -16,7 +16,6 @@ function Index() {
     const [currentTable, setCurrentTable] = useState(null);
     const { locations } = usePage().props;
 
-
     const [activeLocationId, setActiveLocationId] = useState(
         locations.length > 0 ? locations[0].id : 0
     );
@@ -24,7 +23,7 @@ function Index() {
     const activeLocation = locations.find(
         (location) => location.id === activeLocationId
     );
-    console.log(activeLocation)
+    console.log(activeLocation);
 
     const {
         data: tableData,
@@ -70,7 +69,6 @@ function Index() {
             pos_y: blockData.pos_y === "" ? null : Number(blockData.pos_y),
         };
 
-    
         blockPost("/admin/blocks", {
             data: formData,
             onSuccess: () => {
@@ -113,8 +111,10 @@ function Index() {
             tablePatch(`/admin/tables/${id}`, {
                 tableData: {
                     ...tableData,
-                    pos_x: tableData.pos_x === "" ? null : Number(tableData.pos_x),
-                    pos_y: tableData.pos_y === "" ? null : Number(tableData.pos_y),
+                    pos_x:
+                        tableData.pos_x === "" ? null : Number(tableData.pos_x),
+                    pos_y:
+                        tableData.pos_y === "" ? null : Number(tableData.pos_y),
                 },
                 onSuccess: () => {
                     console.log("Asztal frissítve:", id);
@@ -198,16 +198,19 @@ function Index() {
         <>
             <AdminHeader>
                 <span className="block"> Asztalok beállítása</span>
-                <IndigoBtn className="text-xs">
-                    <span onClick={() => setCreateModalOpen(true)}>
-                        + Asztal
-                    </span>
-                </IndigoBtn>
-                <IndigoBtn className="text-xs">
-                    <span onClick={() => setCreateBlockModalOpen(true)}>
-                        + Blokk
-                    </span>
-                </IndigoBtn>
+
+                <div className="flex gap-3 mt-3">
+                    <IndigoBtn className="text-xs">
+                        <span onClick={() => setCreateModalOpen(true)}>
+                            + Asztal
+                        </span>
+                    </IndigoBtn>
+                    <IndigoBtn className="text-xs">
+                        <span onClick={() => setCreateBlockModalOpen(true)}>
+                            + Blokk
+                        </span>
+                    </IndigoBtn>
+                </div>
             </AdminHeader>
 
             <div className="flex gap-4 mt-6 mb-8 flex-wrap">
@@ -225,21 +228,23 @@ function Index() {
                     </button>
                 ))}
             </div>
-            {activeLocation && (activeLocation.tables.length > 0 || activeLocation.blocks.length > 0) && (
-                <div className="mt-10">
-                    <h2 className="text-lg font-semibold mb-2">
-                        Asztalok elhelyezése
-                    </h2>
-                    <TableBoard
-                        tables={activeLocation.tables}
-                        blocks={activeLocation.blocks}
-                        setBlockData={setBlockData}
-                        setEditModalOpen={setEditModalOpen}
-                        setCurrentTable={setCurrentTable}
-                        setTableData={setTableData}
-                    />
-                </div>
-            )}
+            {activeLocation &&
+                (activeLocation.tables.length > 0 ||
+                    activeLocation.blocks.length > 0) && (
+                    <div className="mt-10">
+                        <h2 className="text-lg font-semibold mb-2">
+                            Asztalok elhelyezése
+                        </h2>
+                        <TableBoard
+                            tables={activeLocation.tables}
+                            blocks={activeLocation.blocks}
+                            setBlockData={setBlockData}
+                            setEditModalOpen={setEditModalOpen}
+                            setCurrentTable={setCurrentTable}
+                            setTableData={setTableData}
+                        />
+                    </div>
+                )}
 
             {editModalOpen && (
                 <EditTableModal
