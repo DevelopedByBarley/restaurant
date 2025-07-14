@@ -2,6 +2,7 @@ import { Rnd } from "react-rnd";
 import axios from "axios";
 import { router } from "@inertiajs/react";
 import { useState } from "react";
+import TapHandler from "../../../core/TapHandler";
 
 export default function DraggableItem({
     table,
@@ -117,11 +118,19 @@ export default function DraggableItem({
             }}
             className={`${table.color} shadow-md`}
         >
-            <div
-                onDoubleClick={() => {
-                    if (table.type === "table") {
-                        alert("EDIT BLOCK MODAL");
-                        /* setEditModalOpen(true);
+            <TapHandler
+            onDoubleTap={() => {
+
+                if(table.type === 'table') {
+                    alert("EDIT TABLE MODAL");
+                } else {
+                    alert("DELETE BLOCK MODAL");
+                }
+            }}
+            onDoubleClick={() => {
+                if (table.type === "table") {
+                    alert("EDIT BLOCK MODAL");
+                    /* setEditModalOpen(true);
                         setData({
                             id: table.id,
                             location_id: table.location_id, // helyszín ID
@@ -138,7 +147,7 @@ export default function DraggableItem({
                         alert("DELETE BLOCK MODAL");
                     }
                 }}
-                className="flex items-center justify-center flex-col gap-1 h-full w-full p-2 rounded"
+                classes="flex items-center justify-center flex-col gap-1 h-full w-full p-2 rounded"
             >
                 {table.seats && (
                     <>
@@ -162,7 +171,7 @@ export default function DraggableItem({
                         </div>
                     </>
                 )}
-            </div>
+            </TapHandler>
         </Rnd>
     );
 }
