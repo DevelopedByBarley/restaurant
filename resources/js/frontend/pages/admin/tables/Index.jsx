@@ -8,6 +8,8 @@ import AdminHeader from "../../../components/admin/AdminHeader";
 import CreateTableModal from "../../../components/admin/components/CreateTableModal";
 import EditTableModal from "../../../components/admin/components/EditTableModal";
 import CreateBlockModal from "../../../components/admin/components/CreateBlockModal";
+import { tableService } from "../../../services/admin/TableService";
+import { blockService } from "../../../services/admin/BlockService";
 
 function Index() {
     const [createBlockModalOpen, setCreateBlockModalOpen] = useState(false);
@@ -62,137 +64,21 @@ function Index() {
     });
 
     const handleBlockSubmit = (e) => {
-        e.preventDefault();
-        const formData = {
-            ...blockData,
-            pos_x: blockData.pos_x === "" ? null : Number(blockData.pos_x),
-            pos_y: blockData.pos_y === "" ? null : Number(blockData.pos_y),
-        };
-
-        blockPost("/admin/blocks", {
-            data: formData,
-            onSuccess: () => {
-                blockReset();
-                setCreateBlockModalOpen(false);
-            },
-            onError: (errors) => {
-                console.error("Hiba:", errors);
-            },
-        });
+        blockService.submitBlock(e, blockData, blockPost, blockReset, setCreateBlockModalOpen);
+    };
+    
+    const handleTableDelete = (id) => {
+        tableService.deleteTable(tableDestroy, id);
     };
 
-    /*      $table->foreignId('location_id')->constrained()->onDelete('cascade');
-            $table->string('name');
-            $table->string('type')->default('block');
-            $table->integer('pos_x')->default(null)->nullable(); // pixel érték
-            $table->integer('pos_y')->default(null)->nullable();
-            $table->integer('width')->default(60);
-            $table->integer('height')->default(60);
-            $table->string('color')->default('bg-slate-600'); */
-
-    const handleDelete = (id) => {
-        if (confirm("Biztosan törölni szeretnéd ezt az asztalt?")) {
-            tableDestroy(`/admin/tables/${id}`, {
-                onSuccess: () => {
-                    console.log("Asztal törölve:", id);
-                    // Esetleg itt végezhetsz el további műveleteket, pl. újratöltés
-                },
-                onError: (errors) => {
-                    console.error("Hiba törlés közben:", errors);
-                    // Itt kezelheted a hibákat, pl. megjelenítheted őket a felületen
-                },
-            });
-        }
+    const handleTableUpdate = (id) => {
+        tableService.updateTable(id, tableData, tablePatch, tableReset, setEditModalOpen);
     };
 
-    const handleUpdate = (id) => {
-        if (confirm("Biztosan frissíteni szeretnéd ezt az asztalt?")) {
-            console.log(data);
-            tablePatch(`/admin/tables/${id}`, {
-                tableData: {
-                    ...tableData,
-                    pos_x:
-                        tableData.pos_x === "" ? null : Number(tableData.pos_x),
-                    pos_y:
-                        tableData.pos_y === "" ? null : Number(tableData.pos_y),
-                },
-                onSuccess: () => {
-                    console.log("Asztal frissítve:", id);
-                    // Esetleg itt végezhetsz el további műveleteket, pl. újratöltés
-                    reset();
-                    setEditModalOpen(false);
-                },
-                onError: (errors) => {
-                    console.error("Hiba frissítés közben:", errors);
-                    // Itt kezelheted a hibákat, pl. megjelenítheted őket a felületen
-                },
-                onFinish: () => {
-                    // Esetleg itt végezhetsz el további műveleteket, pl. újratöltés
-                    console.log("Kérelem befejezve");
-                    reset();
-                    setEditModalOpen(false);
-                },
-                onClose: () => {
-                    // Esetleg itt végezhetsz el további műveleteket, pl. újratöltés
-                    console.log("Modal bezárva");
-                    reset();
-                    setEditModalOpen(false);
-                    // Ha szükséges, itt is bezárhatod a modalt
-                },
-            });
-        }
+    const handleTableSubmit = (e) => {
+        tableService.submitTable(e,tableData,tablePost,tableReset,setCreateModalOpen);
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-        // pos_x / pos_y nullra állítása ha üres
-        const formData = {
-            ...tableData,
-            /*             pos_x: data.pos_x === "" ? null : Number(data.pos_x),
-            pos_y: data.pos_y === "" ? null : Number(data.pos_y), */
-        };
-
-        tablePost("/admin/tables", {
-            data: formData,
-            onSuccess: () => {
-                reset();
-                setCreateModalOpen(false);
-            },
-            onError: (errors) => {
-                console.error("Hiba:", errors);
-                // Itt kezelheted a hibákat, pl. megjelenítheted őket a felületen
-            },
-            onFinish: () => {
-                // Esetleg itt végezhetsz el további műveleteket, pl. újratöltés
-                console.log("Kérelem befejezve");
-                reset();
-                setCreateModalOpen(false);
-            },
-            onClose: () => {
-                // Esetleg itt végezhetsz el további műveleteket, pl. újratöltés
-                console.log("Modal bezárva");
-                reset();
-                setCreateModalOpen(false);
-                // Ha szükséges, itt is bezárhatod a modalt
-                onClose();
-            },
-        });
-    };
-
-    /*    const handleSave = async (id, x, y, width, height) => {
-        try {
-            await axios.patch(`/admin/tables/${id}`, {
-                pos_x: x,
-                pos_y: y,
-                width,
-                height,
-            });
-            console.log("Mentve:", id);
-        } catch (error) {
-            console.error("Hiba mentés közben:", error);
-        }
-    }; */
 
     return (
         <>
@@ -253,9 +139,9 @@ function Index() {
                     locations={locations}
                     data={tableData}
                     setData={setTableData}
-                    errors={errors}
+                    errors={tableErrors}
                     handleSubmit={(e) => {
-                        handleUpdate(currentTable.id);
+                        handleTableUpdate(currentTable.id);
                         setEditModalOpen(false);
                     }}
                 />
@@ -279,7 +165,7 @@ function Index() {
                     data={tableData}
                     setData={setTableData}
                     errors={tableErrors}
-                    handleSubmit={handleSubmit}
+                    handleSubmit={handleTableSubmit}
                 />
             )}
 
@@ -345,7 +231,7 @@ function Index() {
 
                                             <button
                                                 onClick={() =>
-                                                    handleDelete(table.id)
+                                                    handleTableDelete(table.id)
                                                 }
                                                 className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded mr-2 transition"
                                             >

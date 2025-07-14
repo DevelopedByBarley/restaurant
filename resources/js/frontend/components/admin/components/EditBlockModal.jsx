@@ -1,3 +1,5 @@
+import Modal from "../../modals/Modal";
+
 export default function EditBlockModal() {
     return (
         <Modal
