@@ -1,8 +1,7 @@
 export const blockService = {
 
 
-    submitBlock: async (e, blockData, blockPost, blockReset, setCreateBlockModalOpen) => {
-        e.preventDefault();
+    submitBlock: async (blockData, blockPost, blockReset, setCreateBlockModalOpen) => {
         const formData = {
             ...blockData,
             pos_x: blockData.pos_x === "" ? null : Number(blockData.pos_x),
@@ -20,6 +19,35 @@ export const blockService = {
             },
         });
     },
+
+    handleSave: async (block, data, router) => {
+        axios
+            .post(
+                `/admin/blocks/${block.id}/save`,
+                {
+                    pos_x: data.x,
+                    pos_y: data.y,
+                    width: data.width,
+                    height: data.height,
+                },
+                {
+                    withCredentials: true, // így küldi a sütiket is
+                }
+            )
+            .then(() => {
+                console.log(`Block ${block.id} saved:`, data);
+
+                router.visit("/admin/tables", {
+                    method: "get",
+                    preserveScroll: true,
+                    preserveState: true,
+                    only: ["locations", "blocks", "blocks"], // csak ezeket kérjük újra
+                });
+            })
+            .catch((err) => {
+                console.error("Error saving block position:", err);
+            });
+    }
 
 
 };

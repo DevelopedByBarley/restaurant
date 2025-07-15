@@ -1,35 +1,43 @@
 import TableItem from "./TableItem";
+import BlockItem from "./BlockItem";
 
 export default function TableBoard({
     activeLocation,
     tables,
     setEditTableModalOpen,
     setTableData,
+    blocks,
+    setBlockData,
+    setEditBlockModalOpen,
 }) {
     return (
         <>
             {activeLocation &&
-                (activeLocation.tables.length > 0 || activeLocation.blocks.length > 0) && (
+                (activeLocation.tables.length > 0 ||
+                    activeLocation.blocks.length > 0) && (
                     <>
-                        <h2 className="text-lg font-semibold mb-2">Asztalok elhelyezése</h2>
+                        <h2 className="text-lg font-semibold mb-2">
+                            Asztalok elhelyezése
+                        </h2>
                         <div className="relative w-[1200px] h-[500px] overflow-scroll border border-gray-300 bg-[repeating-linear-gradient(90deg,_rgba(255,255,255,0.9)_0px,_rgba(255,255,255,0.9)_10px,_rgba(204,251,241,0.15)_10px,_rgba(204,251,241,0.15)_20px)] rounded">
                             {tables.map((table) => (
                                 <TableItem
                                     key={table.id}
                                     table={table}
-                                    setEditTableModalOpen={setEditTableModalOpen}
+                                    setEditTableModalOpen={
+                                        setEditTableModalOpen
+                                    }
                                     setTableData={setTableData}
                                 />
                             ))}
-                            {/* {blocks.map((block) => (
-                                <DraggableItem
+                            {blocks.map((block) => (
+                                <BlockItem
                                     key={block.id}
-                                    table={block}
-                                    setEditModalOpen={setEditModalOpen}
-                                    setCurrentTable={setCurrentTable}
+                                    block={block}
+                                    setEditModalOpen={setEditBlockModalOpen}
                                     setData={setBlockData}
                                 />
-                            ))} */}
+                            ))}
                         </div>
                     </>
                 )}

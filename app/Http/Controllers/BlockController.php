@@ -30,7 +30,7 @@ class BlockController extends Controller
      */
     public function store(StoreBlockRequest $request)
     {
-
+        
         Block::create([
             'location_id' => $request->location_id,
             'name' => $request->name,

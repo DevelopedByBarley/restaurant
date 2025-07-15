@@ -65,16 +65,6 @@ function Index() {
         pos_y: "",
     });
 
-    const handleBlockSubmit = (e) => {
-        blockService.submitBlock(
-            e,
-            blockData,
-            blockPost,
-            blockReset,
-            setCreateBlockModalOpen
-        );
-    }; 
-
     const handleTableDelete = (id) => {
         tableService.deleteTable(tableDestroy, id, tableReset);
         setEditTableModalOpen(false);
@@ -142,12 +132,13 @@ function Index() {
 
             {createBlockModalOpen && (
                 <CreateBlockModal
-                    setCreateTableModalOpen={setCreateBlockModalOpen}
+                    setCreateBlockModalOpen={setCreateBlockModalOpen}
                     locations={locations}
                     data={blockData}
                     setData={setBlockData}
                     errors={blockErrors}
-                    handleSubmit={handleBlockSubmit}
+                    blockPost={blockPost}
+                    blockReset={blockReset}
                 />
             )}
 
@@ -160,6 +151,8 @@ function Index() {
                     errors={tableErrors}
                     tablePost={tablePost}
                     tableReset={tableReset}
+                    blockPost={blockPost}
+                    blockReset={blockReset}
                 />
             )}
 

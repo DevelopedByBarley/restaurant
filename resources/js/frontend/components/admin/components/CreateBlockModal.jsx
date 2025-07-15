@@ -1,20 +1,34 @@
+import { blockService } from "../../../services/admin/BlockService";
 import Modal from "../../modals/Modal";
 
 export default function CreateBlockModal({
-    setCreateTableModalOpen,
+    setCreateBlockModalOpen,
     locations,
     data,
     setData,
     errors,
-    handleSubmit,
+    blockPost,
+    blockReset,
 }) {
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        blockService.submitBlock(
+            data,
+            blockPost,
+            blockReset,
+            setCreateBlockModalOpen
+        );
+        // Reset form data after submission
+    }
+
     return (
         <Modal
             isOpen={() => console.log("isOpen")}
-            onClose={() => setCreateTableModalOpen(false)}
+            onClose={() => setCreateBlockModalOpen(false)}
             onSubmit={(e) => {
                 handleSubmit(e);
-                setCreateTableModalOpen(false);
+                setCreateBlockModalOpen(false);
             }}
             title="Blokk létrehozása"
             description="Válassz egy helyszínt a blokk létrehozásához."
