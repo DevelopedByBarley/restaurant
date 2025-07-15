@@ -1,7 +1,7 @@
 import Modal from "../../modals/Modal";
 
 export default function CreateBlockModal({
-    setCreateModalOpen,
+    setCreateTableModalOpen,
     locations,
     data,
     setData,
@@ -11,10 +11,10 @@ export default function CreateBlockModal({
     return (
         <Modal
             isOpen={() => console.log("isOpen")}
-            onClose={() => setCreateModalOpen(false)}
+            onClose={() => setCreateTableModalOpen(false)}
             onSubmit={(e) => {
                 handleSubmit(e);
-                setCreateModalOpen(false);
+                setCreateTableModalOpen(false);
             }}
             title="Blokk létrehozása"
             description="Válassz egy helyszínt a blokk létrehozásához."

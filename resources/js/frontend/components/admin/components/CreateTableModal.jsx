@@ -1,13 +1,24 @@
+import { tableService } from "../../../services/admin/TableService";
 import Modal from "../../modals/Modal";
 
-export default function CreateTableModal({ setCreateModalOpen, locations, data, setData, errors, handleSubmit }) {
+export default function CreateTableModal({ setCreateTableModalOpen, locations, data, tablePost, tableReset, setData, errors,  }) {
+  const handleTableSubmit = (e) => {
+        tableService.submitTable(
+            e,
+            data,
+            tablePost,
+            tableReset,
+            setCreateTableModalOpen
+        );
+    };
+
     return (
         <Modal
             isOpen={() => console.log("isOpen")}
-            onClose={() => setCreateModalOpen(false)}
+            onClose={() => setCreateTableModalOpen(false)}
             onSubmit={(e) => {
-                handleSubmit(e);
-                setCreateModalOpen(false);
+                handleTableSubmit(e);
+                setCreateTableModalOpen(false);
             }}
             title="Asztalok kezelése"
             description="Válassz egy helyszínt az asztalok kezeléséhez."

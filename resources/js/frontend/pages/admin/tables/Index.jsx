@@ -73,10 +73,12 @@ function Index() {
             blockReset,
             setCreateBlockModalOpen
         );
-    };
+    }; 
 
     const handleTableDelete = (id) => {
-        tableService.deleteTable(tableDestroy, id);
+        tableService.deleteTable(tableDestroy, id, tableReset);
+        setEditTableModalOpen(false);
+
     };
 
     const handleTableUpdate = (id) => {
@@ -86,16 +88,6 @@ function Index() {
             tablePatch,
             tableReset,
             setEditTableModalOpen
-        );
-    };
-
-    const handleTableSubmit = (e) => {
-        tableService.submitTable(
-            e,
-            tableData,
-            tablePost,
-            tableReset,
-            setCreateTableModalOpen
         );
     };
 
@@ -144,6 +136,7 @@ function Index() {
                         handleTableUpdate(tableData.id);
                         setEditTableModalOpen(false);
                     }}
+                    handleTableDelete={handleTableDelete}
                 />
             )}
 
@@ -165,7 +158,8 @@ function Index() {
                     data={tableData}
                     setData={setTableData}
                     errors={tableErrors}
-                    handleSubmit={handleTableSubmit}
+                    tablePost={tablePost}
+                    tableReset={tableReset}
                 />
             )}
 

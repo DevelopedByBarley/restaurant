@@ -8,6 +8,7 @@ export default function Modal({
     description,
     children,
     submitLabel = "Submit",
+    buttons = [],
 }) {
     if (!isOpen) return null;
 
@@ -15,6 +16,9 @@ export default function Modal({
         e.preventDefault();
         if (onSubmit) onSubmit(e);
     };
+
+
+    console.log(buttons);
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-300/80 bg-opacity-50">
@@ -54,6 +58,16 @@ export default function Modal({
                         >
                             {submitLabel}
                         </button>
+                        {buttons.map((button, index) => (
+                            <button
+                                key={index}
+                                type={button.type || "button"}
+                                onClick={button.onClick}
+                                className={`px-4 py-2 rounded-lg text-sm ${button.className}`}
+                            >
+                                {button.label}
+                            </button>
+                        ))}
                     </div>
                 </form>
             </div>

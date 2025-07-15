@@ -1,6 +1,14 @@
 import Modal from "../../modals/Modal";
 
-export default function EditTableModal({ setEditTableModalOpen, locations, data, setData, errors, handleSubmit }) {
+export default function EditTableModal({
+    setEditTableModalOpen,
+    locations,
+    data,
+    setData,
+    errors,
+    handleSubmit,
+    handleTableDelete,
+}) {
     console.log("EditTableModal data:", data);
     return (
         <Modal
@@ -11,8 +19,16 @@ export default function EditTableModal({ setEditTableModalOpen, locations, data,
                 setEditTableModalOpen(false);
             }}
             title="Asztalok kezelése"
+            
             description="Válassz egy helyszínt az asztalok kezeléséhez."
             submitLabel="Asztal frissítése"
+            buttons={[
+                {
+                    label: "Törlés",
+                    onClick: () => handleTableDelete(data.id),
+                    className: "bg-red-600 text-white",
+                },
+            ]}
         >
             <div className="mb-4">
                 <label className="block mb-1 text-sm">Helyszín</label>
@@ -57,7 +73,7 @@ export default function EditTableModal({ setEditTableModalOpen, locations, data,
                 <input
                     type="number"
                     name="seats"
-                    defaultValue={data.seats || data.seats}
+                    defaultValue={data.seats || data.seats}
                     onChange={(e) => setData("seats", e.target.value)}
                     required
                     className="w-full border border-gray-300 p-2 rounded"
@@ -89,6 +105,10 @@ export default function EditTableModal({ setEditTableModalOpen, locations, data,
                 <option value="bg-amber-400">Borostyán</option>
                 <option value="bg-lime-400">Lime</option>
             </select>
+
+            {errors.color && (
+                <p className="text-red-500 text-sm">{errors.color}</p>
+            )}
         </Modal>
     );
 }

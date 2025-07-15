@@ -1,8 +1,9 @@
 export const tableService = {
-    deleteTable: async (tableDestroy, tableId) => {
+    deleteTable: async (tableDestroy, tableId, tableReset) => {
         if (confirm("Biztosan törölni szeretnéd ezt az asztalt?")) {
             await tableDestroy(`/admin/tables/${tableId}`, {
                 onSuccess: () => {
+                    tableReset();
                     console.log("Asztal törölve:", tableId);
                 },
                 onError: (errors) => {
