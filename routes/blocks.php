@@ -9,3 +9,6 @@ Route::post('/admin/blocks/{block}/save', [BlockController::class, 'save'])
 Route::post('/admin/blocks', [BlockController::class, 'store'])
     ->name('blocks.store')
     ->middleware(['auth:admin']);
+    Route::patch('/admin/blocks/{block}', [BlockController::class, 'update'])
+    ->name('blocks.update')
+    ->middleware(['auth:admin']);

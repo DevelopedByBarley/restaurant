@@ -34,7 +34,7 @@ export default function TableBoard({
                                 <BlockItem
                                     key={block.id}
                                     block={block}
-                                    setEditModalOpen={setEditBlockModalOpen}
+                                    setEditBlockModalOpen={setEditBlockModalOpen}
                                     setData={setBlockData}
                                 />
                             ))}

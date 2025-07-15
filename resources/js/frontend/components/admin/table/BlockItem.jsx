@@ -8,8 +8,8 @@ import { blockService } from "../../../services/admin/BlockService";
 export default function BlockItem({
     block,
     setEditBlockModalOpen,
-    setCurrentBlock,
     setData,
+    
 }) {
     const [isDragging, setIsDragging] = useState(false);
 
@@ -67,31 +67,30 @@ export default function BlockItem({
         >
             <TapHandler
                 onDoubleTap={() => {
-                    if (block.type === "block") {
-                        alert("EDIT block MODAL");
-                    } else {
-                        alert("DELETE BLOCK MODAL");
-                    }
+                    setEditBlockModalOpen(true);
+                    setData({
+                        id: block.id,
+                        location_id: block.location_id, // helyszín ID
+                        name: block.name,
+                        pos_x: block.pos_x,
+                        pos_y: block.pos_y,
+                        width: block.width,
+                        height: block.height,
+                    });
+                    console.log("Editing block:", block);
                 }}
                 onDoubleClick={() => {
-                    if (block.type === "block") {
-                        alert("EDIT BLOCK MODAL");
-                        /* setEditModalOpen(true);
-                        setData({
-                            id: block.id,
-                            location_id: block.location_id, // helyszín ID
-                            name: block.name,
-                            seats: block.seats,
-                            color: block.color,
-                            pos_x: block.pos_x,
-                            pos_y: block.pos_y,
-                            width: block.width,
-                            height: block.height,
-                        });
-                        setCurrentblock(block); */
-                    } else {
-                        alert("DELETE BLOCK MODAL");
-                    }
+                    setEditBlockModalOpen(true);
+                    setData({
+                        id: block.id,
+                        location_id: block.location_id, // helyszín ID
+                        name: block.name,
+                        pos_x: block.pos_x,
+                        pos_y: block.pos_y,
+                        width: block.width,
+                        height: block.height,
+                    });
+                    console.log("Editing block:", block);
                 }}
                 classes="flex items-center justify-center flex-col gap-1 h-full w-full p-2 rounded"
             ></TapHandler>

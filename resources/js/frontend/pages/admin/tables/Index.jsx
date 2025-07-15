@@ -1,4 +1,4 @@
-import { useForm, usePage } from "@inertiajs/react";
+import { router, useForm, usePage } from "@inertiajs/react";
 
 import AdminLayout from "../../../layouts/AdminLayout";
 import IndigoBtn from "../../../components/IndigoBtn";
@@ -12,6 +12,7 @@ import { tableService } from "../../../services/admin/TableService";
 import { blockService } from "../../../services/admin/BlockService";
 import LocationItems from "../../../components/admin/table/LocationItems";
 import TableList from "../../../components/admin/table/TableList";
+import EditBlockModal from "../../../components/admin/components/EditBlockModal";
 
 function Index() {
     const { locations } = usePage().props;
@@ -27,7 +28,7 @@ function Index() {
     const [editTableModalOpen, setEditTableModalOpen] = useState(false);
 
     const [createBlockModalOpen, setCreateBlockModalOpen] = useState(false);
-
+    const [editBlockModalOpen, setEditBlockModalOpen] = useState(false);
     const {
         data: tableData,
         setData: setTableData,
@@ -68,7 +69,6 @@ function Index() {
     const handleTableDelete = (id) => {
         tableService.deleteTable(tableDestroy, id, tableReset);
         setEditTableModalOpen(false);
-
     };
 
     const handleTableUpdate = (id) => {
@@ -81,6 +81,14 @@ function Index() {
         );
     };
 
+    const handleBlockUpdate = (id) => {
+        blockService.handleUpdate(
+            blockPatch,
+            blockData,
+            router
+        );
+        setEditBlockModalOpen(false);
+    };
     return (
         <>
             <AdminHeader>
@@ -113,6 +121,7 @@ function Index() {
                 setBlockData={setBlockData}
                 setEditTableModalOpen={setEditTableModalOpen}
                 setTableData={setTableData}
+                setEditBlockModalOpen={setEditBlockModalOpen}
             />
 
             {editTableModalOpen && (
@@ -153,6 +162,19 @@ function Index() {
                     tableReset={tableReset}
                     blockPost={blockPost}
                     blockReset={blockReset}
+                />
+            )}
+
+            {editBlockModalOpen && (
+                <EditBlockModal
+                    setEditBlockModalOpen={setEditBlockModalOpen}
+                    locations={locations}
+                    data={blockData}
+                    setData={setBlockData}
+                    errors={blockErrors}
+                    blockPost={blockPost}
+                    blockReset={blockReset}
+                    handleSubmit={handleBlockUpdate}
                 />
             )}
 

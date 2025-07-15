@@ -1,17 +1,26 @@
 import Modal from "../../modals/Modal";
 
-export default function EditBlockModal() {
+export default function EditBlockModal({
+    locations,
+    setEditBlockModalOpen,
+    data,
+    setData,
+    errors,
+    blockPost,
+    blockReset,
+    handleSubmit
+}) {
     return (
         <Modal
             isOpen={() => console.log("isOpen")}
-            onClose={() => setCreateModalOpen(false)}
+            onClose={() => setEditBlockModalOpen(false)}
             onSubmit={(e) => {
                 handleSubmit(e);
-                setCreateModalOpen(false);
+                setEditBlockModalOpen(false);
             }}
-            title="Blokk létrehozása"
-            description="Válassz egy helyszínt a blokk létrehozásához."
-            submitLabel="Blokk hozzáadása"
+            title="Blokk szerkesztése"
+            description="Válassz egy helyszínt a blokk szerkesztéséhez."
+            submitLabel="Blokk frissítése"
         >
             <div className="mb-4">
                 <label className="block mb-1 text-sm">Helyszín</label>

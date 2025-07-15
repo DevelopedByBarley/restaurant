@@ -47,7 +47,27 @@ export const blockService = {
             .catch((err) => {
                 console.error("Error saving block position:", err);
             });
-    }
+    },
+    handleUpdate: async (blockPatch, data, router) => {
+        blockPatch(`/admin/blocks/${data.id}`, {
+            data: {
+                location_id: data.location_id,
+                name: data.name,
+            },
+            onSuccess: () => {
+                console.log("Block updated successfully");
+                router.visit("/admin/tables", {
+                    method: "get",
+                    preserveScroll: true,
+                    preserveState: true,
+                    only: ["locations", "blocks", "tables"],
+                });
+            },
+            onError: (errors) => {
+                console.error("Hiba:", errors);
+            },
+        });
+    },
 
 
 };

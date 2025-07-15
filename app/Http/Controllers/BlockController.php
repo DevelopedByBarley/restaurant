@@ -30,7 +30,7 @@ class BlockController extends Controller
      */
     public function store(StoreBlockRequest $request)
     {
-        
+
         Block::create([
             'location_id' => $request->location_id,
             'name' => $request->name,
@@ -66,8 +66,8 @@ class BlockController extends Controller
     {
 
         $block->update([
+            'location_id' => $request->location_id,
             'name' => $request->name,
-            'seats' => $request->seats,
             'color' => $request->color ?? 'bg-slate-600',
             'pos_x' => $request->pos_x,
             'pos_y' => $request->pos_y,
