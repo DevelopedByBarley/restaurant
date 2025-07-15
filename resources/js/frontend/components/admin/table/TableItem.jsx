@@ -6,16 +6,14 @@ import { tableService } from "../../../services/admin/TableService";
 
 export default function TableItem({
     table,
-    currentTable,
     setEditTableModalOpen,
-    setCurrentTable,
     setTableData,
 }) {
     const [isDragging, setIsDragging] = useState(false);
 
     const handleSave = (data) => {
         tableService.save(table, data, router);
-    }
+    };
 
     return (
         <Rnd
@@ -67,12 +65,11 @@ export default function TableItem({
         >
             <TapHandler
                 onDoubleTap={() => {
-                    setCurrentTable(table);
-                    setTableData(currentTable);
-                    setEditTableModalOpen(true)
+                    setTableData(table);
+                    setEditTableModalOpen(true);
                 }}
                 onDoubleClick={() => {
-                    setCurrentTable(table);
+                    setTableData(table);
                     setEditTableModalOpen(true);
                 }}
                 classes="flex items-center justify-center flex-col gap-1 h-full w-full p-2 rounded"

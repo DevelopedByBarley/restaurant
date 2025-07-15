@@ -23,7 +23,6 @@ function Index() {
         (location) => location.id === activeLocationId
     );
 
-    const [currentTable, setCurrentTable] = useState(null);
     const [createTableModalOpen, setCreateTableModalOpen] = useState(false);
     const [editTableModalOpen, setEditTableModalOpen] = useState(false);
 
@@ -131,20 +130,18 @@ function Index() {
                 blocks={activeLocation.blocks}
                 setBlockData={setBlockData}
                 setEditTableModalOpen={setEditTableModalOpen}
-                setCurrentTable={setCurrentTable}
                 setTableData={setTableData}
             />
 
             {editTableModalOpen && (
                 <EditTableModal
-                    currentTable={currentTable}
                     setEditTableModalOpen={setEditTableModalOpen}
                     locations={locations}
                     data={tableData}
                     setData={setTableData}
                     errors={tableErrors}
                     handleSubmit={(e) => {
-                        handleTableUpdate(currentTable.id);
+                        handleTableUpdate(tableData.id);
                         setEditTableModalOpen(false);
                     }}
                 />
@@ -182,8 +179,8 @@ function Index() {
                         <TableList
                             activeLocation={activeLocation}
                             setEditTableModalOpen={setEditTableModalOpen}
-                            setCurrentTable={setCurrentTable}
                             setTableData={setTableData}
+                            handleTableDelete={handleTableDelete}
                         />
                     </>
                 )}

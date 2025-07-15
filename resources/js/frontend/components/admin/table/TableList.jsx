@@ -1,4 +1,10 @@
-export default function TableList({ activeLocation, setEditTableModalOpen, setCurrentTable, setTableData }) {
+export default function TableList({
+    activeLocation,
+    setEditTableModalOpen,
+    setCurrentTable,
+    setTableData,
+    handleTableDelete,
+}) {
     return (
         <table className="w-full text-sm shadow-md text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <caption className="p-5 text-lg font-semibold text-left rtl:text-right text-gray-900 bg-white dark:text-white dark:bg-gray-800">

@@ -3,9 +3,8 @@ import TableItem from "./TableItem";
 export default function TableBoard({
     activeLocation,
     tables,
-    setEditModalOpen,
-    setCurrentTable,
-    setData,
+    setEditTableModalOpen,
+    setTableData,
 }) {
     return (
         <>
@@ -18,9 +17,8 @@ export default function TableBoard({
                                 <TableItem
                                     key={table.id}
                                     table={table}
-                                    setEditModalOpen={setEditModalOpen}
-                                    setCurrentTable={setCurrentTable}
-                                    setData={setData}
+                                    setEditTableModalOpen={setEditTableModalOpen}
+                                    setTableData={setTableData}
                                 />
                             ))}
                             {/* {blocks.map((block) => (

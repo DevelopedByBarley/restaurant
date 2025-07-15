@@ -1,14 +1,14 @@
 import Modal from "../../modals/Modal";
 
-export default function EditTableModal({ setEditModalOpen, locations, data, setData, errors, handleSubmit, currentTable }) {
-    console.log("EditTableModal currentTable:", currentTable);
+export default function EditTableModal({ setEditTableModalOpen, locations, data, setData, errors, handleSubmit }) {
+    console.log("EditTableModal data:", data);
     return (
         <Modal
             isOpen={() => console.log("isOpen")}
-            onClose={() => setEditModalOpen(false)}
+            onClose={() => setEditTableModalOpen(false)}
             onSubmit={(e) => {
                 handleSubmit(e);
-                setEditModalOpen(false);
+                setEditTableModalOpen(false);
             }}
             title="Asztalok kezelése"
             description="Válassz egy helyszínt az asztalok kezeléséhez."
@@ -18,7 +18,7 @@ export default function EditTableModal({ setEditModalOpen, locations, data, setD
                 <label className="block mb-1 text-sm">Helyszín</label>
                 <select
                     name="location_id"
-                    defaultValue={currentTable.location_id || data.location_id}
+                    defaultValue={data.location_id || data.location_id}
                     onChange={(e) => setData("location_id", e.target.value)}
                     required
                     className="w-full border border-gray-300 p-2 rounded"
@@ -41,7 +41,7 @@ export default function EditTableModal({ setEditModalOpen, locations, data, setD
                 <input
                     type="text"
                     name="name"
-                    defaultValue={currentTable.name || data.name}
+                    defaultValue={data.name || data.name}
                     onChange={(e) => setData("name", e.target.value)}
                     required
                     className="w-full border border-gray-300 p-2 rounded"
@@ -57,7 +57,7 @@ export default function EditTableModal({ setEditModalOpen, locations, data, setD
                 <input
                     type="number"
                     name="seats"
-                    defaultValue={currentTable.seats || data.seats}
+                    defaultValue={data.seats || data.seats}
                     onChange={(e) => setData("seats", e.target.value)}
                     required
                     className="w-full border border-gray-300 p-2 rounded"
@@ -70,7 +70,7 @@ export default function EditTableModal({ setEditModalOpen, locations, data, setD
             <select
                 name="color"
                 id="color"
-                defaultValue={currentTable.color || data.color}
+                defaultValue={data.color || data.color}
                 onChange={(e) => setData("color", e.target.value)}
                 className="w-full border border-gray-300 p-2 rounded mb-4"
             >
