@@ -2,12 +2,11 @@ import { Link, usePage } from "@inertiajs/react";
 import { useState } from "react";
 import LocaleSwitcher from "./LocaleSwitcher";
 
-export default function Navbar() {
+export default function Navbar({ setIsReservationModalOpen }) {
     const { url } = usePage();
     const { locale, t } = usePage().props;
     const [isOpen, setIsOpen] = useState(false);
 
-    console.log(locale);
     const getLinkClass = (path) => {
         return url === path
             ? "rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
@@ -87,7 +86,7 @@ export default function Navbar() {
                     </div>
 
                     {/* Sign in / Sign up nagy képernyőn jobbra, mobilon rejtve */}
-                    <div className="hidden sm:flex gap-2">
+                    {/*    <div className="hidden sm:flex gap-2">
                         <Link
                             href="/login"
                             className="cursor-pointer bg-violet-500 hover:bg-violet-700 text-white font-bold py-2 px-4 rounded"
@@ -101,7 +100,14 @@ export default function Navbar() {
                             {t.navbar.register}
                         </Link>
                         <LocaleSwitcher />
-                    </div>
+                    </div> */}
+
+                    <button
+                        onClick={() => setIsReservationModalOpen(true)}
+                        className="cursor-pointer bg-violet-500 hover:bg-violet-700 text-white font-bold py-2 px-4 rounded"
+                    >
+                        Asztal foglalás
+                    </button>
                 </div>
             </div>
 
@@ -131,7 +137,7 @@ export default function Navbar() {
                             >
                                 {t.navbar.register}
                             </Link>
-                        <LocaleSwitcher />
+                            <LocaleSwitcher />
                         </div>
                     </div>
                 </div>
