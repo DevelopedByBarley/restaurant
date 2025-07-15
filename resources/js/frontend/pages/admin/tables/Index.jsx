@@ -89,6 +89,11 @@ function Index() {
         );
         setEditBlockModalOpen(false);
     };
+
+    const handleBlockDelete = (id) => {
+        blockService.handleDelete(blockDestroy, id, blockReset);
+        setEditBlockModalOpen(false);
+    };
     return (
         <>
             <AdminHeader>
@@ -175,6 +180,7 @@ function Index() {
                     blockPost={blockPost}
                     blockReset={blockReset}
                     handleSubmit={handleBlockUpdate}
+                    handleBlockDelete={handleBlockDelete}
                 />
             )}
 

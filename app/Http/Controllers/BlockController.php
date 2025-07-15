@@ -83,7 +83,11 @@ class BlockController extends Controller
      */
     public function destroy(Block $block)
     {
-        //
+
+        $block->delete();
+
+        return redirect()->route('tables.index')->with('success', 'Blokk sikeresen törölve.');
+
     }
 
     public function save(Request $request, Block $block)

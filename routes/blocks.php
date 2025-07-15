@@ -12,3 +12,6 @@ Route::post('/admin/blocks', [BlockController::class, 'store'])
     Route::patch('/admin/blocks/{block}', [BlockController::class, 'update'])
     ->name('blocks.update')
     ->middleware(['auth:admin']);
+Route::delete('/admin/blocks/{block}', [BlockController::class, 'destroy'])
+    ->name('blocks.destroy')
+    ->middleware(['auth:admin']);

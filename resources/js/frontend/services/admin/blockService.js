@@ -69,5 +69,18 @@ export const blockService = {
         });
     },
 
+    handleDelete: async (blockDestroy, id, blockReset) => {
+        confirm("Biztosan törölni szeretnéd ezt a blokkot?") &&
+        blockDestroy(`/admin/blocks/${id}`, {
+            onSuccess: () => {
+                console.log("Block deleted successfully");
+                blockReset();
+            },
+            onError: (errors) => {
+                console.error("Hiba:", errors);
+            },
+        });
+    },
+
 
 };

@@ -8,7 +8,8 @@ export default function EditBlockModal({
     errors,
     blockPost,
     blockReset,
-    handleSubmit
+    handleSubmit,
+    handleBlockDelete
 }) {
     return (
         <Modal
@@ -21,6 +22,13 @@ export default function EditBlockModal({
             title="Blokk szerkesztése"
             description="Válassz egy helyszínt a blokk szerkesztéséhez."
             submitLabel="Blokk frissítése"
+            buttons={[
+                {
+                    label: "Törlés",
+                    onClick: () => handleBlockDelete(data.id),
+                    className: "bg-red-600 text-white",
+                },
+            ]}
         >
             <div className="mb-4">
                 <label className="block mb-1 text-sm">Helyszín</label>

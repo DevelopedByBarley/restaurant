@@ -41,15 +41,17 @@ class TableController extends Controller
      */
     public function store(StoreTableRequest $request)
     {
+        $validated = $request->validated();
+        $size = $this->generateSizeOfTable($validated['seats']);
+
         Table::create([
-            'location_id' => $request->location_id,
-            'name' => $request->name,
-            'seats' => $request->seats,
-            'color' => $request->color ?? 'bg-rose-400',
-            'pos_x' => 0,
-            'pos_y' => 0,
-            'width' => 60,
-            'height' => 60,
+            'location_id' => $validated['location_id'],
+            'name' => $validated['name'],
+            'seats' => $validated['seats'],
+            'pos_x' => $validated['pos_x'] ?? 0,
+            'pos_y' => $validated['pos_y'] ?? 0,
+            'width' => $size['width'],
+            'height' => $size['height'],
         ]);
 
         return redirect()->route('tables.index')->with('success', 'Asztal sikeresen létrehozva.');
@@ -110,5 +112,39 @@ class TableController extends Controller
         ]);
 
         return redirect()->route('tables.index')->with('success', 'Asztal mérete sikeresen frissítve.');
+    }
+
+    private function generateSizeOfTable($seats)
+    {
+        $width = 60;
+        $height = 60;
+
+        switch ($seats) {
+            case $seats <= 2:
+                return [
+                    'width' => $width,
+                    'height' => $height,
+                ];
+            case $seats <= 4:
+                return [
+                    'width' => $width * 1.5,
+                    'height' => $height * 1.5,
+                ];
+            case $seats <= 6:
+                return [
+                    'width' => $width * 2,
+                    'height' => $height * 2,
+                ];
+            case $seats <= 8:
+                return [
+                    'width' => $width * 2.5,
+                    'height' => $height * 2.5,
+                ];
+            default:
+                return [
+                    'width' => $width,
+                    'height' => $height,
+                ];
+        }
     }
 }
