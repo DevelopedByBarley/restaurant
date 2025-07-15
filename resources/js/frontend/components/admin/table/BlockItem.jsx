@@ -4,10 +4,10 @@ import { router } from "@inertiajs/react";
 import { useState } from "react";
 import TapHandler from "../../../core/TapHandler";
 
-export default function DraggableItem({
-    table,
-    setEditModalOpen,
-    setCurrentTable,
+export default function BlockItem({
+    block,
+    setEditBlockModalOpen,
+    setCurrentBlock,
     setData,
 }) {
 

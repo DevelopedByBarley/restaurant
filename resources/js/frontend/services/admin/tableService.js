@@ -79,6 +79,35 @@ export const tableService = {
                 },
             });
         }
+    },
+
+    save: async (table, data, router) => {
+        axios
+            .post(
+                `/admin/tables/${table.id}/save`,
+                {
+                    pos_x: data.x,
+                    pos_y: data.y,
+                    width: data.width,
+                    height: data.height,
+                },
+                {
+                    withCredentials: true,
+                }
+            )
+            .then(() => {
+                console.log(`Table ${table.id} saved:`, data);
+                router.visit("/admin/tables", {
+                    method: "get",
+                    preserveScroll: true,
+                    preserveState: true,
+                    only: ["locations", "tables", "blocks"],
+                });
+            })
+            .catch((err) => {
+                console.error("Error saving table position:", err);
+            });
     }
+
 
 };

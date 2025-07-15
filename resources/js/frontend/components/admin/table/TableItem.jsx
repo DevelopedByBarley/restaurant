@@ -1,0 +1,105 @@
+import { Rnd } from "react-rnd";
+import { router } from "@inertiajs/react";
+import { useState } from "react";
+import TapHandler from "../../../core/TapHandler";
+import { tableService } from "../../../services/admin/TableService";
+
+export default function TableItem({
+    table,
+    currentTable,
+    setEditTableModalOpen,
+    setCurrentTable,
+    setTableData,
+}) {
+    const [isDragging, setIsDragging] = useState(false);
+
+    const handleSave = (data) => {
+        tableService.save(table, data, router);
+    }
+
+    return (
+        <Rnd
+            key={table.id}
+            default={{
+                x: table.pos_x || 0,
+                y: table.pos_y || 0,
+                width: table.width,
+                height: table.height,
+                type: table.type || "table",
+            }}
+            bounds="parent"
+            onDragStop={(e, d) => {
+                handleSave({
+                    x: d.x,
+                    y: d.y,
+                    width: table.width,
+                    height: table.height,
+                    type: table.type || "table",
+                });
+
+                setIsDragging(false);
+            }}
+            onResizeStop={(e, direction, ref, delta, position) => {
+                handleSave({
+                    x: position.x,
+                    y: position.y,
+                    width: parseInt(ref.style.width),
+                    height: parseInt(ref.style.height),
+                    type: table.type || "table",
+                });
+                setIsDragging(false);
+            }}
+            onDragStart={() => setIsDragging(true)}
+            onResizeStart={() => setIsDragging(true)}
+            onDragEnd={() => setIsDragging(false)}
+            onResizeEnd={() => setIsDragging(false)}
+            style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: 4,
+                cursor: "move",
+                opacity: isDragging ? 0.5 : 1,
+                transition: "opacity 0.2s ease",
+                boxShadow: isDragging ? "0 4px 8px rgba(0, 0, 0, 0.2)" : "none",
+            }}
+            className={`${table.color} shadow-md`}
+        >
+            <TapHandler
+                onDoubleTap={() => {
+                    setCurrentTable(table);
+                    setTableData(currentTable);
+                    setEditTableModalOpen(true)
+                }}
+                onDoubleClick={() => {
+                    setCurrentTable(table);
+                    setEditTableModalOpen(true);
+                }}
+                classes="flex items-center justify-center flex-col gap-1 h-full w-full p-2 rounded"
+            >
+                {table.seats && (
+                    <>
+                        <p className="font-bold">{table.name}</p>
+                        <div className="rounded-full bg-white p-1 flex items-center justify-center">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth={1.5}
+                                stroke="currentColor"
+                                className="size-4"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
+                                />
+                            </svg>
+                            <p className="text-sm">{table.seats}</p>
+                        </div>
+                    </>
+                )}
+            </TapHandler>
+        </Rnd>
+    );
+}
