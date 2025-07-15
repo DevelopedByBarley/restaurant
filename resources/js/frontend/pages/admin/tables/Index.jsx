@@ -1,4 +1,4 @@
-import { router, useForm, usePage } from "@inertiajs/react";
+import { Link, router, useForm, usePage } from "@inertiajs/react";
 
 import AdminLayout from "../../../layouts/AdminLayout";
 import IndigoBtn from "../../../components/IndigoBtn";
@@ -16,6 +16,7 @@ import EditBlockModal from "../../../components/admin/components/EditBlockModal"
 
 function Index() {
     const { locations } = usePage().props;
+
     const [activeLocationId, setActiveLocationId] = useState(
         locations.length > 0 ? locations[0].id : 0
     );
@@ -81,12 +82,8 @@ function Index() {
         );
     };
 
-    const handleBlockUpdate = (id) => {
-        blockService.handleUpdate(
-            blockPatch,
-            blockData,
-            router
-        );
+    const handleBlockUpdate = () => {
+        blockService.handleUpdate(blockPatch, blockData, router);
         setEditBlockModalOpen(false);
     };
 
@@ -94,6 +91,22 @@ function Index() {
         blockService.handleDelete(blockDestroy, id, blockReset);
         setEditBlockModalOpen(false);
     };
+
+    if(locations.length === 0) {
+        return (
+            <div className="p-6 text-gray-600 dark:text-gray-300 text-center">
+                Nincs elérhető helyszín. Kérjük, először hozzon létre egy
+                helyszínt.
+                <Link
+                    href="/admin/locations/create"
+                    className="text-blue-500 hover:underline ml-2"
+                >
+                    Hozzon létre egy helyszínt
+                </Link>
+            </div>
+        );
+    }
+
     return (
         <>
             <AdminHeader>

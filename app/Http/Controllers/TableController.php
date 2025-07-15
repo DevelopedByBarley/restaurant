@@ -52,6 +52,7 @@ class TableController extends Controller
             'pos_y' => $validated['pos_y'] ?? 0,
             'width' => $size['width'],
             'height' => $size['height'],
+            'color' => $validated['color'] ?? 'bg-teal-400',
         ]);
 
         return redirect()->route('tables.index')->with('success', 'Asztal sikeresen létrehozva.');
