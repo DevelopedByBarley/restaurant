@@ -15,11 +15,13 @@ return new class extends Migration
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignIdFor(Table::class)->constrained()->onDelete('cascade'); // melyik asztalhoz
+            $table->foreignIdFor(Table::class)->nullable()->constrained()->onDelete('cascade'); // melyik asztalhoz
             $table->string('guest_name');   // vendég neve
             $table->string('guest_phone')->nullable(); // telefon (opcionális)
             $table->string('guest_email')->nullable(); // email (opcionális)
 
+            $table->date('date'); // a foglalás napja
+            $table->time('duration'); // a foglalás időtartama
             $table->dateTime('reservation_start'); // foglalás kezdete
             $table->dateTime('reservation_end');   // foglalás vége
 

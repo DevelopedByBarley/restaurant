@@ -1,17 +1,20 @@
 import { Link, usePage } from "@inertiajs/react";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import LocaleSwitcher from "./LocaleSwitcher";
+import { ReservationContext } from "../contexts/ReservationContext";
 
-export default function Navbar({ setIsReservationModalOpen }) {
+export default function Navbar() {
     const { url } = usePage();
     const { locale, t } = usePage().props;
     const [isOpen, setIsOpen] = useState(false);
+    const { setReservationModalOpen } = useContext(ReservationContext);
 
     const getLinkClass = (path) => {
         return url === path
             ? "rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
             : "rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white";
     };
+    
 
     return (
         <nav className="bg-gray-800">
@@ -103,7 +106,7 @@ export default function Navbar({ setIsReservationModalOpen }) {
                     </div> */}
 
                     <button
-                        onClick={() => setIsReservationModalOpen(true)}
+                        onClick={() => setReservationModalOpen(true)}
                         className="cursor-pointer bg-violet-500 hover:bg-violet-700 text-white font-bold py-2 px-4 rounded"
                     >
                         Asztal foglalás
