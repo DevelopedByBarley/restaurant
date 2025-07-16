@@ -119,7 +119,7 @@ export default function AdminNavbar() {
                             <span className="mx-2 text-sm font-medium">Foglalások</span>
                         </Link>
 
-                        <Link href="/admin/tables" className="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-300
+                        <Link href="/admin/openings" className="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-300
                             hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                 viewBox="0 0 24 24" strokeWidth="1.5"
@@ -131,7 +131,7 @@ export default function AdminNavbar() {
                                       1.125 1.125 1.125h1.5a3.375 3.375 0 013.375 3.375M9 15l2.25
                                       2.25L15 12" />
                             </svg>
-                            <span className="mx-2 text-sm font-medium">Tasks</span>
+                            <span className="mx-2 text-sm font-medium">Nyitvatartás</span>
                         </Link>
 
 

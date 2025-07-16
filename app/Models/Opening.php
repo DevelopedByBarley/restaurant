@@ -9,4 +9,6 @@ class Opening extends Model
 {
     /** @use HasFactory<\Database\Factories\OpeningFactory> */
     use HasFactory;
+
+    protected $guarded = [];
 }

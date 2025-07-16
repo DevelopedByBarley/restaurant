@@ -24,8 +24,6 @@ return new class extends Migration
                 'sunday'
             ]);
 
-            $table->date('date');
-
 
             $table->time('opens_at');      // nyitás időpontja
             $table->time('closes_at');     // zárás időpontja

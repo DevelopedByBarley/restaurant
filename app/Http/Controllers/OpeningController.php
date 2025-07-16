@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Opening;
 use App\Http\Requests\StoreOpeningRequest;
 use App\Http\Requests\UpdateOpeningRequest;
+use Inertia\Inertia;
 
 class OpeningController extends Controller
 {
@@ -13,7 +14,9 @@ class OpeningController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('pages/admin/openings/Index', [
+            'openings' => Opening::all(),
+        ]);
     }
 
     /**
@@ -21,7 +24,7 @@ class OpeningController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('pages/admin/openings/Create');
     }
 
     /**
@@ -29,7 +32,11 @@ class OpeningController extends Controller
      */
     public function store(StoreOpeningRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        Opening::create($data);
+
+        return redirect()->route('openings.index')->with('success', 'Nyitvatartás sikeresen hozzáadva.');
     }
 
     /**

@@ -11,7 +11,7 @@ class StoreOpeningRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,10 @@ class StoreOpeningRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'day_of_week' => 'required|in:monday,tuesday,wednesday,thursday,friday,saturday,sunday',
+            'opens_at' => 'required_without:is_closed|date_format:H:i',
+            'closes_at' => 'required_without:is_closed|date_format:H:i',
+            'is_closed' => 'boolean',
         ];
     }
 }
