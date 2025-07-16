@@ -15,11 +15,6 @@ function Index() {
                             Nyitvatartás hozzáadása
                         </Link>
                     </IndigoBtn>
-                    <IndigoBtn className="mt-4 text-xs">
-                        <Link href={"/admin/openings/create"}>
-                            Kivétel hozzáadása
-                        </Link>
-                    </IndigoBtn>
                 </span>
             </AdminHeader>
 
