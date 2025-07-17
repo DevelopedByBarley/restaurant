@@ -12,11 +12,7 @@ export default function Home() {
         <>
             <CreateReservationModal
                 isOpen={isReservationModalOpen}
-                onClose={() => setIsReservationModalOpen(false) }
-                onSubmit={() => {
-                    // Handle reservation submission
-                    setIsReservationModalOpen(false);
-                }}
+                setIsReservationModalOpen={setIsReservationModalOpen}
                 slots={slots}
                 title="Asztal foglalás"
                 description="Kérjük, töltse ki az adatokat a foglalás létrehozásához."

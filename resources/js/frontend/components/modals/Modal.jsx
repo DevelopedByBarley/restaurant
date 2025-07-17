@@ -8,6 +8,7 @@ export default function Modal({
     description,
     children,
     submitLabel = "Submit",
+    withButtons = true,
     buttons = [],
 }) {
     if (!isOpen) return null;
@@ -44,31 +45,32 @@ export default function Modal({
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">{children}</div>
 
-                    <div className="flex justify-end gap-2">
-                        <button
-                            type="button"
-                            onClick={onClose}
-                            className="px-4 py-2 rounded-lg text-sm bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-500"
-                        >
-                            Cancel
-                        </button>
-                        <button
-                            type="submit"
-                            className="px-4 py-2 rounded-lg text-sm bg-blue-600 text-white hover:bg-blue-700"
-                        >
-                            {submitLabel}
-                        </button>
-                        {buttons.map((button, index) => (
-                            <button
-                                key={index}
-                                type={button.type || "button"}
-                                onClick={button.onClick}
-                                className={`px-4 py-2 rounded-lg text-sm ${button.className}`}
-                            >
-                                {button.label}
-                            </button>
-                        ))}
-                    </div>
+                    {withButtons && (
+                        <div className="flex justify-end space-x-2">
+                            {buttons.length > 0 ? (
+                                buttons.map((button, index) => (
+                                    <button
+                                        key={index}
+                                        type={button.type || "button"}
+                                        onClick={button.onClick}
+                                        className={`px-4 py-2 rounded ${
+                                            button.className ||
+                                            "bg-indigo-600 text-white hover:bg-indigo-700"
+                                        }`}
+                                    >
+                                        {button.label}
+                                    </button>
+                                ))
+                            ) : (
+                                <button
+                                    type="submit"
+                                    className="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700"
+                                >
+                                    {submitLabel}
+                                </button>
+                            )}
+                        </div>
+                    )}
                 </form>
             </div>
         </div>

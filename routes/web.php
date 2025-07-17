@@ -54,6 +54,8 @@ Route::get('/test', function () {
             return !$hasReservation;
         });
 
+        dd($freeTable);
+
         if ($freeTable) {
             $timestamps[] = [
                 'start' => $slotStart->format('H:i'),
