@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignIdFor(Table::class)->nullable()->constrained()->onDelete('cascade'); // melyik asztalhoz
+            $table->foreignIdFor(Table::class)->nullable()->constrained()->onDelete('restrict'); // melyik asztalhoz
             $table->string('guest_name');   // vendég neve
             $table->string('guest_phone')->nullable(); // telefon (opcionális)
             $table->string('guest_email')->nullable(); // email (opcionális)

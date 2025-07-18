@@ -14,7 +14,6 @@ function ReservationsPage() {
     return (
         <div className="w-3/4 xl:ml-80 p-4">
             <AdminHeader>Foglalások kezelése</AdminHeader>
-
             <ReservationNav reservations={reservations.data} filters={filters} />
             <TableMap tables={tables} />
         </div>

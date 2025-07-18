@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { ReservationCard } from "../../../pages/admin/reservations/ReservationCard";
 
 export const ReservationNav = ({ reservations, filters }) => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -32,7 +33,7 @@ export const ReservationNav = ({ reservations, filters }) => {
             {/* Sidebar - foglalási kérelmek */}
             <aside
                 className={`
-                    fixed top-0 left-0 z-40 h-screen w-92 px-5 py-8 overflow-y-auto bg-white border-r dark:bg-gray-900 dark:border-gray-700
+                    fixed top-0 left-0 z-40 h-screen w-[500px] px-5 py-8 overflow-y-auto bg-white border-r dark:bg-gray-900 dark:border-gray-700
                     transform transition-transform duration-300 ease-in-out
                     ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}
                     lg:translate-x-0
@@ -52,6 +53,7 @@ export const ReservationNav = ({ reservations, filters }) => {
                     Bejövő foglalási kérelmek
                 </h2>
 
+                <ReservationCard reservation={reservations[0]} />
             </aside>
 
             {/* Overlay for sidebar when open on mobile */}
@@ -64,7 +66,7 @@ export const ReservationNav = ({ reservations, filters }) => {
 
             {/* Tartalom helye */}
             <div className="p-4 lg:ml-96">
-                {/* Itt jelenítheted meg a fő tartalmat */}
+
             </div>
         </>
     );

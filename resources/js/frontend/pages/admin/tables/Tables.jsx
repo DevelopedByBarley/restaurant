@@ -6,12 +6,12 @@ import { useState } from "react";
 import TableBoard from "../../../components/admin/table/TableBoard";
 import AdminHeader from "../../../components/admin/AdminHeader";
 import EditTableModal from "../../../components/admin/EditTableModal";
-import CreateBlockModal from "../../../components/admin/EditBlockModal";
 import { tableService } from "../../../services/admin/TableService";
 import { blockService } from "../../../services/admin/BlockService";
 import LocationItems from "../../../components/admin/table/LocationItems";
 import TableList from "../../../components/admin/table/TableList";
 import EditBlockModal from "../../../components/admin/EditBlockModal";
+import CreateTableModal from "../../../components/admin/table/CreateTableModal";
 
 function Tables() {
     const { locations } = usePage().props;

@@ -16,29 +16,39 @@ class ReservationController extends Controller
      */
     public function index()
     {
-        $date = request('date'); // pl. '2024-07-18'
-        $start = $date . ' ' . request('start'); // pl. '2024-07-18 18:00'
-        $end = $date . ' ' . request('end');     // pl. '2024-07-18 19:30'
+        $date = request('date', date('Y-m-d'));
+        $start = $date . ' ' . request('start');
+        $end = $date . ' ' . request('end');
 
-
-        // Lekérjük az asztalokat, és minden asztalhoz csak az adott időintervallumra eső foglalásokat csatoljuk
+        // Asztalok szűrt foglalásokkal
         $tables = Table::with(['reservations' => function ($query) use ($date, $start, $end) {
             if ($date && $start && $end) {
                 $query->whereDate('reservation_start', $date)
                       ->where(function ($q) use ($start, $end) {
-                          $q->where(function ($sub) use ($start, $end) {
-                              $sub->where('reservation_start', '<', $end)
-                                  ->where('reservation_end', '>', $start);
-                          });
+                          $q->where('reservation_start', '<', $end)
+                            ->where('reservation_end', '>', $start);
                       });
             }
         }])->get();
 
+        // Locations szűrt asztalokkal (itt is with-eljük a reservations-t!)
+        $locations = Location::with([
+            'tables.reservations' => function ($query) use ($date, $start, $end) {
+                if ($date && $start && $end) {
+                    $query->whereDate('reservation_start', $date)
+                          ->where('reservation_start', '<', $end)
+                          ->where('reservation_end', '>', $start);
+                }
+            },
+            'blocks'
+        ])->get();
+
+        
+
         return Inertia::render('pages/admin/reservations/Reservations', [
             'tables' => $tables,
             'filters' => request()->all('search', 'trashed', 'date', 'start', 'end'),
-            'locations' => Location::with(['tables', 'blocks'])->get(),
-            // A reservations maradhat, ha külön listázni akarod
+            'locations' => $locations,
             'reservations' => Reservation::with(['table'])->paginate()
         ]);
     }

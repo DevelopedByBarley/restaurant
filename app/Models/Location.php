@@ -21,4 +21,5 @@ class Location extends Model
     {
         return $this->hasMany(Block::class);
     }
+    
 }

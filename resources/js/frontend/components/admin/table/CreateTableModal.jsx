@@ -1,5 +1,5 @@
-import { tableService } from "../../services/admin/TableService";
-import Modal from "../modals/Modal";
+import { tableService } from "../../../services/admin/TableService";
+import Modal from "../../modals/Modal";
 
 export default function CreateTableModal({ setCreateTableModalOpen, locations, data, tablePost, tableReset, setData, errors,  }) {
   const handleTableSubmit = (e) => {

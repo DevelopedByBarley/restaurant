@@ -13,6 +13,8 @@ export const TableMap = ({ tables }) => {
         (location) => location.id === activeLocationId
     );
 
+    console.log(activeLocation.tables);
+    console.log(activeLocation.blocks);
     return (
         <>
             <LocationItems
@@ -30,7 +32,11 @@ export const TableMap = ({ tables }) => {
                                 (
                                     <div
                                         key={table.id}
-                                        className={`absolute border border-gray-400 ${table.color} cursor-pointer`}
+                                        className={`absolute border border-gray-400 ${
+                                            table.reservations.length > 0
+                                                ? "bg-red-500"
+                                                : table.color
+                                        } cursor-pointer`}
                                         style={{
                                             position: "absolute",
                                             left: table.pos_x + "px",
@@ -78,8 +84,7 @@ export const TableMap = ({ tables }) => {
                                     width: block.width + "px",
                                     height: block.height + "px",
                                 }}
-                            >
-                            </div>
+                            ></div>
                         ))}
                     </div>
                 )}
