@@ -5,7 +5,6 @@ import { ReservationDate } from "./ReservationDate";
 import { ReservationSlots } from "./ReservationSlots";
 import { ReservationBasicDatas } from "./ReservationBasicDatas";
 import { ReservationContext } from "../../contexts/ReservationContext";
-import { date } from "yup";
 import { reservationService } from "../../services/admin/reservationService";
 
 export default function CreateReservationModal({
