@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export const Reservations = ({ reservations, filters }) => {
+export const ReservationNav = ({ reservations, filters }) => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 

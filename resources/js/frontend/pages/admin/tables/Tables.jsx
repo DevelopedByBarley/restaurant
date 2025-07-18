@@ -5,14 +5,13 @@ import IndigoBtn from "../../../components/IndigoBtn";
 import { useState } from "react";
 import TableBoard from "../../../components/admin/table/TableBoard";
 import AdminHeader from "../../../components/admin/AdminHeader";
-import CreateTableModal from "../../../components/admin/components/CreateTableModal";
-import EditTableModal from "../../../components/admin/components/EditTableModal";
-import CreateBlockModal from "../../../components/admin/components/CreateBlockModal";
+import EditTableModal from "../../../components/admin/EditTableModal";
+import CreateBlockModal from "../../../components/admin/EditBlockModal";
 import { tableService } from "../../../services/admin/TableService";
 import { blockService } from "../../../services/admin/BlockService";
 import LocationItems from "../../../components/admin/table/LocationItems";
 import TableList from "../../../components/admin/table/TableList";
-import EditBlockModal from "../../../components/admin/components/EditBlockModal";
+import EditBlockModal from "../../../components/admin/EditBlockModal";
 
 function Tables() {
     const { locations } = usePage().props;
