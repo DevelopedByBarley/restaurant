@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Reservation;
 use App\Http\Requests\StoreReservationRequest;
 use App\Http\Requests\UpdateReservationRequest;
-
+use Inertia\Inertia;
 
 class ReservationController extends Controller
 {
@@ -14,7 +14,7 @@ class ReservationController extends Controller
      */
     public function index()
     {
-
+        return Inertia::render('pages/admin/reservations/Reservations');
     }
 
     public function getReservationsByDate($date)
