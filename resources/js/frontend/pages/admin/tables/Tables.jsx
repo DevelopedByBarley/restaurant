@@ -43,7 +43,7 @@ function Tables() {
         location_id: "",
         name: "",
         type: "table",
-        color: "bg-rose-400",
+        color: "",
         seats: "",
         pos_x: "",
         pos_y: "",

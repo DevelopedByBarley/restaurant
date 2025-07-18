@@ -28,6 +28,16 @@ export default function EditTableModal({
                     onClick: () => handleTableDelete(data.id),
                     className: "bg-red-600 text-white",
                 },
+                {
+                    label: "Frissítés",
+                    onClick: () => handleSubmit(),
+                    className: "bg-orange-400 text-white",
+                },
+                {
+                    label: "Mégse",
+                    onClick: () => setEditTableModalOpen(false),
+                    className: "bg-gray-300 text-gray-800",
+                },
             ]}
         >
             <div className="mb-4">
@@ -109,6 +119,7 @@ export default function EditTableModal({
             {errors.color && (
                 <p className="text-red-500 text-sm">{errors.color}</p>
             )}
+
         </Modal>
     );
 }
