@@ -1,5 +1,5 @@
-import { blockService } from "../../services/admin/BlockService";
-import Modal from "../modals/Modal";
+import { blockService } from "../../../services/admin/BlockService";
+import Modal from "../../modals/Modal";
 
 export default function CreateBlockModal({
     setCreateBlockModalOpen,

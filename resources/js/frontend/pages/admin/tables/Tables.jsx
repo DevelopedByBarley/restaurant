@@ -12,6 +12,7 @@ import LocationItems from "../../../components/admin/table/LocationItems";
 import TableList from "../../../components/admin/table/TableList";
 import EditBlockModal from "../../../components/admin/EditBlockModal";
 import CreateTableModal from "../../../components/admin/table/CreateTableModal";
+import CreateBlockModal from "../../../components/admin/table/CreateBlockModal";
 
 function Tables() {
     const { locations } = usePage().props;
