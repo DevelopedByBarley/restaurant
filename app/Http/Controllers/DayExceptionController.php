@@ -14,7 +14,7 @@ class DayExceptionController extends Controller
      */
     public function index()
     {
-        return Inertia::render('pages/admin/exceptions/Index', [
+        return Inertia::render('pages/admin/exceptions/Exceptions', [
             'dayExceptions' => DayException::all(),
         ]);
     }
@@ -24,7 +24,7 @@ class DayExceptionController extends Controller
      */
     public function create()
     {
-        return Inertia::render('pages/admin/exceptions/Create');
+        return Inertia::render('pages/admin/exceptions/CreateException');
     }
 
     /**

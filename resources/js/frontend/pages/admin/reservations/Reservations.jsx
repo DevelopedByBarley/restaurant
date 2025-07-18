@@ -6,7 +6,7 @@ import { TableMap } from "../../../components/tables/TableMap";
 import AdminLayout from "@/frontend/layouts/AdminLayout";
 import { Reservations } from "../../../components/admin/components/reservations/Reservations";
 import DatePicker from "../../../components/admin/components/DatePicker";
-function Index() {
+function ReservationsPage() {
     const { reservations, tables, filters } = usePage().props;
 
 
@@ -20,5 +20,5 @@ function Index() {
     );
 }
 
-Index.layout = (page) => <AdminLayout>{page}</AdminLayout>;
-export default Index;
+ReservationsPage.layout = (page) => <AdminLayout>{page}</AdminLayout>;
+export default ReservationsPage;

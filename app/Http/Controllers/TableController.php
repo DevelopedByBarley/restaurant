@@ -17,7 +17,7 @@ class TableController extends Controller
      */
     public function index()
     {
-        return Inertia::render('pages/admin/tables/Index', [
+        return Inertia::render('pages/admin/tables/Tables', [
             'locations' => Location::with('tables', 'blocks')->get(),
             'tables' => Table::with('location')->get(),
             'blocks' => Block::with('location')->get(), // Assuming blocks are tables without a location
@@ -31,7 +31,7 @@ class TableController extends Controller
 
     public function create()
     {
-        return Inertia::render('pages/admin/tables/Create', [
+        return Inertia::render('pages/admin/tables/CreateTable', [
             'locations' => Location::with('tables')->get(),
         ]);
     }

@@ -14,7 +14,7 @@ class OpeningController extends Controller
      */
     public function index()
     {
-        return Inertia::render('pages/admin/openings/Index', [
+        return Inertia::render('pages/admin/openings/Openings', [
             'openings' => Opening::all(),
         ]);
     }
@@ -24,7 +24,7 @@ class OpeningController extends Controller
      */
     public function create()
     {
-        return Inertia::render('pages/admin/openings/Create');
+        return Inertia::render('pages/admin/openings/CreateOpening');
     }
 
     /**

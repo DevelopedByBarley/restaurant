@@ -3,7 +3,7 @@ import IndigoBtn from "../../../components/IndigoBtn";
 import AdminLayout from "../../../layouts/AdminLayout";
 import { useForm } from "@inertiajs/react";
 
-function Create({ locations }) {
+function CreateTable({ locations }) {
     const { data, setData, post, processing, errors } = useForm({
         location_id: "",
         name: "",
@@ -103,6 +103,6 @@ function Create({ locations }) {
     );
 }
 
-Create.layout = (page) => <AdminLayout>{page}</AdminLayout>;
+CreateTable.layout = (page) => <AdminLayout>{page}</AdminLayout>;
 
-export default Create;
+export default CreateTable;

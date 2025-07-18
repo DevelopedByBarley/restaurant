@@ -34,7 +34,7 @@ class ReservationController extends Controller
             }
         }])->get();
 
-        return Inertia::render('pages/admin/reservations/Index', [
+        return Inertia::render('pages/admin/reservations/Reservations', [
             'tables' => $tables,
             'filters' => request()->all('search', 'trashed', 'date', 'start', 'end'),
             'locations' => Location::with(['tables', 'blocks'])->get(),

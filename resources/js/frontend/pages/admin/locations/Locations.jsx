@@ -3,7 +3,7 @@ import AdminLayout from "../../../layouts/AdminLayout";
 import IndigoBtn from "../../../components/IndigoBtn";
 import AdminHeader from "../../../components/admin/AdminHeader";
 
-function Index() {
+function Locations() {
     const { locations } = usePage().props;
     return (
         <>
@@ -98,6 +98,6 @@ function Index() {
     );
 }
 
-Index.layout = (page) => <AdminLayout>{page}</AdminLayout>;
+Locations.layout = (page) => <AdminLayout>{page}</AdminLayout>;
 
-export default Index;
+export default Locations;

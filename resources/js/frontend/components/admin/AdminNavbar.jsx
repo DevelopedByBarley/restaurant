@@ -1,5 +1,6 @@
 import { Link, useForm, usePage } from "@inertiajs/react";
 import { useEffect, useState } from "react";
+import urlIs from "../../helpers/functions";
 
 export default function AdminNavbar() {
     const { post } = useForm();
@@ -38,31 +39,50 @@ export default function AdminNavbar() {
                     <div className="flex items-center gap-4 justify-center w-full">
                         <Link
                             href="/admin/dashboard"
-                            className="text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-indigo-600 transition"
+                            className={`text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-indigo-600 transition ${
+                                urlIs("/admin/dashboard")
+                                    ? "text-indigo-600"
+                                    : ""
+                            }`}
                         >
                             Vezérlőpult
                         </Link>
                         <Link
                             href="/admin/locations"
-                            className="text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-indigo-600 transition"
+                            className={`text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-indigo-600 transition ${
+                                urlIs("/admin/locations")
+                                    ? "text-indigo-600"
+                                    : ""
+                            }`}
                         >
                             Helyszínek
                         </Link>
                         <Link
                             href="/admin/tables"
-                            className="text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-indigo-600 transition"
+                            className={`text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-indigo-600 transition ${
+                                urlIs("/admin/tables")
+                                    ? "text-indigo-600"
+                                    : ""
+                            }`}
                         >
                             Asztalok
                         </Link>
                         <Link
                             href="/admin/reservations"
-                            className="text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-indigo-600 transition"
-                        >
+                            className={`text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-indigo-600 transition ${
+                                urlIs("/admin/reservations")
+                                    ? "text-indigo-600"
+                                    : ""
+                            }`}>
                             Foglalások
                         </Link>
                         <Link
                             href="/admin/openings"
-                            className="text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-indigo-600 transition"
+                            className={`text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-indigo-600 transition ${
+                                urlIs("/admin/openings")
+                                    ? "text-indigo-600"
+                                    : ""
+                            }`}
                         >
                             Nyitvatartás
                         </Link>
@@ -74,8 +94,11 @@ export default function AdminNavbar() {
                         </Link>
                         <Link
                             href="/admin/setting"
-                            className="text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-indigo-600 transition"
-                        >
+                            className={`text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-indigo-600 transition ${
+                                urlIs("/admin/setting")
+                                    ? "text-indigo-600"
+                                    : ""
+                            }`}>
                             Settings
                         </Link>
                     </div>

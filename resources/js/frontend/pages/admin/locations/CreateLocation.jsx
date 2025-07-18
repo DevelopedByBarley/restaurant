@@ -4,7 +4,7 @@ import IndigoBtn from "../../../components/IndigoBtn";
 import AdminLayout from "../../../layouts/AdminLayout";
 import { useForm } from '@inertiajs/react';
 
-function Create() {
+function CreateLocation() {
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
         description: '',
@@ -60,6 +60,6 @@ function Create() {
     );
 }
 
-Create.layout = (page) => <AdminLayout>{page}</AdminLayout>;
+CreateLocation.layout = (page) => <AdminLayout>{page}</AdminLayout>;
 
-export default Create;
+export default CreateLocation;

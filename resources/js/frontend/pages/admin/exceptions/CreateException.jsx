@@ -3,7 +3,7 @@ import AdminHeader from "../../../components/admin/AdminHeader";
 import { useForm } from "@inertiajs/react";
 import { exceptionService } from "../../../services/admin/exceptionService";
 
-function Create() {
+function CreateException() {
     const { data, setData, post, processing, errors, reset } = useForm({
         date: "",
         reason: "",
@@ -72,6 +72,6 @@ function Create() {
     );
 }
 
-Create.layout = (page) => <AdminLayout>{page}</AdminLayout>;
+CreateException.layout = (page) => <AdminLayout>{page}</AdminLayout>;
 
-export default Create;
+export default CreateException;

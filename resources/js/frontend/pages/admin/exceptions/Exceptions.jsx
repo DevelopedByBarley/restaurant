@@ -3,7 +3,7 @@ import AdminHeader from "../../../components/admin/AdminHeader";
 import IndigoBtn from "../../../components/IndigoBtn";
 import AdminLayout from "../../../layouts/AdminLayout";
 
-function Index() {
+function Exceptions() {
     const { dayExceptions } = usePage().props;
     return (
         <div className="p-4">
@@ -62,6 +62,6 @@ function Index() {
     );
 }
 
-Index.layout = (page) => <AdminLayout>{page}</AdminLayout>;
+Exceptions.layout = (page) => <AdminLayout>{page}</AdminLayout>;
 
-export default Index;
+export default Exceptions;

@@ -3,7 +3,7 @@ import AdminHeader from "../../../components/admin/AdminHeader";
 import AdminLayout from "../../../layouts/AdminLayout";
 import { openingService } from "../../../services/admin/openingService";
 
-function Create() {
+function CreateOpening() {
     const { data, setData, post, processing, errors, reset } = useForm({
         day_of_week: "",
         date: "",
@@ -106,6 +106,6 @@ function Create() {
     );
 }
 
-Create.layout = (page) => <AdminLayout>{page}</AdminLayout>;
+CreateOpening.layout = (page) => <AdminLayout>{page}</AdminLayout>;
 
-export default Create;
+export default CreateOpening;

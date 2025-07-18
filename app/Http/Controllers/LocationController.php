@@ -14,7 +14,7 @@ class LocationController extends Controller
      */
     public function index()
     {
-        return Inertia::render('pages/admin/locations/Index', [
+        return Inertia::render('pages/admin/locations/Locations', [
             'locations' => Location::all()->map(function ($location) {
                 return [
                     'id' => $location->id,
@@ -32,7 +32,7 @@ class LocationController extends Controller
      */
     public function create()
     {
-        return Inertia::render('pages/admin/locations/Create');
+        return Inertia::render('pages/admin/locations/CreateLocation');
     }
 
     /**

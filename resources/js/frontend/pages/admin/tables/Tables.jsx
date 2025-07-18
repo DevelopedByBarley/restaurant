@@ -14,7 +14,7 @@ import LocationItems from "../../../components/admin/table/LocationItems";
 import TableList from "../../../components/admin/table/TableList";
 import EditBlockModal from "../../../components/admin/components/EditBlockModal";
 
-function Index() {
+function Tables() {
     const { locations } = usePage().props;
 
     const [activeLocationId, setActiveLocationId] = useState(
@@ -217,6 +217,6 @@ function Index() {
     );
 }
 
-Index.layout = (page) => <AdminLayout>{page}</AdminLayout>;
+Tables.layout = (page) => <AdminLayout>{page}</AdminLayout>;
 
-export default Index;
+export default Tables;
